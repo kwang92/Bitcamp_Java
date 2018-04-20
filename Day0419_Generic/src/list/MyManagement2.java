@@ -57,7 +57,7 @@ public class MyManagement2{
 		System.out.print("삭제할 이름을 입력하세요 : ");
 		String data = input.nextLine();
 		
-		stu.remove(searchByName(data));	
+		stu.remove(searchByName(data));		// myList의 remove 메소드 호출
 	}
 	public void stuAdd() {	// 학생 추가 메소드, 배열크기가 꽉차면 원래크기 *2 크기 만큼의 배열로 바꿔준다.
 		Scanner input = new Scanner(System.in);
