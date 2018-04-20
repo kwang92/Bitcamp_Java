@@ -49,7 +49,7 @@ public class MyManagement2{
 		System.out.print("검색할 학생 이름 : ");
 		String name = input.next();
 		System.out.println(name+"을 검색합니다.");
-		System.out.println(this.searchByName(name)); // Student_List의 searchByName 메소드 호출
+		System.out.println(stu.get(searchByName(name)));
 	}
 	public void stuRemove() {	// 노드 삭제 메소드
 		Scanner input = new Scanner(System.in);
@@ -57,7 +57,7 @@ public class MyManagement2{
 		System.out.print("삭제할 이름을 입력하세요 : ");
 		String data = input.nextLine();
 		
-		this.delete(data);	// Student_List의 delete 메소드 호출	
+		stu.remove(searchByName(data));	
 	}
 	public void stuAdd() {	// 학생 추가 메소드, 배열크기가 꽉차면 원래크기 *2 크기 만큼의 배열로 바꿔준다.
 		Scanner input = new Scanner(System.in);
@@ -85,22 +85,13 @@ public class MyManagement2{
 		}
 		System.out.println();
 	}
-	public void delete(String name) {	// 학생 삭제
-		for(int i = 0; i < stu.size(); i++) {
-			if(stu.get(i).getName().equals(name)) {
-				stu.remove(i);
-				break;
-			}
-		}
-	}
-	public Student searchByName(String n) {	// 학생 검색
+	public int searchByName(String n) {	// 학생 검색
 		for(int i = 0; i < stu.size(); i++) {
 			if(stu.get(i).getName().equals(n)) {
-				return stu.get(i);
+				return i;
 			}
 		}
-	
-		return null;
+		return -1;
 	}
 
 }

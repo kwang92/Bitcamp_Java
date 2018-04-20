@@ -33,6 +33,10 @@ public class MyList<E>{	// 임의의 데이터타입을 넣을 수 있도록 작
 	}
 	public void remove(int index) {
 		// index 삭제하고 뒤 배열 내용 앞으로 한칸씩
+		if(index < 0 || index > array.length) {
+			System.out.println("해당 데이터가 없습니다.");
+			return;
+		}
 		E[] tmp = (E[])new Object[array.length-1];
 		int pos = 0;
 		
