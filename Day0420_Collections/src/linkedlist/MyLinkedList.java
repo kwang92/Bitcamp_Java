@@ -5,7 +5,6 @@ public class MyLinkedList {
 	private int len;
 	
 	public MyLinkedList() {
-		len = 0;
 		head = null;
 	}
 	public void add(String data) {	// Tail Node를 가져와 next를 새 Node로 set해주고 size를 1 늘려준다.
@@ -38,7 +37,7 @@ public class MyLinkedList {
 			if(i == index)
 				return current;
 		}
-		return null;
+		return current;
 	}
 	public void set(int index, String data) {
 		if(index >= len) {
