@@ -1,18 +1,18 @@
 package linkedlist;
 
-public class Node{	// 문자열 저장 노드
-	private String data;
+public class Node<T>{	// 저장 Node ( generic )
+	private T data;
 	private Node next;
 	
 	public Node() {}
-	public Node(String data) {
+	public Node(T data) {
 		this.data = data;
 		this.next = null;
 	}
-	public String getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(String data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 	public Node next() {
@@ -25,6 +25,4 @@ public class Node{	// 문자열 저장 노드
 	public String toString() {
 		return data+" ";
 	}
-	
-	
 }
