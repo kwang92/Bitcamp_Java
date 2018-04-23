@@ -2,7 +2,7 @@ package linkedlist;
 
 public class Node<T>{	// 저장 Node ( generic )
 	private T data;
-	private Node next;
+	private Node<T> next;
 	
 	public Node() {}
 	public Node(T data) {
@@ -18,7 +18,7 @@ public class Node<T>{	// 저장 Node ( generic )
 	public Node next() {
 		return next;
 	}
-	public void setNext(Node next) {
+	public void setNext(Node<T> next) {
 		this.next = next;
 	}
 	@Override

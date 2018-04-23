@@ -1,15 +1,15 @@
 package linkedlist;
 
-public class MyLinkedList<T> {
-	private Node head;
+public class MyLinkedList<E> {
+	private Node<E> head;
 	private int len;
 	
 	public MyLinkedList() {
 		head = null;
 	}
-	public void add(T data) {	// Tail Node를 가져와 next를 새 Node로 set해주고 size를 1 늘려준다.
-		Node newNode = new Node(data);
-		if(isEmpty()) {
+	public void add(E data) {	// Tail Node를 가져와 next를 새 Node로 set해주고 size를 1 늘려준다.
+		Node<E> newNode = new Node<E>(data);
+		if(head == null) {
 			head = newNode;
 		}
 		else {
@@ -18,7 +18,7 @@ public class MyLinkedList<T> {
 		len++;
 	}
 	public void remove(int index) {
-		if(isEmpty()) {
+		if(head == null) {
 			System.out.println("지울 데이터가 없습니다.");
 			return;
 		}
@@ -34,16 +34,20 @@ public class MyLinkedList<T> {
 		current.setNext(current.next().next());
 		len--;
 	}
-	public Node get(int index) {
-		Node current = head;
-		for(int i = 1; i < len; i++) {
-			current = current.next();
+	public Node get(int index) { // 15 -> 3.25, len = 2
+		Node current = head;// 15
+		System.out.println("현재 len"+len);
+		for(int i = 0; i < len; i++) {
 			if(i == index)
 				return current;
+			current = current.next();
 		}
 		return current;
 	}
-	public void set(int index, String data) {
+	public Node getHead() {
+		return this.head;
+	}
+	public void set(int index, E data) {
 		if(index >= len) {
 			System.out.println("해당 Index Node가 존재하지 않습니다.");
 			return;
@@ -77,11 +81,5 @@ public class MyLinkedList<T> {
 		}	
 		return result+"";
 	}
-	public boolean isEmpty() {
-		boolean empty = false;
-		if(head == null) {
-			return !empty;
-		}
-		return empty;
-	}
+
 }
