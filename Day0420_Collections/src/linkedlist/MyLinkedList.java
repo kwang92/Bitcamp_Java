@@ -9,7 +9,7 @@ public class MyLinkedList {
 	}
 	public void add(String data) {	// Tail Node를 가져와 next를 새 Node로 set해주고 size를 1 늘려준다.
 		Node newNode = new Node(data);
-		if(head == null) {
+		if(isEmpty()) {
 			head = newNode;
 		}
 		else {
@@ -18,6 +18,10 @@ public class MyLinkedList {
 		len++;
 	}
 	public void remove(int index) {
+		if(isEmpty()) {
+			System.out.println("지울 데이터가 없습니다.");
+			return;
+		}
 		Node current = head;
 		for(int i = 1; i < index; i++) {
 			current = current.next();
@@ -72,5 +76,12 @@ public class MyLinkedList {
 			current = current.next();
 		}	
 		return result+"";
+	}
+	public boolean isEmpty() {
+		boolean empty = false;
+		if(head == null) {
+			return !empty;
+		}
+		return empty;
 	}
 }
