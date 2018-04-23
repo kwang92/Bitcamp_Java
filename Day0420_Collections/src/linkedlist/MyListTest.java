@@ -2,11 +2,12 @@ package linkedlist;
 
 import java.util.Scanner;
 
+
 public class MyListTest {
 	public static void main(String[] args) {
 		MyLinkedList list = new MyLinkedList();
 		Scanner in = new Scanner(System.in);	// 테스트용 scanner 객체
-		
+
 		int num = 0;
 		loop:
 		while(num != -1) {

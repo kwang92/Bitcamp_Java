@@ -1,13 +1,13 @@
 package linkedlist;
 
-public class MyLinkedList {
+public class MyLinkedList<T> {
 	private Node head;
 	private int len;
 	
 	public MyLinkedList() {
 		head = null;
 	}
-	public void add(String data) {	// Tail Node를 가져와 next를 새 Node로 set해주고 size를 1 늘려준다.
+	public void add(T data) {	// Tail Node를 가져와 next를 새 Node로 set해주고 size를 1 늘려준다.
 		Node newNode = new Node(data);
 		if(isEmpty()) {
 			head = newNode;
