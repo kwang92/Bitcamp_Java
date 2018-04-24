@@ -13,14 +13,12 @@ public class FileCopy {
 		FileInputStream in = null;
 		int readLength = 0;
 		try {
-			
 			in = new FileInputStream(path+"iu.png");
 			out = new FileOutputStream(path+"iu2.png");
 			
 			while((readLength = in.read(buffer))!=-1) {
 				out.write(buffer,0,readLength);
 			}
-			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
