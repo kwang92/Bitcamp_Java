@@ -25,7 +25,7 @@ public class DataStreamEx {
 			out.writeDouble(3.14);
 			out.writeBoolean(false);
 			out.writeUTF("hello world");// writeUTF 는 문자여을 WRITE함
-			out.flush();
+			out.flush();	// 버퍼가 꽉차지 않았을 때도 data를 내보내기 (출력)하기 위해 flush() 메소드 사용
 			
 			int intNum = in.readInt();
 			double doubleNum = in.readDouble();

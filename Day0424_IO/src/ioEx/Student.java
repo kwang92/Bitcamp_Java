@@ -1,6 +1,11 @@
 package ioEx;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
+	
+	
+	private static final long serialVersionUID = 8998292384308117044L;	// 클래스의 버젼정보를 확인하는 데이터 값
 	private String name;
 	private int grade;
 	private int score;
@@ -34,4 +39,9 @@ public class Student {
 	public void setScore(int score) {
 		this.score = score;
 	}
+	@Override
+	public String toString() {
+		return "Student [name=" + name + ", grade=" + grade + ", score=" + score + "]";
+	}
+	
 }
