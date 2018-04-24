@@ -15,13 +15,13 @@ public class MyManagement2{
 		this.readValue();
 	}
 	public void readValue() {
+		System.out.println("읽어오기");
 		MyList<Student> tmp;
-		if( ( tmp = read.getStuInfo_ByFile() ) != null ) {
-			for(int i = 0; i < stu.size(); i++) {
-				this.stu.add(tmp.get(i));
-			}
+		tmp = read.getStuInfo_ByFile();
+		if( tmp != null ) {
+			stu = tmp;
 		}
-		System.out.println("현재 tmp "+tmp);
+		System.out.println("size :" + stu.size());
 	}
 	public void start() {	// 프로그램 start 메소드 ( 최초 Menu 선택 )
 		boolean boot = true;	// 프로그램 자체 무한루프를 종료/작동 시키는 boolean

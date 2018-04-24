@@ -8,47 +8,49 @@ import java.io.ObjectInputStream;
 
 public class ReadStuInfo {
 	private ObjectInputStream in;
-	private String path = "C:\\Users\\bit\\Desktop\\ryu\\store\\Day0424_IO\\students.dat";
+	private FileInputStream fin;
+	//private String path = "C:\\Users\\bit\\Desktop\\ryu\\store\\Day0424_IO\\students.dat";
+	private String path = "students.dat";
 
 	public ReadStuInfo() {
 
 		try {
-			in = new ObjectInputStream(new FileInputStream(path));
-			System.out.println("현재 in"+in);
+			fin = new FileInputStream(path);
 		} catch (FileNotFoundException e) {
-		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
 	public MyList<Student> getStuInfo_ByFile() {
-
 		MyList<Student> tmp = null;
-		if(in != null) {
-			try {
-				
-				try {
-					tmp = (MyList<Student>) in.readObject();
-				} catch (EOFException e) {
-					System.out.println("왜 여기들어옴?");
-				}
-				catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 
-				return tmp;
-
-			} catch (ClassNotFoundException e) {
-
-			}
-
-		} 
-
+		if(fin == null) {	// 최초 1회는 student.dat 파일이 없으므로 메소드 종료
+			System.out.println("최초 1회는 받아오지않습니다.");
+			return null;
+		}
 		try {
-			if(in != null) {
-				in.close();
+			in = new ObjectInputStream(fin);
+			tmp = (MyList<Student>) in.readObject();
+			
+			System.out.println("try안 tmp"+ tmp);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(in != null && fin != null) {
+					in.close();
+					fin.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (IOException e) {}
+		}
+
 		return tmp;
 	}
 }
