@@ -16,23 +16,23 @@ public class IOManager {
 	public byte[] readFile() {
 		byte[] data = null;
 		String str = "";
-		
+
 		try {
 			in = new FileInputStream(path);
 			int tmp;
-			
-			try {
-				while(( tmp = in.read() ) != -1) {
-					str += (char)tmp;
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+			while(( tmp = in.read() ) != -1) {
+				str += (char)tmp;
 			}
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
 			try {
 				if( in != null ) {
 					in.close();
@@ -48,16 +48,16 @@ public class IOManager {
 		try {
 			out = new FileOutputStream(path);
 			String str = s.getName()+"/"+s.getGrade()+"/"+s.getScore();
-			try {
-				out.write(str.getBytes());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			out.write(str.getBytes());
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
 			try {
 				if(out != null) {
 					out.close();

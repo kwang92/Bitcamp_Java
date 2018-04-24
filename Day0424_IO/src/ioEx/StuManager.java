@@ -9,7 +9,7 @@ public class StuManager extends IOManager{
 		s = new Student();
 	}
 	public void readStudent_Info() {
-		byte[] info = readFile();
+		byte[] info = readFile();	// IOManager 클래스의 readFile 메소드 호출 후 byte형 반환
 		String data = new String(info,0,info.length);
 		String str[] = data.split("/");
 		System.out.println("받아온 데이터 : "+data);
@@ -28,7 +28,7 @@ public class StuManager extends IOManager{
 		System.out.print("수정할 점수 입력 : ");
 		s.setScore(input.nextInt());
 		
-		writeFile(s);
+		writeFile(s);	// IOManager 클래스의 writeFile 메소드 호출
 	}
 	public void display_Info() {
 		System.out.println("이름 : "+s.getName()+", 학년 : "+s.getGrade()+", 점수 : "+s.getGrade());

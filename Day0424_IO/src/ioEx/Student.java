@@ -11,7 +11,6 @@ public class Student {
 		this.grade = grade;
 		this.score = score;
 	}
-
 	public String getName() {
 		return name;
 	}
@@ -35,5 +34,4 @@ public class Student {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
 }
