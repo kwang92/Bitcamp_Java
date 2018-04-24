@@ -15,7 +15,6 @@ public class WriteStuInfo {
 	}
 	public void writeStuInfo_ToFile(MyList<Student> stu) {
 		
-		System.out.println("stu : "+ stu);
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(path));
 			out.writeObject(stu);

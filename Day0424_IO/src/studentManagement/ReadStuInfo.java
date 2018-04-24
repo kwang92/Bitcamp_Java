@@ -31,8 +31,7 @@ public class ReadStuInfo {
 		try {
 			in = new ObjectInputStream(fin);
 			tmp = (MyList<Student>) in.readObject();
-			
-			System.out.println("try안 tmp"+ tmp);
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
