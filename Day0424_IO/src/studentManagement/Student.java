@@ -3,10 +3,13 @@ package studentManagement;
 import java.io.Serializable;
 
 public class Student implements Serializable{
+	// Serializable 클래스에서 
+	// 정보를 보내기 싫은 변수 앞에 transient 키워드를 쓰면 해당 데이터는 직렬화(Serializable)대상에서 제외된다.
+	// transient로 저장된 데이터를 저장했다가 다시 불러오면 기본값으로 초기화된 데이터가 불려온다.
 	private static int totalStudent = 0;
 	private String name;
-	private int grade;
-	Score score;
+	private transient int grade;	// 이런식으로 Serializable 클래스안 변수 앞에 transient를 붙여주면
+	Score score;					// grade 정보는 직렬화 대상에서 제외.
 	
 	public Student() {
 		this.name = "Empty";
