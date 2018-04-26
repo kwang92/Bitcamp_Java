@@ -24,12 +24,10 @@ public class Sender{
 			DatagramPacket packet = null;
 			byte[] buf;	// data를 담을 byte배열
 			buf = this.msg.getBytes();
-			
+
 			packet = new DatagramPacket(buf, buf.length,inet,5000);
 			ds.send(packet);
-
-
-
+			
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,6 +37,7 @@ public class Sender{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
+
 	}
 }

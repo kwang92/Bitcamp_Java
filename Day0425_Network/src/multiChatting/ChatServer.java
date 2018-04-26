@@ -34,7 +34,7 @@ public class ChatServer implements Runnable{
 				
 				Iterator<String> it = set.iterator();	// set의 iterator 사용
 				while(it.hasNext()) {	// 접속해있는 IP들에게 메시지들을 뿌려준다.
-					send = new Sender(ip2,it.next(),new String(buf).trim());	// trim으로 공백은 잘라줌.
+					send = new Sender(ip2,it.next(),new String(buf).trim());	// 순서대로 msg보내는 ip, 목적지 ip, msg내용
 					send.sendMsg();
 				}
 			}
@@ -44,6 +44,10 @@ public class ChatServer implements Runnable{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if(socket != null) {
+				socket.close();
+			}
 		}
 	}
 }

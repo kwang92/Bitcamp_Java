@@ -17,7 +17,7 @@ public class UDPSender {
 		DatagramSocket ds = null;
 		try {
 			ds = new DatagramSocket();
-			InetAddress ip = InetAddress.getByName("localhost");
+			InetAddress ip = InetAddress.getByName("192.168.0.34");
 			
 			DatagramPacket packet = null;
 			byte[] buf;	// data를 담을 byte배열
