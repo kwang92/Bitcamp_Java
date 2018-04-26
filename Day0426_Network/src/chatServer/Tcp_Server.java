@@ -28,7 +28,7 @@ public class Tcp_Server extends Thread{
 	}
 
 	public void run() {	
-		try {
+		try {	// 리스트에 1명만 들어 왔따 list(0) size = 1-1 
 			while(true) {
 				clientSocket = socket.accept();
 				client_List.add(clientSocket);	// 들어온 소켓List 저장
@@ -74,6 +74,7 @@ public class Tcp_Server extends Thread{
 			for(int i = 0; i < client_List.size(); i++) {
 				try {
 					out = new DataOutputStream(client_List.get(i).getOutputStream());
+					msg = client_List.get(i).getInetAddress().getHostAddress()+": "+msg;
 					out.writeUTF(msg);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
