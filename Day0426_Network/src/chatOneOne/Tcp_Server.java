@@ -7,7 +7,7 @@ import java.net.Socket;
 public class Tcp_Server {
 	private ServerSocket socket;
 	private Socket clientSocket;
-	private static final int PORT = 5555;
+	private static final int PORT = 5000;
 	private Sender sender;
 	private Reader reader;
 
@@ -44,4 +44,3 @@ public class Tcp_Server {
 		}
 	}
 }
-

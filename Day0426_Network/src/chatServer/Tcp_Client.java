@@ -1,4 +1,4 @@
-package chatOneOne;
+package chatServer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Tcp_Client {	// 프로그램 시작 시 Server에 연결, 연결이 되면 데이터 준비 및 전송
 	private Socket socket;
-	private static String IP = "192.168.0.22";
+	private static String IP = "192.168.0.26";
 	private static int PORT = 5000;
 	private Sender sender;
 	private Reader reader;
