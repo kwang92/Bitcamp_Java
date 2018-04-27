@@ -1,21 +1,31 @@
 package chatServer_UI;
 
+import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+
 
 public class ChatFrame extends JFrame{
 	private TextField tf;
 	private TextArea ta;
+	private JButton btn;
 	private Sender sender;
+
 	public ChatFrame() {
 		
-		tf = new TextField();
 		ta = new TextArea();
-		this.add(ta,"Center");
-		this.add(tf,"South");
+		ta.setBounds(10, 5, 300, 161);
+		tf = new TextField();
+		tf.setBounds(10, 172, 225, 23);
+		getContentPane().setLayout(null);
+		
+		getContentPane().add(ta);
+		getContentPane().add(tf);
 		
 		tf.addActionListener(new ActionListener() {
 			@Override
@@ -30,7 +40,21 @@ public class ChatFrame extends JFrame{
 		});
 		
 		ta.setEditable(false);
-		this.setSize(300,200);
+		
+		JButton btnNewButton = new JButton("send");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String msg = tf.getText()+"\n";
+				ta.append("나 : "+msg);
+				tf.setText("");
+				tf.requestFocus();
+				
+				sendServer(msg);
+			}
+		});
+		btnNewButton.setBounds(241, 172, 69, 23);
+		getContentPane().add(btnNewButton);
+		this.setSize(338,244);
 		this.setVisible(true);
 		tf.requestFocus();
 		
@@ -39,7 +63,7 @@ public class ChatFrame extends JFrame{
 		this.sender.sendToServer(msg);
 	}
 	public void setTa(String msg) {
-		this.ta.append(msg+"\n");
+		this.ta.append(msg);
 	}
 	public void setSender(Sender sender) {
 		this.sender = sender;
