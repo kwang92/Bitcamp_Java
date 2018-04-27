@@ -75,6 +75,8 @@ public class Tcp_Server extends Thread{
 		public void sendToAll(String msg) {
 			for(int i = 0; i < client_List.size(); i++) {	// 소켓 ArrayList에 있는 모든 사용자들에게 메시지 전송
 				try {
+					if(this.socket.equals(client_List.get(i)))
+						continue;
 					out = new DataOutputStream(client_List.get(i).getOutputStream());
 					msg = this.socket.getInetAddress().getHostAddress()+" : "+msg;	// 메시지를 보내는 객체의 ip + msg내용전송
 					out.writeUTF(msg);
