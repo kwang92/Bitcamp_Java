@@ -17,9 +17,8 @@ public class Reader extends Thread{
 			e.printStackTrace();
 		}
 	}
-	public void run() {
-		
-		while(true) {
+	public void run() {	// 서버로부터 들어오는 input 내용을 받는 쓰레드
+		while(true) {	
 			String msg;
 			if(in != null) {
 				try {

@@ -17,7 +17,7 @@ public class Sender extends Thread{
 			e.printStackTrace();
 		}
 	}
-	public void run() {
+	public void run() {	// 유저로부터 입력받은 내용을 서버로 전송
 		try {
 			Scanner user = new Scanner(System.in);
 			String msg;

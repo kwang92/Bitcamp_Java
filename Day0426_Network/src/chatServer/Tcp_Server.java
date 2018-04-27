@@ -5,8 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Tcp_Server extends Thread{
 	private ServerSocket socket;
@@ -35,10 +35,12 @@ public class Tcp_Server extends Thread{
 				reader.add(new ServerReader(clientSocket));	// reader클래스에 새로 들어온 소켓을 넣어서 ArrayList에 추가
 				reader.get(reader.size()-1).start();	// 새로 생성된 ArrayList의 reader 쓰레드 start
 				System.out.println("Client 추가");
-			}
+			}	
+		} catch (SocketException e) { 
+			System.out.println("소켓 생성 실패");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("IOException 발생");
 		}
 	}
 
