@@ -17,11 +17,11 @@ public class ChatFrame extends JFrame{
 	private Sender sender;
 
 	public ChatFrame() {
-		
 		ta = new TextArea();
 		ta.setBounds(10, 5, 300, 161);
 		tf = new TextField();
 		tf.setBounds(10, 172, 225, 23);
+		ta.setEditable(false);
 		getContentPane().setLayout(null);
 		
 		getContentPane().add(ta);
