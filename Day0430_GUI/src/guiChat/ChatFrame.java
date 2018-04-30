@@ -34,12 +34,7 @@ public class ChatFrame extends JFrame{
 		tf.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String msg = tf.getText()+"\n";
-				ta.append("나 : "+msg);
-				tf.setText("");
-				tf.requestFocus();
-				
-				sendServer(msg);
+				sendMsg();
 			}
 		});
 		
@@ -64,6 +59,14 @@ public class ChatFrame extends JFrame{
 		
 		
 		
+	}
+	public void sendMsg() {
+		String msg = tf.getText()+"\n";
+		ta.append("나 : "+msg);
+		tf.setText("");
+		tf.requestFocus();
+		
+		sendServer(msg);
 	}
 	public String getIP() {
 		String ip = JOptionPane.showInputDialog(null, "서버 IP입력", null);
