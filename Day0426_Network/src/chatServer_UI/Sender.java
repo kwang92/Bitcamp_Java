@@ -9,11 +9,13 @@ public class Sender{
 	private DataOutputStream out;
 	private Socket socket;
 
-	public Sender(Socket socket) {
+	public Sender(Socket socket, String name) {
 
 		this.socket = socket;
 		try {
 			out = new DataOutputStream(this.socket.getOutputStream());
+			out.writeUTF(name);
+			out.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

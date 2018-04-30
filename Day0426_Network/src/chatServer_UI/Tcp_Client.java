@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class Tcp_Client extends ChatFrame {	// 프로그램 시작 시 Server에 연결, 연결이 되면 데이터 준비 및 전송
 	private Socket socket;
@@ -11,8 +12,14 @@ public class Tcp_Client extends ChatFrame {	// 프로그램 시작 시 Server에
 	private static int PORT = 5000;				// 연결요청 할 지정 Port
 	private Sender sender;
 	private Reader reader;
+	private String name;
 
 	
+	public Tcp_Client() {
+		Scanner input = new Scanner(System.in);
+		System.out.print("이름을 입력하세요 : ");
+		name = input.next();
+	}
 	public boolean setConnect() {	// 서버와 소켓 연결, 연결 성공 시 true 반환, 실패 시 false 반환
 		try {
 			socket = new Socket(IP,PORT);
@@ -31,7 +38,7 @@ public class Tcp_Client extends ChatFrame {	// 프로그램 시작 시 Server에
 	public void startComm() {	// 채팅기능 시작
 		if(setConnect()) {	// startComm에서 setConnect 호출 ( 서버와의 연결 )
 			// 서버와의 연결 성공 시 sender, reader 쓰레드 start
-			sender = new Sender(socket);
+			sender = new Sender(socket, name);
 			super.setSender(sender);
 			reader = new Reader(socket);
 			reader.start();

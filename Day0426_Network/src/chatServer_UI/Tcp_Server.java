@@ -11,11 +11,14 @@ import java.util.ArrayList;
 public class Tcp_Server extends Thread{
 	private ServerSocket socket;
 	private Socket clientSocket;
-
+	private static int total_Client = 0;
+	
 	private static final int PORT = 5000;
 	private ArrayList<ServerReader> reader;
 	private ArrayList<Socket> client_List;
+	private String[] client_Name;
 	public Tcp_Server() {
+		this.client_Name = new String[0];
 		try {
 			socket = new ServerSocket(PORT);		// ServerSocket Port를 지정해서 열어준다.
 			reader = new ArrayList<ServerReader>();	// 접속한 소켓들에 1:1대응하는 reader클래스의 ArrayList
@@ -27,6 +30,18 @@ public class Tcp_Server extends Thread{
 		}
 	}
 
+	public String getUsers(int index) {
+		return client_Name[index];
+	}
+	public void setUserName(String name) {
+		String[] tmp = client_Name;
+		client_Name = new String[total_Client+1];
+		for(int i = 0; i < tmp.length; i++) {
+			client_Name[i] = tmp[i];
+		}
+		this.client_Name[total_Client] = name;
+		total_Client++;
+	}
 	public void run() {	
 		try {
 			while(true) {
@@ -43,7 +58,7 @@ public class Tcp_Server extends Thread{
 			System.out.println("IOException 발생");
 		}
 	}
-
+	
 
 	public class ServerReader extends Thread{	// innerClass ServerReader
 		private DataInputStream in;
@@ -59,12 +74,17 @@ public class Tcp_Server extends Thread{
 			}
 		}
 		public void run() {
+			try {
+				setUserName(in.readUTF());	// 사용자의 이름을 설정한다.
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			while(true) {
 				String msg;
 				if(in != null) {	// in에 객체가 생성됬는지 확인
 					try {
 						msg = in.readUTF();	// Input이 들어올때 까지 대기
-						System.out.println("서버가 메시지 수신");
 						sendToAll(msg);		// Input이 들어올 시 접속해있는 모든 소켓들에게 msg전달
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -79,7 +99,7 @@ public class Tcp_Server extends Thread{
 					if(this.socket.equals(client_List.get(i)))
 						continue;
 					out = new DataOutputStream(client_List.get(i).getOutputStream());
-					msg = this.socket.getInetAddress().getHostAddress()+" : "+msg;	// 메시지를 보내는 객체의 ip + msg내용전송
+					msg = getUsers(i)+" : "+msg;	// 메시지를 보내는 객체의 ip + msg내용전송
 					System.out.println("전송");
 					out.writeUTF(msg);
 				} catch (IOException e) {
