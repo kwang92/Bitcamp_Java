@@ -53,12 +53,9 @@ public class MyInfoFrame extends JFrame{
 		group.add(radioBtn2);
 		
 		
-		Vector<String> contents = new Vector<String>();
-		contents.add("쥐");
-		contents.add("소");
-		contents.add("호랑이");
-		contents.add("토끼");
-		contents.add("용");
+		Vector contents = new Vector();
+		Stu a = new Stu();
+		contents.add(a.getIn());
 		
 		JList list = new JList(contents);
 		list.setBounds(12, 133, 289, 174);
@@ -67,5 +64,11 @@ public class MyInfoFrame extends JFrame{
 		
 		
 		this.setVisible(true);
+	}
+}
+class Stu{
+	public String[] getIn() {
+		String[] info = {"abc","def","ghi"}; 
+		return info;
 	}
 }

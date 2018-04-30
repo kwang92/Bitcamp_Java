@@ -1,4 +1,4 @@
-package guiChat;
+package guiChat2;
 
 public class ChatTest {
 	public static void main(String[] args) {

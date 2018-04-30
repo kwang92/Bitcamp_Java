@@ -1,4 +1,4 @@
-package guiChat;
+package guiChat2;
 
 import java.io.DataInputStream;
 import java.io.IOException;

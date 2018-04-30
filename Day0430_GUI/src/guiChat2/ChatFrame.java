@@ -1,4 +1,4 @@
-package guiChat;
+package guiChat2;
 
 
 import java.awt.TextArea;
@@ -19,16 +19,14 @@ public class ChatFrame extends JFrame{
 	private JButton btn;
 	private Sender sender;
 	private JButton btnNick;
-	private JTextField tfNick;
-	private String nickName;
+
 	
 	public ChatFrame() {
 		ta = new TextArea();
-		ta.setBounds(10, 5, 225, 161);
+		ta.setBounds(10, 5, 300, 161);
 		tf = new TextField();
 		tf.setBounds(10, 172, 225, 23);
-		this.nickName = "NoName";
-		
+	
 		ta.setEditable(false);
 		getContentPane().setLayout(null);
 		
@@ -38,6 +36,7 @@ public class ChatFrame extends JFrame{
 		tf.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				updateArea();
 				sendMsg();
 			}
 		});
@@ -47,34 +46,16 @@ public class ChatFrame extends JFrame{
 		btn = new JButton("send");
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String msg = tf.getText()+"\n";
-				ta.append("나 : "+msg);
-				tf.setText("");
-				tf.requestFocus();
-				
-				sendServer(msg);
+				System.out.println("설마 여기도 오나?");
+				updateArea();
+				sendMsg();
 			}
 		});
 		btn.setBounds(241, 172, 69, 23);
 		getContentPane().add(btn);
 		
-		btnNick = new JButton("set");
-		btnNick.setBounds(241, 46, 69, 23);
-		btnNick.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				nickName = tfNick.getText();
-				tfNick.setText("");
-			}
-		});
-		
-		getContentPane().add(btnNick);
-		
-		tfNick = new JTextField();
-		tfNick.setBounds(240, 23, 70, 21);
-		getContentPane().add(tfNick);
-		tfNick.setColumns(10);
+
+
 		this.setSize(338,244);
 		this.setVisible(true);
 		tf.requestFocus();
@@ -82,14 +63,18 @@ public class ChatFrame extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-
+	public void updateArea() {
+		String[] msg = tf.getText().split("(##)");
+		ta.append("나 : "+msg[1]);
+		tf.requestFocus();
+	}
 	public void sendMsg() {
 		String msg = tf.getText()+"\n";
 		ta.append("나 : "+msg);
 		tf.setText("");
 		tf.requestFocus();
 		
-		sendServer(nickName+" : "+msg);
+		sendServer(msg.substring(0,msg.length()-1));
 	}
 	public String getIP() {
 		String ip = JOptionPane.showInputDialog(null, "서버 IP입력", null);
