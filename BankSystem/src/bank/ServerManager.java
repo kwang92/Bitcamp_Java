@@ -52,7 +52,8 @@ public class ServerManager {
 					Customer tmp = (Customer)in.readObject();
 					if(tmp.getDataType().equals("COMMIT")) {
 						System.out.println("commit할 계좌 찾는중");
-						for(int i = 0; i < cus_List.size(); i++) {
+						int i;
+						for(i = 0; i < cus_List.size(); i++) {
 							if(tmp.getAccount().getAccount().equals(cus_List.get(i).getAccount().getAccount())) {
 								cus_List.remove(i);
 								System.out.println("저장한 계좌: "+tmp.getAccount().getAccount());
@@ -60,9 +61,13 @@ public class ServerManager {
 							}
 						}
 						cus_List.add(tmp);
+						Socket tmpSock = socketList.get(i);
+						out = new ObjectOutputStream(tmpSock.getOutputStream());
+						out.writeObject(tmp);
 						System.out.println("commit완료");
 					}else if(tmp.getDataType().equals("SHOW")) {
 						// 일단 나중에 구현
+						
 					}else if(tmp.getDataType().equals("REQ")) {
 						for(int i = 0; i < cus_List.size(); i++) {
 							if(tmp.getAccount().getAccount().equals(cus_List.get(i).getAccount().getAccount())) {
