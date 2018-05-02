@@ -131,6 +131,9 @@ public class StudentDAO {
 				if(stmt != null) {
 					stmt.close();
 				}
+				if(rsSet != null) {
+					rsSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -158,6 +161,9 @@ public class StudentDAO {
 			try {
 				if(stmt != null) {
 					stmt.close();
+				}
+				if(rsSet != null) {
+					rsSet.close();
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
