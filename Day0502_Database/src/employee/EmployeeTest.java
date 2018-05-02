@@ -16,13 +16,14 @@ public class EmployeeTest {
 	// update Test
 	//	emp.updateEmployee(new Employee(2,"홍길도롱",3,500000));
 		
-		
+	// selectAll Test
 		show = emp.selectAll();
 		for(int i = 0; i < show.size(); i++) {
 			System.out.println(show.get(i));
 		}
-		
-		System.out.println("===============================");
+	
+	// selectOne Test
+		System.out.println("====================================================");
 		System.out.println(emp.selectOne(1));
 		
 	}

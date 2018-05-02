@@ -1,44 +1,43 @@
 package bank;
 
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class ServerManager {
+public class ServerManager{
 	private List<Customer> cus_List;
 	private List<Socket> socketList;
-	/*
-	private static final String path = "C:\\Users\\bit\\Desktop\\ryu\\javaProject\\BankSystem\\src\\record.txt";
-	private File inFile;
-	private File outFile;
-	*/
+
 	public ServerManager() {
 		socketList = new ArrayList<Socket>();
 		cus_List = new ArrayList<Customer>();
-		cus_List.add(new Customer("1010","1234"));
-		cus_List.get(0).getAccount().deposit(20000);	// 1010계좌는 2만원을 가지고 시작
-		
-		cus_List.add(new Customer("2020","1234"));
-		cus_List.get(1).getAccount().deposit(10000);	// 2020계좌는 만원을 가지고 시작
 	}
 
 	public void add(Socket socket) {
 		socketList.add(socket);
 		ServerThread st = new ServerThread(socket);
 		st.start();
-
 	}
 
+
 	class ServerThread extends Thread{
+		
 		private Socket socket;
+		private int manage_Index;
+		private Customer current;
+		private BufferedWriter bw;
+		private PrintWriter pw;
 		public ServerThread(Socket socket) {
 			this.socket = socket;
+			
 		}
 
 		public void run() {
@@ -48,34 +47,61 @@ public class ServerManager {
 				in = new ObjectInputStream(socket.getInputStream());
 				out = new ObjectOutputStream(socket.getOutputStream());
 				//소켓으로 부터 메시지를 읽어오는 부분
-				while(true) {
-					Customer tmp = (Customer)in.readObject();
-					if(tmp.getDataType().equals("COMMIT")) {
-						System.out.println("commit할 계좌 찾는중");
-						int i;
-						for(i = 0; i < cus_List.size(); i++) {
-							if(tmp.getAccount().getAccount().equals(cus_List.get(i).getAccount().getAccount())) {
-								cus_List.remove(i);
-								System.out.println("저장한 계좌: "+tmp.getAccount().getAccount());
+				while(true) {	// DE, WD, TR, SH
+					TransAction tmp = (TransAction)in.readObject();
+					String job = tmp.getJob();
+					
+					System.out.println("들어온 Transaction "+job);
+					
+					if(job.equals("NW")) {	// 등록되지 않는 새로운 고객이 들어오면 이렇게 해줌
+						String[] info = tmp.getMsg().split(",");
+						cus_List.add(new Customer(info[0],info[1],info[2]));
+						manage_Index = cus_List.size()-1;
+						continue;
+					}
+					
+					current = cus_List.get(manage_Index);
+					String path = "C:\\Users\\bit\\Desktop\\ryu\\store\\BankSystem\\src\\record"+current.getName()+".txt";
+					bw = new BufferedWriter(new FileWriter(path,true));
+					pw = new PrintWriter(bw,true);
+					Calendar cal = Calendar.getInstance();
+					
+					if(job.equals("DE")) {
+						current.getAccount().deposit(tmp.getMoney());
+						System.out.println(current.getAccount().getBal());
+						out.writeObject(current);
+						System.out.println("입금완료");
+						
+						bw.write(cal.get(cal.YEAR)+"."+(cal.get(cal.MONTH)+1)+"."+cal.get(cal.DATE)+" = ");
+						bw.write(tmp.getMoney()+"원 입금");
+						bw.newLine();
+					}else if(job.equals("WD")) {
+						current.getAccount().withdraw(tmp.getMoney());
+						out.writeObject(current);
+						System.out.println("출금완료");
+						bw.write(cal.get(cal.YEAR)+"."+(cal.get(cal.MONTH)+1)+"."+cal.get(cal.DATE)+" = ");
+						bw.write(tmp.getMoney()+"원 출금");
+						bw.newLine();
+					}else if(job.equals("REQ")) {
+						out.writeObject(current);
+						System.out.println(current.getAccount().getBal());
+					}else if(job.equals("TR")) {	
+						current.getAccount().withdraw(tmp.getMoney());
+						for(int i = 0; i < cus_List.size(); i++) {
+							if(cus_List.get(i).getAccount().getAccount().equals(tmp.getTarget())) {
+								System.out.println("target을 찾았다");
+								cus_List.get(i).getAccount().deposit(tmp.getMoney());
 								break;
 							}
 						}
-						cus_List.add(tmp);
-						Socket tmpSock = socketList.get(i);
-						out = new ObjectOutputStream(tmpSock.getOutputStream());
-						out.writeObject(tmp);
-						System.out.println("commit완료");
-					}else if(tmp.getDataType().equals("SHOW")) {
-						// 일단 나중에 구현
-						
-					}else if(tmp.getDataType().equals("REQ")) {
-						for(int i = 0; i < cus_List.size(); i++) {
-							if(tmp.getAccount().getAccount().equals(cus_List.get(i).getAccount().getAccount())) {
-								out.writeObject(cus_List.get(i));
-								break;
-							}	// 해당 계좌에 해당하는 객체정보를 보내줘서 client_system의 tmp_Cus에 넣어줌
-						}
 					}
+					out.flush();
+					out.reset();
+					pw.flush();
+					pw.close();
+					
+					
+					
 				}
 
 			} catch (SocketException e) { 

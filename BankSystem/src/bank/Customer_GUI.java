@@ -5,21 +5,31 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class Customer_GUI extends JFrame{
+	private JLayeredPane mainPanel;
 	private JTabbedPane tab;	// 입금 , 출금, 송금, 조회, 총 4개의 tab을 담을 tab panel
 	private JPanel deposit_Panel;	// 입금 GUI 패널
 	private JTextField input_Deposit; // 입금금액 입력받는 textField
 	private JPanel withdraw_Panel;	// 출금 GUI 패널
-
+	private JPanel login;
 	private JPanel transfer_Panel;	// 송금 GUI 패널
-
 	private JPanel inquiry_Panel;	// 조회 GUI 패널
 	private JTextField input_Withdraw;	// 출금금액 입력받는 textField
 	private JTextField Destination;		// 이체 대상 계좌 입력받는 textField
@@ -31,7 +41,7 @@ public class Customer_GUI extends JFrame{
 	private JButton show_Btn2;			// 잔액조회 버튼
 	private JLabel balance_Label;		// 잔액출력 Label
 	private JList list;					// 거래내역 출력 List
-
+	
 	private Client_System cs;
 	// /////////////////////////컴포넌트 getter, setter ///////////////////////////
 
@@ -101,36 +111,47 @@ public class Customer_GUI extends JFrame{
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
-	public Customer_GUI(String account, String password) {
+	public Customer_GUI(String name, String account, String password) {
 		this.setSize(300,300);
 		this.setTitle("Customer");
 		this.setVisible(true);
-		
+		mainPanel = new JLayeredPane();
 		this.build_Deposit();
 		this.build_Withdraw();
 		this.build_Transfer();
 		this.build_Inquiry();
-		getContentPane().add(tab);
-		System.out.println("7");
 		
-		
-		cs = new Client_System(account, password);
+		cs = new Client_System(name, account, password);
 		startEvent();     // 버튼 이벤트들 시작
 		
-
+		getContentPane().add(tab);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	public boolean checkAccess() {
+		String pwd = JOptionPane.showInputDialog("비밀번호를 입력하세요");
+		if(pwd.equals(cs.getTmpCus().getAccount().getPassword())) {
+			return true;
+		}
+		JOptionPane.showConfirmDialog(null, "비밀번호가 틀립니다.","경고",JOptionPane.YES_OPTION,JOptionPane.WARNING_MESSAGE);
+		
+		
+		return false;
+	}
 	public void startEvent() {
 		de_Btn.addActionListener(new ActionListener() {	// 입금버튼 이벤트
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				if(!checkAccess()) {
+					input_Deposit.setText("");
+					return;
+				}
 				int money = Integer.parseInt(input_Deposit.getText());
 				System.out.println(money+"원 입금");
 				input_Deposit.setText("");
-				cs.getTmpCus().setDataType("COMMIT");
-				cs.getTmpCus().getAccount().deposit(money);
+				cs.getTransAction().setJob("DE");
+				cs.getTransAction().setMoney(money);
 				cs.sendCustomer();
 			}
 		});
@@ -138,11 +159,15 @@ public class Customer_GUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				if(!checkAccess()) {
+					input_Withdraw.setText("");
+					return;
+				}
 				int money = Integer.parseInt(input_Withdraw.getText());
 				System.out.println(money+"원 출금");
 				input_Withdraw.setText("");
-				cs.getTmpCus().getAccount().withdraw(money);
-				cs.getTmpCus().setDataType("COMMIT");
+				cs.getTransAction().setJob("WD");
+				cs.getTransAction().setMoney(money);
 				cs.sendCustomer();
 			}
 		});
@@ -150,45 +175,65 @@ public class Customer_GUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				if(!checkAccess()) {
+					Destination.setText("");
+					input_Transfer.setText("");
+					return;
+				}
 				int money = Integer.parseInt(input_Transfer.getText());
-				System.out.println(money+"원 송금");
+				String target = Destination.getText();
+				Destination.setText("");
 				input_Transfer.setText("");
-				cs.getTmpCus().getAccount().withdraw(money);	// 본인 계좌의 금액만큼 출금
-				cs.getTmpCus().setDataType("COMMIT");			// 변경된 사항 commit
-				cs.sendCustomer();								// server에 전송해서 적용
-				
-				String my_Account = cs.getTmpCus().getAccount().getAccount();	// 자기 자신의 계좌번호 저장
-				String password = cs.getTmpCus().getAccount().getPassword(); 	// 자기 자신의 비밀번호도 저장
-				String target_Account = Destination.getText();	// target 계좌번호
-				Customer target = new Customer(target_Account,"target");	// target 계좌번호로 된 Customer객체 생성
-				cs.setTmpCus(target);										// tmpCus를 target customer로 변경
-				cs.getTmpCus().setDataType("REQ");							// target으로 변경된 객체정보를 서버에 요청
-				cs.sendCustomer();											// 요청전송
-				// 서버에게 target Customer를 받아서 tmpCus에 저장됬다고 가정
-				cs.getTmpCus().getAccount().deposit(money);		// tmpCus(target)에 금액만큼 입금				
-				cs.getTmpCus().setDataType("COMMIT");			// 변경된 사항 commit
-				cs.sendCustomer();								// 서버에 전송, 적용
-				
-				cs.setTmpCus(new Customer(my_Account,password));
-				cs.getTmpCus().setDataType("REQ");
+				cs.getTransAction().setJob("TR");
+				cs.getTransAction().setMoney(money);
+				cs.getTransAction().setTarget(target);
 				cs.sendCustomer();
-				System.out.println("이체완료");
 			}
 		});
+		String name = cs.getTmpCus().getName();
 		show_Btn1.addActionListener(new ActionListener() {	// 거래내역버튼 이벤트
 			@Override										// 접속중인 고객에 대응하는 거래내역정보를 서버로부터 받는다.
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				if(!checkAccess()) {
+					
+					return;
+				}
+				String path = "C:\\Users\\bit\\Desktop\\ryu\\store\\BankSystem\\src\\record"+name+".txt";
+				try {
+					BufferedReader in = new BufferedReader(new FileReader(path));
+					String line;
+					DefaultListModel model = new DefaultListModel();
+					while((line = in.readLine()) != null) {
+						model.addElement(line);
+					}
+					list.setModel(model);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				balance_Label.setVisible(false);
+				list.setVisible(true);
 			}
 		});
 		show_Btn2.addActionListener(new ActionListener() {	// 잔액조회버튼 이벤트
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				if(!checkAccess()) {
+					
+					return;
+				}
+				list.setVisible(false);
+				cs.getTransAction().setJob("REQ");
+				cs.sendCustomer();
 				String balance = cs.getTmpCus().getAccount().getBal()+"";
 				setBalanceLabel(balance);
-				System.out.println("현재 잔액: "+cs.getTmpCus().getAccount().getBal());
+				
+				balance_Label.setVisible(true);
 			}
 		});
 	}
@@ -268,13 +313,15 @@ public class Customer_GUI extends JFrame{
 		inquiry_Panel.add(show_Btn2);
 
 		list = new JList();
+		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setBounds(12, 43, 255, 179);
 		inquiry_Panel.add(list);
+		
+		
 		list.setVisible(false);
 		balance_Label = new JLabel("");
 		balance_Label.setVisible(false);
 		balance_Label.setBounds(108, 124, 57, 15);
 		inquiry_Panel.add(balance_Label);
 	}
-
 }
