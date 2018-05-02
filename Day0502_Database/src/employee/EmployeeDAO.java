@@ -1,3 +1,5 @@
+package employee;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -6,19 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentDAO {
+public class EmployeeDAO {
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
 	private static final String USER = "kwangmin";
 	private static final String PWD = "1";
 	private Connection conn;
 
-	public StudentDAO() {
+	public EmployeeDAO() {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");	// 드라이버 로딩
-			conn = DriverManager.getConnection(URL, USER, PWD);	// 연결
-
-			System.out.println("연결 및 준비 성공");
-
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(URL,USER,PWD);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -27,19 +26,77 @@ public class StudentDAO {
 			e.printStackTrace();
 		}
 	}
-	// insert, update, delete, select, selectAll
+	public Employee selectOne(int empNum) {
+		String sql = "select * from employee"+
+				" where enum = "+empNum;
 
-	// 내가 조회하려고 하는 데이터를 담을 수 있는 데이터와 동일한 구조를 가지는 객체를 만들어야함 ( Model Class )
-	// VO(Value Object), DTO(Data Transfer Object)
-
-	public int insertStudent(Student student) {
-		String sql = "insert into student_ex"
-				+ " values("+student.getSnum()+",'"
-				+student.getSname()+"',"
-				+student.getSgrade()+")";
-
+		Employee emp = null;
 		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			if(rs.next()) {
+				emp = new Employee(rs.getInt("enum"), rs.getString("ename"),
+						rs.getInt("deptno"),rs.getInt("salary"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return emp;
+	}
+	public List<Employee> selectAll(){
+		List<Employee> emps = new ArrayList<Employee>();
+		String sql = "select * from employee";
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while(rs.next()) {
+				emps.add(new Employee(rs.getInt("enum"),rs.getString("ename"),
+						rs.getInt("deptno"),rs.getInt("salary")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return emps;
+	}
+	public int deleteEmployee(int empNum) {
 		int result = 0;
+		String sql = "delete from employee"+
+				" where enum = "+empNum;
+		Statement stmt = null;
+
 		try {
 			stmt = conn.createStatement();
 			result = stmt.executeUpdate(sql);
@@ -55,18 +112,17 @@ public class StudentDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 		return result;
 	}
-	public int updateStudent(Student student) {
-		String sql = "update student_ex"+
-				" set snum = "+student.getSnum()+", "+
-				"sname = '"+student.getSname()+"', "+
-				"sgrade = "+student.getSgrade()+
-				" where snum = "+student.getSnum();
-
+	public int updateEmployee(Employee emp) {
 		int result = 0;
+		String sql = "update employee set "+
+				"ename = '"+emp.getEname()+"',"+
+				"deptno = "+emp.getDeptno()+","+
+				"salary = "+emp.getSalary()+
+				" where enum = "+emp.getEmpNum();
+
 		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();
@@ -86,10 +142,14 @@ public class StudentDAO {
 		}
 		return result;
 	}
-	public int deleteStudent(int snum) {
-		String sql = "delete from student_ex"+
-				" where snum in "+snum;
+	public int insertEmployee(Employee emp) {
 		int result = 0;
+		String sql = "insert into employee values("+
+				emp.getEmpNum()+",'"+
+				emp.getEname()+"',"+
+				emp.getDeptno()+","+
+				emp.getSalary()+")";
+
 		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();
@@ -108,68 +168,5 @@ public class StudentDAO {
 			}
 		}
 		return result;
-	}
-	public Student selectStudent(int snum) {	
-		Student rs = null;
-		String sql = "select * from student_ex"+
-				" where snum = "+snum;
-
-		ResultSet rsSet = null;
-		Statement stmt = null;
-		try {
-			stmt = conn.createStatement();
-			rsSet = stmt.executeQuery(sql);
-			if(rsSet.next()) {
-				rs = new Student(rsSet.getInt("snum"),rsSet.getString("sname"),rsSet.getInt("sgrade"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if(stmt != null) {
-					stmt.close();
-				}
-				if(rsSet != null) {
-					rsSet.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return rs; 
-	}
-	public List<Student> selectAll(){
-		List<Student> rs = new ArrayList<Student>();
-		String sql = "select * from student_ex";
-
-		ResultSet rsSet = null;
-		Statement stmt = null;
-		try {
-			stmt = conn.createStatement();
-			rsSet = stmt.executeQuery(sql);
-			while(rsSet.next()) {
-				rs.add(new Student(rsSet.getInt("snum"),rsSet.getString("sname"),rsSet.getInt("sgrade")));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if(stmt != null) {
-					stmt.close();
-				}
-				if(rsSet != null) {
-					rsSet.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return rs;
 	}
 }

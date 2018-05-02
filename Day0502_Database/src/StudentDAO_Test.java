@@ -20,7 +20,7 @@ public class StudentDAO_Test {
 		}
 		System.out.println();
 		
-		System.out.println(sd.selectStudent(2));
+		System.out.println(sd.selectStudent(2));	// snum으로 선택한 1 student만 select해서 조회
 		/*
 		System.out.println(sd.insertStudent(new Student(7,"그루트",3))+"개의 행 추가");	// insert Test
 		test = sd.selectAll();
