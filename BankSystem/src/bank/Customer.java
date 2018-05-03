@@ -3,9 +3,7 @@ package bank;
 import java.io.Serializable;
 
 public class Customer implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -101140915114665164L;
 	private String name;
 	private String address;
@@ -13,7 +11,6 @@ public class Customer implements Serializable{
 	private int age;
 	private boolean access;
 
-	private String datatype;
 	private Account account;
 	
 
@@ -30,11 +27,6 @@ public class Customer implements Serializable{
 		this.access = false;
 		System.out.println("계좌 생성완료");
 	}
-	public boolean checkAccess(String password) {	// prompt로 들어온 password를 해당 고객의 계좌비밀번호와 맞는지 확인
-		access = this.account.checkAccess(password);
-		return access;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -64,11 +56,5 @@ public class Customer implements Serializable{
 	}
 	public Account getAccount() {
 		return account;
-	}
-	public void setDataType(String type) {
-		this.datatype = type;
-	}
-	public String getDataType() {
-		return this.datatype;
 	}
 }

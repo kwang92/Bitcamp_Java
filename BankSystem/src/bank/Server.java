@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-	//얘가 할일은 소켓 연결 받기 : 계속..반복하면서
 	public static void main(String[] args) {
 		ServerSocket serverSocket;
 		ServerManager manager = new ServerManager();
@@ -20,12 +19,7 @@ public class Server {
 				//서버 매니져에게 소켓 넘겨주기
 				manager.add(socket);
 			}
-		} catch(BindException e) { 
-			System.out.println("Bind Exception 발생");
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch(BindException e) {}
+		catch (IOException e) {}
 	}
 }

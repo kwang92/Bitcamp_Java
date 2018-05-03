@@ -2,12 +2,12 @@ package bank;
 
 import java.io.Serializable;
 
-public class Account implements Serializable{
+public class Account implements Serializable{	// 고객이 가질 계좌클래스
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8868834113136300368L;
-	private String account_Number;
+	private String account_Number;	// 작업을 실행할 key로 쓰일 계좌번호
 	private String password;
 	private int balance;
 	
@@ -16,16 +16,10 @@ public class Account implements Serializable{
 		this.account_Number = account;
 		this.password = password;
 	}
-	public boolean checkAccess(String password) {	// 권한 확인
-		if(this.password.equals(password)) {
-			return true;
-		}
-		return false;
-	}
 	public String getPassword() {
 		return this.password;
 	}
-	public String getAccount() {
+	public String getAccountNum() {
 		return this.account_Number;
 	}
 	public void deposit(int money) {

@@ -6,22 +6,20 @@ import java.io.ObjectOutputStream;
 import java.net.BindException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Observable;
-import java.util.Observer;
 
 public class Client_System{
 	private static final String SERVER_IP = "192.168.0.26";
 	private static final int PORT = 7000;
-	private Customer tmp_Cus;
-	private TransAction tran;
-	private Socket socket;
+	private Customer tmp_Cus;		// Client System에서 Server로부터 객체를 받아서 사용할 임시 객체
+	private TransAction tran;		// 서버로 요청할 작업을 저장할 트랜잭션 객체
+	private Socket socket;			// 서버와 연결될 클라이언트 소켓
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	
 	public Client_System() {
-		socket = new Socket();
-		tmp_Cus = new Customer();
-		tran = new TransAction();
+		socket = new Socket();		
+		tmp_Cus = new Customer();	
+		tran = new TransAction();	
 	}
 	public Client_System(String name,String account, String password) {	// 로그인 이용시 거쳐야하는 생성자
 		try {
@@ -29,26 +27,26 @@ public class Client_System{
 			tmp_Cus = new Customer(name, account, password);
 			tran = new TransAction();
 			out = new ObjectOutputStream(socket.getOutputStream());
-			startClient();
-			
-		} catch (BindException e) { 
-			System.out.println("바인드 Exception 발생");
-		}
-		catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			startClient();	// 새로운 client 생성 후 최초작업 실행
+		} 
+		catch (BindException e) {}
+		catch (UnknownHostException e) {} 
+		catch (IOException e) {}
 	}
-	public void startClient() {	// 계좌번호, 해당 비밀번호가 정상적이면 해당 계좌 작업시작
+	public void startClient() {	// 서버로 NW 트랜잭션 명령을 보내 새로운 Customer를 서버가 등록하게 요청
 		Receive recv = new Receive();
 		recv.start();
 		tran.setJob("NW");
-		tran.setMsg(tmp_Cus.getName()+","+tmp_Cus.getAccount().getAccount()+","+tmp_Cus.getAccount().getPassword());
+		tran.setMsg(tmp_Cus.getName()+","+tmp_Cus.getAccount().getAccountNum()+","+tmp_Cus.getAccount().getPassword());
 		sendCustomer();
 
+	}
+	public void sendCustomer() {	// 상황에 맞는 명령을 서버에 요청하는 메소드
+		try {
+			out.writeObject(tran);
+			out.flush();
+			out.reset();
+		} catch (IOException e1) {}
 	}
 	public TransAction getTransAction() {
 		return this.tran;
@@ -59,41 +57,19 @@ public class Client_System{
 	public void setTmpCus(Customer cus) {
 		this.tmp_Cus = cus;
 	}
-	public void sendCustomer() {
-		
-		try {
-			System.out.println(tran.getJob()+"을 보냅니다.");
-			out.writeObject(tran);
-			out.flush();
-			out.reset();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-	public class Receive extends Thread{
+	public class Receive extends Thread{	// 서버로부터 계속해서 정보를 갱신받기 위한 receive 쓰레드
 		public void run() {
 			try {
-				in = new ObjectInputStream(socket.getInputStream());
-				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+				in = new ObjectInputStream(socket.getInputStream());			
+			} 
+			catch (IOException e1) {}
 			
 			while(true) {
 				try {
 					tmp_Cus = (Customer)in.readObject();
-					
-					System.out.println(tmp_Cus.getAccount().getBal());
-					System.out.println("받음!!!");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} 
+				catch (ClassNotFoundException e) {} 
+				catch (IOException e) {}
 			}
 		}
 	}

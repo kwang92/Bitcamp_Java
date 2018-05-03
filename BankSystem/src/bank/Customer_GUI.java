@@ -5,30 +5,25 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Font;
 
 public class Customer_GUI extends JFrame{
-	private JLayeredPane mainPanel;
 	private JTabbedPane tab;	// 입금 , 출금, 송금, 조회, 총 4개의 tab을 담을 tab panel
 	private JPanel deposit_Panel;	// 입금 GUI 패널
 	private JTextField input_Deposit; // 입금금액 입력받는 textField
 	private JPanel withdraw_Panel;	// 출금 GUI 패널
-	private JPanel login;
 	private JPanel transfer_Panel;	// 송금 GUI 패널
 	private JPanel inquiry_Panel;	// 조회 GUI 패널
 	private JTextField input_Withdraw;	// 출금금액 입력받는 textField
@@ -41,104 +36,40 @@ public class Customer_GUI extends JFrame{
 	private JButton show_Btn2;			// 잔액조회 버튼
 	private JLabel balance_Label;		// 잔액출력 Label
 	private JList list;					// 거래내역 출력 List
-	
-	private Client_System cs;
-	// /////////////////////////컴포넌트 getter, setter ///////////////////////////
+	private Client_System cs;			// 현재 GUI에서 관리하고 있는 Client_System 객체를 저장할 변수
 
-	public JTextField getInput_Deposit() {
-		return input_Deposit;
-	}
-	public void setInput_Deposit(JTextField input_Deposit) {
-		this.input_Deposit = input_Deposit;
-	}
-	public JTextField getInput_Withdraw() {
-		return input_Withdraw;
-	}
-	public void setInput_Withdraw(JTextField input_Withdraw) {
-		this.input_Withdraw = input_Withdraw;
-	}
-	public JTextField getDestination() {
-		return Destination;
-	}
-	public void setDestination(JTextField destination) {
-		Destination = destination;
-	}
-	public JTextField getInput_Transfer() {
-		return input_Transfer;
-	}
-	public void setInput_Transfer(JTextField input_Transfer) {
-		this.input_Transfer = input_Transfer;
-	}
-	public JButton getDe_Btn() {
-		return de_Btn;
-	}
-	public void setDe_Btn(JButton de_Btn) {
-		this.de_Btn = de_Btn;
-	}
-	public JButton getWi_Btn() {
-		return wi_Btn;
-	}
-	public void setWi_Btn(JButton wi_Btn) {
-		this.wi_Btn = wi_Btn;
-	}
-	public JButton getTran_Btn() {
-		return tran_Btn;
-	}
-	public void setTran_Btn(JButton tran_Btn) {
-		this.tran_Btn = tran_Btn;
-	}
-	public JButton getShow_Btn1() {
-		return show_Btn1;
-	}
-	public void setShow_Btn1(JButton show_Btn1) {
-		this.show_Btn1 = show_Btn1;
-	}
-	public JButton getShow_Btn2() {
-		return show_Btn2;
-	}
-	public void setShow_Btn2(JButton show_Btn2) {
-		this.show_Btn2 = show_Btn2;
-	}
-	public JList getList() {
-		return list;
-	}
-	public void setList(JList list) {
-		this.list = list;
-	}
-	public void setBalanceLabel(String balance) {
-		this.balance_Label.setText(balance);
-		this.balance_Label.setVisible(true);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	public Customer_GUI(String name, String account, String password) {
+	public Customer_GUI(String name, String account, String password) {	 // Customer GUI 생성자
 		this.setSize(300,300);
 		this.setTitle("Customer");
 		this.setVisible(true);
-		mainPanel = new JLayeredPane();
 		this.build_Deposit();
 		this.build_Withdraw();
 		this.build_Transfer();
 		this.build_Inquiry();
-		
-		cs = new Client_System(name, account, password);
-		startEvent();     // 버튼 이벤트들 시작
-		
-		getContentPane().add(tab);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		///////////////////////////////////////////////각 패널들 생성 완료
+
+		cs = new Client_System(name, account, password);	// 현재 관리할 cs 객체 생성
+		startEvent();     									// 버튼 이벤트들 시작
+
+		getContentPane().add(tab);							// 생성한 모든 tab Panel들을  mainFrame에 넣어준다.
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// GUI종료 시 프로그램도 자동종료
 	}
 
-	public boolean checkAccess() {
+	public void setBalanceLabel(String balance) {	// 잔액 출력 Label 값 설정 후 Visible을 true로 변환하는 메소드
+		this.balance_Label.setText(balance);
+		this.balance_Label.setVisible(true);
+	}
+	public boolean checkAccess() {	// 비밀번호 일치여부를 boolean값으로 return 해주는 메소드
 		String pwd = JOptionPane.showInputDialog("비밀번호를 입력하세요");
 		if(pwd.equals(cs.getTmpCus().getAccount().getPassword())) {
 			return true;
 		}
-		JOptionPane.showConfirmDialog(null, "비밀번호가 틀립니다.","경고",JOptionPane.YES_OPTION,JOptionPane.WARNING_MESSAGE);
-		
-		
+		JOptionPane.showMessageDialog(null, "비밀번호가 틀립니다.","경고",JOptionPane.WARNING_MESSAGE);
+
 		return false;
 	}
-	public void startEvent() {
+	public void startEvent() {	// button 이벤트 동작시키는 메소드
 		de_Btn.addActionListener(new ActionListener() {	// 입금버튼 이벤트
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -188,6 +119,10 @@ public class Customer_GUI extends JFrame{
 				cs.getTransAction().setMoney(money);
 				cs.getTransAction().setTarget(target);
 				cs.sendCustomer();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {}
+				JOptionPane.showConfirmDialog(null, "송금완료!"); 
 			}
 		});
 		String name = cs.getTmpCus().getName();
@@ -195,10 +130,10 @@ public class Customer_GUI extends JFrame{
 			@Override										// 접속중인 고객에 대응하는 거래내역정보를 서버로부터 받는다.
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(!checkAccess()) {
-					
+				if(!checkAccess())
 					return;
-				}
+				
+
 				String path = "C:\\Users\\bit\\Desktop\\ryu\\store\\BankSystem\\src\\record"+name+".txt";
 				try {
 					BufferedReader in = new BufferedReader(new FileReader(path));
@@ -210,11 +145,9 @@ public class Customer_GUI extends JFrame{
 					list.setModel(model);
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					JOptionPane.showMessageDialog(null, "거래내역이 없습니다.","거래내역 오류",JOptionPane.WARNING_MESSAGE);
+				} catch (IOException e1) {}
+
 				balance_Label.setVisible(false);
 				list.setVisible(true);
 			}
@@ -223,21 +156,18 @@ public class Customer_GUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(!checkAccess()) {
-					
+				if(!checkAccess()) 
 					return;
-				}
+
 				list.setVisible(false);
 				cs.getTransAction().setJob("REQ");
 				cs.sendCustomer();
-				String balance = cs.getTmpCus().getAccount().getBal()+"";
+				String balance = "현재 잔액은 "+cs.getTmpCus().getAccount().getBal()+"원 입니다.";
 				setBalanceLabel(balance);
-				
-				balance_Label.setVisible(true);
 			}
 		});
 	}
-	public void build_Deposit() {
+	public void build_Deposit() {	// 입금패널 컴포넌트 생성 메소드
 		this.deposit_Panel = new JPanel();
 		this.input_Deposit = new JTextField();
 		input_Deposit.setBounds(56, 113, 141, 21);
@@ -255,7 +185,7 @@ public class Customer_GUI extends JFrame{
 		de_Btn.setBounds(84, 144, 97, 23);
 		deposit_Panel.add(de_Btn);
 	}
-	public void build_Withdraw() {
+	public void build_Withdraw() {	// 출금패널 컴포넌트 생성 메소드
 		this.withdraw_Panel = new JPanel();
 		tab.add("출금", withdraw_Panel);
 		withdraw_Panel.setLayout(null);
@@ -272,7 +202,7 @@ public class Customer_GUI extends JFrame{
 		wi_Btn.setBounds(85, 143, 97, 23);
 		withdraw_Panel.add(wi_Btn);
 	}
-	public void build_Transfer() {
+	public void build_Transfer() {	// 송금패널 컴포넌트 생성 메소드
 		this.transfer_Panel = new JPanel();
 		tab.add("송금", transfer_Panel);
 		transfer_Panel.setLayout(null);
@@ -299,7 +229,7 @@ public class Customer_GUI extends JFrame{
 		tran_Btn.setBounds(12, 159, 97, 23);
 		transfer_Panel.add(tran_Btn);
 	}
-	public void build_Inquiry() {
+	public void build_Inquiry() {	// 조회패널 컴포넌트 생성 메소드
 		this.inquiry_Panel = new JPanel();
 		tab.add("조회", inquiry_Panel);
 		inquiry_Panel.setLayout(null);
@@ -313,15 +243,17 @@ public class Customer_GUI extends JFrame{
 		inquiry_Panel.add(show_Btn2);
 
 		list = new JList();
+		list.setAutoscrolls(true);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setBounds(12, 43, 255, 179);
 		inquiry_Panel.add(list);
-		
-		
+
+
 		list.setVisible(false);
 		balance_Label = new JLabel("");
+		balance_Label.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		balance_Label.setVisible(false);
-		balance_Label.setBounds(108, 124, 57, 15);
+		balance_Label.setBounds(24, 105, 232, 41);
 		inquiry_Panel.add(balance_Label);
 	}
 }
