@@ -62,7 +62,7 @@ public class Client_System{
 			try {
 				in = new ObjectInputStream(socket.getInputStream());			
 			} 
-			catch (IOException e1) {}
+			catch (IOException e){}
 			
 			while(true) {
 				try {

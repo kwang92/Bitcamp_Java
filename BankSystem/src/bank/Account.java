@@ -16,6 +16,9 @@ public class Account implements Serializable{	// 고객이 가질 계좌클래�
 		this.account_Number = account;
 		this.password = password;
 	}
+	public void setPassWord(String newPwd) {
+		this.password = newPwd;
+	}
 	public String getPassword() {
 		return this.password;
 	}

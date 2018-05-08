@@ -35,7 +35,7 @@ public class ServerManager{
 		private PrintWriter pw;
 		public ServerThread(Socket socket) {
 			this.socket = socket;
-			
+
 		}
 
 		public void run() {
@@ -48,36 +48,37 @@ public class ServerManager{
 				while(true) {	// DE, WD, TR, SH
 					TransAction tmp = (TransAction)in.readObject();	// 실행할 작업종류, 금액등 정보를 가지고있는 객체
 					String job = tmp.getJob();						// 실행할 작업을 따로 저장
-					
-				
+
+
 					if(job.equals("NW")) {	// NW, NeW 작업을 받았을 때 처리하는 기능 (신규생성)
 						String[] info = tmp.getMsg().split(",");
 						cus_List.add(new Customer(info[0],info[1],info[2]));
 						manage_Index = cus_List.size()-1;
 						continue;
 					}
-					
+
 					current = cus_List.get(manage_Index);			// 현재 다룰 Customer객체를 저장
-					String path = current.getAccount().getAccountNum()+".txt";			// 계좌번호로 거래내역을 저장해서 계속 사용
+					String path = current.getName()+current.getAccount().getAccountNum()+".txt";
+					// 계좌번호로 거래내역을 저장해서 계속 사용
 					bw = new BufferedWriter(new FileWriter(path,true));	// 이행한 작업내용을 기록한 파일 writer
 					pw = new PrintWriter(bw,true);
-					
+
 					Calendar cal = Calendar.getInstance();	// 작업이행 날짜를 저장할 Calendar 객체
 					String date_Today = cal.get(cal.YEAR)+"."+(cal.get(cal.MONTH)+1)+"."+cal.get(cal.DATE);
-					
+
 					// DE 명령을 받았을 때는, current(현재 관리하는 customer)의 잔고에서 요청한 money만큼 deposit을 해주고 customer전송
 					if(job.equals("DE")) {	// DE, Deposit 작업을 받았을 때 처리하는 기능
 						current.getAccount().deposit(tmp.getMoney());
 						out.writeObject(current);
 						System.out.println("입금완료");
-						
+
 						bw.write(date_Today+" = ");
 						bw.write(tmp.getMoney()+"원 입금");
 						bw.newLine();
 					}
-					
+
 					// WD 명령을 받았을 때는, current의 잔고에서 요청한 money만큼 withdraw 해주고 customer에 전송
-					else if(job.equals("WD")) {	// WD, WithDraw 작업을 받았을 때 처리하는 기능
+					else if(job.equals("WD")) {	// WD, WithDraw 작업을 받았을 때 처리하는 기능						
 						current.getAccount().withdraw(tmp.getMoney());
 						out.writeObject(current);
 						System.out.println("출금완료");
@@ -85,13 +86,13 @@ public class ServerManager{
 						bw.write(tmp.getMoney()+"원 출금");
 						bw.newLine();
 					}
-					
+
 					// REQ 명령을 받았을 때는, 현재 관리하고 있는 최신 current객체 전송
 					else if(job.equals("REQ")) { // REQ, REQuest 작업을 받았을 때 처리하는 기능
 						out.writeObject(current);
 						System.out.println(current.getAccount().getBal());
 					}
-					
+
 					// TR 명령을 받았을 때는, current에서 money만큼 widthdraw 해주고 target객체를 list에서 찾아 money만큼 deposit해준다.
 					else if(job.equals("TR")) {	// TR, TRansmission 작업을 받았을 때 처리하는 기능	
 						current.getAccount().withdraw(tmp.getMoney());
@@ -104,6 +105,18 @@ public class ServerManager{
 								break;
 							}
 						}
+					}
+					
+					// MOD 명령을 받았을 때는, 수정할 값을 split으로 읽어온 후 각각 이름과 비밀번호를 set해준다.
+					else if(job.equals("MOD")) {	// MOD, MODify 작업을 받았을 때 처리하는 기능
+						String[] info = tmp.getMsg().split(",");
+						if(!(info[0].equals(" "))) {
+							current.setName(info[0]);
+						}
+						if(!(info[1].equals(" "))) {
+							current.getAccount().setPassWord(info[1]);
+						}
+						out.writeObject(current);
 					}
 					out.flush();
 					out.reset();
