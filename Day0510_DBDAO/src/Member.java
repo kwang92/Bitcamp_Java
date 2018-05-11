@@ -1,3 +1,4 @@
+import java.sql.Timestamp;
 
 public class Member {
 	public static int MEMBER_CNT = 1;
@@ -6,17 +7,17 @@ public class Member {
 	private String pw;
 	private String name;
 	private String e_Mail;
-	private String reg_Date;
+	private Timestamp reg_Timestamp;
 	
-	public Member(int num, String id, String pw, String name, String e_Mail, String reg_Date) {
+	public Member(int num, String id, String pw, String name, String e_Mail, Timestamp reg_Timestamp) {
 		this.num = num;
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
 		this.e_Mail = e_Mail;
-		this.reg_Date = reg_Date;
+		this.reg_Timestamp = reg_Timestamp;
 	}
-	public Member(int num, String id, String pw, String name, String e_Mail) {
+	public Member(String id, String pw, String name, String e_Mail) {
 		this.num = num;
 		this.id = id;
 		this.pw = pw;
@@ -53,11 +54,11 @@ public class Member {
 	public void setE_Mail(String e_Mail) {
 		this.e_Mail = e_Mail;
 	}
-	public String getReg_Date() {
-		return reg_Date;
+	public Timestamp getReg_Timestamp() {
+		return reg_Timestamp;
 	}
-	public void setReg_Date(String reg_Date) {
-		this.reg_Date = reg_Date;
+	public void setReg_Timestamp(Timestamp reg_Timestamp) {
+		this.reg_Timestamp = reg_Timestamp;
 	}
 	public static void increaseMember() {
 		MEMBER_CNT++;
@@ -71,7 +72,7 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [num=" + num + ", id=" + id + ", pw=" + pw + ", name=" + name + ", e_Mail=" + e_Mail
-				+ ", reg_Date=" + reg_Date + "]";
+				+ ", reg_Timestamp=" + reg_Timestamp + "]";
 	}
 	
 	
