@@ -155,8 +155,7 @@ public class Member_DAO {
 					System.out.println("비밀번호가 틀렸습니다.");
 					return false;
 				}
-			}
-			
+			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
