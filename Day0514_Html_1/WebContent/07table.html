@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<!-- 
+		데이터를 표 형식으로 표현하고 싶을 때 테이블을 사용한다.
+	 -->
+		<meta charset="UTF-8">
+		<title>테이블 만들어보기</title>
+		<style>
+			th,td{
+				width : 80px;
+				height : 30px;
+				padding : 10px;
+			}
+		
+		</style>
+	</head>
+	<body>
+	<!-- 
+		<table border = "1" width = 200 height = 100>
+			<tr>
+				<th>이름</th>
+				<td>류광민</td>
+				<th>나이</th>
+				<td>27</td>
+			</tr>
+			<tr>
+				<td colspan = "2">류</td>
+				<td>광</td>
+				<td>민</td>
+			</tr>
+			<tr>
+				<td>민</td>
+				<td>광</td>
+				<td colspan = "2">류</td>
+			</tr>
+			<tr>
+				<td>광</td>
+				<td>민</td>
+				<td colspan = "2">류</td>
+			</tr>
+			<tr>
+				<td>광</td>
+				<td colspan = "2">류</td>
+				<td>민</td>
+			</tr>
+		</table>
+		 -->
+		 
+		 <table border = "1" width = 400 height = 150>	 	
+		 	<tr>
+		 		<th>이름</th>
+		 		<td></td> 
+		 		<th>연락처</th><td> </td>
+		 	</tr>
+		 	<tr>
+		 		<th>주소</th>
+		 		<td colspan = "3"></td>
+		 	</tr>
+		 	<tr>
+		 		<th>자기소개</th>
+		 		<td colspan = "3"></td>
+		 	</tr>
+		 </table>
+		 
+		 <hr>
+		 
+		<table border = "1">
+ 		<colgroup>
+ 			<col style="background-color: red">
+ 			<col span = "2" style= "background-color: blue">
+ 			<col style="background-color: yellow">
+ 		</colgroup>
+ 		<tr>
+ 			<td></td>
+ 			<td></td>
+ 			<td></td>
+ 			<td></td>
+ 		</tr>
+ 		<tr>
+ 			<td></td>
+ 			<td></td>
+ 			<td></td>
+ 			<td></td>
+ 		</tr>
+ 	</table>
+		 
+	</body>
+</html>

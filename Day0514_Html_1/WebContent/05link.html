@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>외부링크 적용하기</title>
+	</head>
+	<body>
+		<h1>텍스트 링크</h1>
+		<a href = "http://www.naver.com">네이버 바로가기</a><br>
+		<a href = "http://www.daum.net">다음 바로가기</a><br>
+		
+		<h1>이미지 링크</h1>
+		<!-- 링크 속성(target) 
+			blank : 새창
+			self  : 기본 값 ( 현재페이지에서 띄우기 )
+			parent : 프레임을 사용했을 경우에 내용을 부모 프레임에 표시
+		-->
+		<a href = "http://www.naver.com" target = "blank">
+			<img alt = "네이버로고" src = "img/naver.png">
+		</a>
+		<br>
+		<a href = "http://www.daum.net" target = "parent">
+			<img alt = "네이버로고" src = "img/daum.png" width = 300 height = 200>
+		</a>
+	</body>
+</html>

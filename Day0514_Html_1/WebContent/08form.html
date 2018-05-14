@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>form 사용하기</title>
+		<!-- 
+			<form> </form>
+			: 사용자로부터 값을 입력받기 위한 요소 ( 값을 받아서 서버로 전송하기 위한  )
+			
+			[ 하위태그 ]
+		    1. <input> : 정보를 입력받을 수 있다. 
+			 type = text	:문자열 
+			 		password 	: 가린 문자열
+			 		email	: 입력패턴을 검사해서 email인지를 검사하는 문자열 
+			 		submit 	: form 하위 요소의 내용을 서버로 전송하는 버튼
+			 		button 	: 버튼모양의 요소 출력
+			 		reset	: form 하위 input요소의 내용을 초기화하는 버튼
+			        checkbox 	: 항목출력, 다중선택이 가능한 체크박스
+			        radio 	: 항목출력, 단일선택만 가능한 체크박스
+			        file 	: 파일업로드를 위해서 파일을 선택할 수 있게하는 요소
+			        number	: 숫자입력(최대,최소등을 지정할 수 있다)
+			        date	: 날짜입력 요소
+			        
+			        * input 요소의 name은 서버에서 input의 값을 보낼 때
+			          , 요청의 파라미터에 input의 값을 넣어서 보낼 때 구분자 역할을 해준다.
+		 -->
+		 <form>
+		 	<table>
+		 		<tr>
+		 			<td>
+		 				아이디
+		 			</td>
+		 			<td colspan = "2">
+		 				: <input type = "text" name = "userid" id = "userid" placeholder = "아이디를 입력하세요">
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td>
+		 				비밀번호
+		 			</td>
+		 			<td colspan = "2">
+		 				: <input type = "password" name = "pwd" id = "pwd" placeholder = "비밀번호를 입력하세요">
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td>
+		 				이름 
+		 			</td>
+		 			<td colspan = "2">
+		 				: <input type = "text">
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td>
+		 				주소 
+		 			</td>
+		 			<td colspan = "2">
+		 				: <input type = "text">
+		 			</td>
+		 		</tr>
+		 		<tr>
+		 			<td>
+		 				전화번호   
+		 			</td>
+		 			<td colspan = "2">
+		 				: <input type = "text">
+		 			</td>
+		 		</tr>
+		 		
+		 		<tr>
+		 			<td colspan = "3">
+		 				<input type = "submit" value = "전송">		
+		 				<input type = "reset" value = "초기화">			
+		 				<input type = "button" value = "버튼">		
+		 			</td>
+		 		</tr>
+		 	</table>
+		 </form>
+		 
+	</head>
+	<body>
+		
+	</body>
+</html>
