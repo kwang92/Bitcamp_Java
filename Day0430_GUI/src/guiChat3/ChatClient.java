@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.InetAddress;
@@ -37,13 +38,13 @@ public class ChatClient extends JFrame implements KeyListener {
 	private JLabel lblNick;
 	private JTextField tfNick;
 	private JButton btnNickSave;
-	
-	
+
+
 	// 서버로 메시지 전송을 위한, socket, writer(스트림) 선언
 	private Socket socket;
-//	private BufferedWriter writer;
+	//	private BufferedWriter writer;
 	private ObjectOutputStream out;
-	
+
 	public ChatClient() {
 		this.setTitle("채팅");
 		this.setSize(453, 422);
@@ -74,7 +75,7 @@ public class ChatClient extends JFrame implements KeyListener {
 				sendMessage();
 			}
 		});
-		
+
 		panel.add(btnSend);
 		textFieldIp = new JTextField();
 		textFieldIp.setBounds(234, 179, 180, 21);
@@ -89,18 +90,18 @@ public class ChatClient extends JFrame implements KeyListener {
 		btnConnect = new JButton("접속");
 		btnConnect.setBounds(234, 211, 180, 23);
 		panel.add(btnConnect);
-		
+
 		lblNick = new JLabel("닉네임");
 		lblNick.setBounds(234, 71, 106, 15);
 		panel.add(lblNick);
-		
+
 		tfNick = new JTextField();
 		tfNick.setBounds(234, 96, 180, 21);
 		panel.add(tfNick);
 		tfNick.setText("이름없음");
 		tfNick.addKeyListener(this);
-		
-		
+
+
 		btnNickSave = new JButton("저장");
 		btnNickSave.setBounds(234, 121, 180, 23);
 		panel.add(btnNickSave);
@@ -110,7 +111,7 @@ public class ChatClient extends JFrame implements KeyListener {
 				sendNick();
 			}
 		});
-	
+
 		btnConnect.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -121,54 +122,54 @@ public class ChatClient extends JFrame implements KeyListener {
 
 		this.setVisible(true);
 	}// 생성자 end
-	
+
 	public void sendNick() {
-		 //textfield에 있는 문자열을 writer 를 이용해서 보내면 됨
+		//textfield에 있는 문자열을 writer 를 이용해서 보내면 됨
 		try {
 			String msg = tfNick.getText();	// String msg 변수에 textField로 부터 text를 받아와 저장한다.
-			
+
 			Protocol p = new Protocol();	// 메시지 정보를 저장할 Protocol p 객체 생성
 			Map<String, Object> data		// 발신자 이름과 실제 데이터를 저장할 Map객체 생성
-			 = new HashMap<String,Object>();
+			= new HashMap<String,Object>();
 			p.setType("#01");				// 현재 보내는 메시지의 타입을 정의 #01 - 닉네임 변경, #02 - 메시지 전송
 			data.put("nick", msg);			// 
 			p.setData(data);
-			
+
 			out.writeObject(p);
-			
+
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	public void sendMessage() {
 		// textfield에 있는 문자열을 writer 를 이용해서 보내면 됨
 		try {
 			String msg = textField.getText();
-			
+
 			//Protocol 객체 만들어서 쓰기
 			Protocol p = new Protocol();
 			p.setType("#02");		// 메시지를 보낼 땐 p 객체의 type을 #02로 지정
 			//p에다가 데이터를 넣기 위해서 Map이 필요
 			Map<String, Object> data
-			 = new HashMap<String,Object>();
+			= new HashMap<String,Object>();
 			//채팅 메시지 넣어주기
 			data.put("msg",msg);
 			//전송할 프로토콜 객체에 데이터 셋팅
 			p.setData(data);
-			
+
 			out.writeObject(p);
-			
+
 			//객체쓰기 : ObjectStream 
 			//writer.write("02##"+msg);
-//			writer.newLine();
-//			writer.flush();
+			//			writer.newLine();
+			//			writer.flush();
 
 			// 보내고 나서 해야할 일: 내가 작성한 내용을 textArea(채팅 내용화면)에 갖다 붙이기
 			textArea.append("나: " + msg + "\n");
@@ -191,11 +192,11 @@ public class ChatClient extends JFrame implements KeyListener {
 			// 소켓얻어왔으니.. 데이터 전송을 위해서 스트림 얻어오기
 			//writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			out = new ObjectOutputStream(socket.getOutputStream());
-			
+
 			//서버로 부터 오는 메시지를 처리하기 위한 스레드 생성 및 시작
 			Thread receiver = new Thread(new Receiver());
 			receiver.start();
-			
+
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -205,7 +206,7 @@ public class ChatClient extends JFrame implements KeyListener {
 		}
 
 	}
-	
+
 	public static void main(String[] args) {
 		ChatClient client = new ChatClient();
 	}
@@ -219,7 +220,7 @@ public class ChatClient extends JFrame implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			
+
 			System.out.println(tfNick.isFocusOwner());
 			sendMessage();
 		}
@@ -236,20 +237,28 @@ public class ChatClient extends JFrame implements KeyListener {
 	// 서버로 부터 메시지를 계속 해서 받아와야 함 thread가 필요함
 
 	class Receiver implements Runnable {
-		
+
 		public void run() {
 			// 소켓으로 부터 메시지 받아서 출력
 			// System.out.println("receiver");
-			BufferedReader reader = null;
+			ObjectInputStream in = null;
 			String msg = null;
 
 			// 데이터를 소켓으로부터 읽어오기 위해서 스트림을 얻어옴
 			try {
-				reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				
+				in = new ObjectInputStream(socket.getInputStream());
 				while (true) {
-					msg = reader.readLine();
-					textArea.append(msg+"\n");
+					try {
+						Protocol p = (Protocol)in.readObject();
+						if(p.getType().equals("#02")) {
+						//	msg = p.getData().get(key)
+							textArea.append(msg+"\n");
+						}
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
 			} catch (IOException e) {
 				System.out.println("상대방이 연결을 종료했습니다.");

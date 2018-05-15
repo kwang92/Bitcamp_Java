@@ -2,6 +2,7 @@ package guiChat;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -58,13 +59,14 @@ public class Tcp_Client extends ChatFrame {	// 프로그램 시작 시 Server에
 		super.setTa(msg);
 	}
 	public class Reader extends Thread{
-
-		private DataInputStream in;
+		private ObjectInputStream in;
+		//	private DataInputStream in;
 		private Socket socket;
 		public Reader(Socket socket) {
 			this.socket = socket;
 			try {
-				in = new DataInputStream(this.socket.getInputStream());
+				//		in = new DataInputStream(this.socket.getInputStream());
+				in = new ObjectInputStream(this.socket.getInputStream());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -75,26 +77,23 @@ public class Tcp_Client extends ChatFrame {	// 프로그램 시작 시 Server에
 				String msg;
 				if(in != null) {
 					try {
-						msg = in.readUTF();
+						//	msg = in.readUTF();
+						msg = (String)in.readObject();
 						addChat(msg);
-						
+
 					} catch (SocketException e) {
 						System.out.println(IP+" User out");
 						break;
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
-						System.out.println("IOException");
+						e.printStackTrace();
 					}
 				}
+
 			}
-			try {
-				in.close();
-				socket.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 		}
 	}
 }
