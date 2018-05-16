@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Box Model</title>
+		<style type = "text/css">
+			.box1{
+				/* contents box */
+				width : 300px;
+				height : 150px;
+				margin : 10px;
+				padding : 30px;
+				border : 2px solid red;
+			}
+			.box2{
+				/* border box */
+				box-sizing : border-box;
+				width : 300px;
+				height : 150px;
+				margin : 10px;
+				padding : 30px;
+				border : 2px solid blue;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>박스모델</h1>
+		<p>
+			박스모델은 컨텐츠 영역(contents),
+			테두리와 내용사이의 패딩(padding),
+			테두리(border),
+			테두리와 다른 박스모델간의 여백(margin)
+			으로 구성
+		</p>
+		
+		<h1>박스의 크기</h1>
+		<p>
+			박스의 크기는 같은 크기로 지정을 하더라도
+			설정에 따라서 실제 크기가 다를 수 있다. (박스 사이징)
+		</p>
+		<!-- 
+			컨텐츠 박스(디폴트) : 요소를 생성할 때 컨텐츠를 감싸는 컨텐츠박스를
+						       요소 크기를 결정, 실제 요소의 크기
+				높이 : height + padding*2 + border*2
+				너비 : width + padding*2 + border*2
+				
+			Border 박스 : 요소 생성시, 테두리를 기준으로 크기를 지정
+				실제 크기
+				높이 : height
+				너비 : width
+		 -->
+		 <div class = "box1">Content Box</div>
+		 <div class = "box2">Border Box</div>
+	
+	</body>
+</html>

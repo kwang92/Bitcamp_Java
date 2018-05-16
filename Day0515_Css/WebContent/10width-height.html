@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<style type = "text/css">
+		/*
+			인라인, 블록 요소들을 배치 방법 바꾸는 방법
+			display 속성의 속성 값
+				block : 해당요소를 블락레벨로 지정
+				inline : 해당요소를 인라인레벨로 지정
+				inline-block : 블락요소의 속성값은 그대로 가지면서, 인라인처럼 배치
+		*/
+			div{
+				width: 100px;
+				height: 100px;
+				margin: 10px 0 10px 10px;
+				display : inline-block;
+			}
+			.test1{
+				background: red;
+			}
+			.test2{
+				background: green;
+			}
+			.test3{
+				background: blue;
+			}
+			button{
+				display : block;
+				margin : 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<!-- width-height 화면 배치하기  -->
+		<div class = "test1"></div>
+		<div class = "test2"></div>
+		<div class = "test3"></div>
+		<br>
+		<button>버튼</button>
+		<button>버튼</button>
+	</body>
+</html>

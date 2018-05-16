@@ -1,0 +1,9 @@
+h1{
+	color : red;
+	font-size : 30px;
+	font-family: 굴림;
+}
+ul{
+	color : blue;
+	list-style : square;
+}

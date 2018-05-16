@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>스타일 우선순위</title>
+		<style type = "text/css">
+			ul{
+				color : red;
+				font-style : normal !important; /* !important를 부여하면 우선적용된다. */
+			}
+			ul{
+				color : blue;
+				font-style : italic;
+			}
+		</style>
+	</head>
+	<body>
+		<img alt ="파이리" src = "img/fire.jpg" width = "500" height = "400">
+		<h1>세계의 파이리</h1>
+		<h1>세계의 아름다운 파이리</h1>
+		<!--  우선순위에 의해 인라인 스타일이 우선적으로 적용되서 스타일 none으로 적용된다. -->
+		<ul>
+			<li>파이리 원</li>
+			<li>파이리 투</li>
+			<li>파이리 쓰리</li>
+		</ul>
+		<p>천지는 광야에서 그들은 못할 부패를 보라. 보내는 새가 소리다</p>
+	</body>
+</html>
