@@ -1,17 +1,25 @@
 package list;
 
+import java.util.ArrayList;
+
 public class MyList<E>{	// 임의의 데이터타입을 넣을 수 있도록 작성 ( 제네릭 )
 	// add(E), remove(index), get(index), size(), set(int, E)
 	private E[] array;
 	public MyList() {
 		array = (E[])new Object[0];
+		ArrayList<E> test = new ArrayList();
+		String str = "";
+		for(int i = 0; i < test.size() ; i++) {
+			str += test.get(i).toString();
+		}
+		
 	}
-	
+
 	public void add(int index, E data) {
 		// index 위치에 data 삽입
 		E[] tmp = (E[])new Object[array.length+1];
 		int pos = 0;
-		
+
 		for(int i = 0; i < size(); i++) {
 			if(index == i) {
 				pos++;
@@ -23,7 +31,7 @@ public class MyList<E>{	// 임의의 데이터타입을 넣을 수 있도록 작
 	}
 	public void add(E data) {
 		E[] tmp = (E[])new Object[array.length+1];
-		
+
 		for(int i = 0; i < size(); i++) {
 			tmp[i] = this.array[i];
 		}
@@ -39,7 +47,7 @@ public class MyList<E>{	// 임의의 데이터타입을 넣을 수 있도록 작
 		}
 		E[] tmp = (E[])new Object[array.length-1];
 		int pos = 0;
-		
+
 		for(int i = 0; i < array.length-1; i++) {
 			if(i == index)
 				pos++;
