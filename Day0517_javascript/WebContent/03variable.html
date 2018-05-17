@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<script type = "text/javascript">
+	// 변수(var) = 숫자, 문자열, 논리형, Null, undefined, 배열, 함수, 객체가 다 들어갈 수 있음
+	//  기초자료형 : Number, String, Boolean, Null, Undefined
+	//  참조자료형 : Array, Object, function등
+		var str = "\"'Hello!!'\"";
+		document.write(str,"<br>");
+		document.write(str,"<br>");
+		document.write(str,"<br>");
+		
+		var a;
+		var b = null;
+		var c = true;
+		var d = 10<5;
+		var e = 100;
+		var f = "100";
+		
+		document.write(typeof(a),"<br>");
+		document.write(typeof(b),"<br>");
+		document.write(typeof(c),"<br>");
+		document.write(typeof(d),"<br>");
+		document.write(typeof(e),"<br>");
+		document.write(typeof(f),"<br>");
+		
+		var aa = "10" + 1;
+		var bb = 10 + 1;
+		document.write(aa+"<br>");
+		document.write(bb+"<br>");
+	
+
+		// 0, null, undefined (false)로 boolean 취급
+		// 나머지는 전부 (true) boolean 취급 될 수있다.
+		var bool1 = Boolean(a);	// undefined
+		var bool2 = Boolean(b);	// null
+		var bool3 = Boolean(c);	// true(boolean)
+		var bool4 = Boolean(0);	
+		var bool5 = Boolean(1);
+		var bool6 = Boolean("아무문자열");
+		document.write(bool1,"<br>");
+		document.write(bool2,"<br>");
+		document.write(bool3,"<br>");
+		document.write(bool4,"<br>");
+		document.write(bool5,"<br>");
+		document.write(bool6,"<br>");
+		
+		var x = 3.145427;
+		document.write(typeof(x),"<br>");
+		document.write(typeof(x.toFixed(2)),"<br>");
+		// toFixed(0)
+		document.write(x.toFixed(0),"<br>");
+		document.write(x.toFixed(1),"<br>");
+	
+		
+		var txt = "ABCDEFGHIJKLMN";
+		document.write(txt.length,"<br>");
+		document.write(txt.indexOf("CD"),"<br>");
+		document.write(txt.lastIndexOf("GH"),"<br>");
+	</script>
+	<body>
+		
+	</body>
+</html>

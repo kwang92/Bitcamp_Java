@@ -26,6 +26,7 @@ public class ChatFrame extends JFrame{
 		ta = new TextArea();
 		ta.setBounds(10, 5, 225, 161);
 		tf = new TextField();
+		
 		tf.setBounds(10, 172, 225, 23);
 		this.nickName = "NoName";
 		
