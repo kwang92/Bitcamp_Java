@@ -59,13 +59,14 @@
 	<script type = "text/javascript">
 		var money;
 		var price;
+		
 		window.onload = function(){
 			price = document.getElementById("total");
 			money = Number(price.value);
 		};
 		
 		function car(check){		
-			if(check.checked == true){
+			if(check.checked){
 				money += Number(check.value);
 			} else{
 				money -= Number(check.value);
