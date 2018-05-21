@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>속성 변경하기</title>
+		<style type = "text/css">
+		
+		</style>
+		<script type = "text/javascript">
+			window.onload = function(){
+				var image = document.getElementById("img1");
+				var btn = document.getElementById("btn1");
+				setTimeout(function(){	// 문서가 load되면 3초 후 실행
+					image.src = "img/pic_2.jpg";	
+				},1000);
+				
+				/*
+					innerHTML
+					해당 요소의 모든 하위요소를 불러오거나, 변경할 때 사용
+					요소선택.innerHTML : 선택
+				*/
+				document.getElementById("img2").innerHTML
+					= "<img alt = '사진' src = 'img/pic_4.jpg' />";
+			};
+			
+			
+		</script>
+	</head>
+	<body>
+		<h1>이미지 바꾸기</h1>
+		<img alt = "이미지" src = "img/pic_1.jpg" id = "img1">
+		<div id = "img2">
+			<img src = "img/pic_3.jpg">
+		</div>
+	</body>
+</html>
+

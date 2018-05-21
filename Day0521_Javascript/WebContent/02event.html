@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>이벤트 처리</title>
+		<script type = "text/javascript">
+			/*
+				문서객체 이벤트 처리하기
+				event 핸들 : event가 발생하면, 우리가 원하는 코드를 실행
+				event 핸들러 event가 발생했을때 실행시킬 문장을 작성하는 부분
+				
+				1. 요소에 event속성 직접 작성
+				2. script에서 요소 선택해서 이벤트 발생 시 실행할 문장 작성
+				[이벤트 종류]
+				마우스 : onmouseover, onmouseout, onmousemove, onclick, ondblclick
+				키보드 : onkeypress, onkeydown, onkeyup
+				기타    : onfocus, onblur(요소가 포커스를 잃었을 때), onchange, onload, 
+					  onsubmit(form요소에서 submit이 눌렸을 때), onreset, onerror, onresize
+			*/	
+			window.onload = function(){
+				var btn2 = document.getElementById("btn2");
+				btn2.onclick = function(){
+					alert("버튼2 눌림");
+				};
+				
+				var btn4 = document.getElementById("btn4");
+				btn4.addEventListener("click",function(){
+					alert("버튼4 눌림");	
+				},false);	// 세번 째 인자 boolean 값은 부모와 자식요소간 이벤트 실행 순서 값 false이면 자식 이벤트 먼저, true이면 부모 이벤트 먼저
+				
+				var btn5 = document.getElementById("btn5");
+				btn5.addEventListener("dblclick",function(){
+					alert("버튼5 더블클릭");
+				},false);	// 세번 째 인자 boolean 값은 부모와 자식요소간 이벤트 실행 순서 값 false이면 자식 이벤트 먼저, true이면 부모 이벤트 먼저
+			};
+			
+		
+		
+	
+			
+			function btn3Alert(){
+				alert("버튼3 눌림");
+			};
+			
+		</script>
+	</head>
+	<body>
+		<button onclick = "alert('버튼1 눌림')" id = "btn1">버튼1</button>
+		<button id = "btn2">버튼2</button>
+		<button onclick = "btn3Alert()" id = "btn3">버튼3</button>
+		<button id = "btn4">버튼4</button>
+		<button id = "btn5">버튼5</button>
+	</body>
+</html>

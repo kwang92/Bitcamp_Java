@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>form 요소 선택하기</title>
+	</head>
+	<style type = "text/css">
+		
+	</style>
+	<script type = "text/javascript">
+		/*
+			form 요소의 경우에는 name속성만으로 요소를 선택 할 수 있다.
+			form요소의 하위요소도 이름으로 선택가능
+		*/
+		window.onload = function(){
+			var frm = document.loginForm;
+			frm.onsubmit = function(){
+				var id = frm.userId.value;
+				var pw = frm.userPw.value;
+				alert("ID : "+ id + ", PW : "+pw);
+			};
+			var ch1 = document.loginForm.check1;
+			var ch2 = document.loginForm.check2;
+			var ch3 = document.loginForm.check3;
+			
+	
+			
+			ch1.onclick = function(){
+				ch2.checked = false;
+				ch3.checked = false;
+			};
+			ch2.onclick = function(){
+				ch1.checked = false;
+				ch3.checked = false;
+			};
+			ch3.onclick = function(){
+				ch1.checked = false;
+				ch2.checked = false;
+			};
+			
+			
+		};
+		
+	</script>
+	<body>
+		<form name = "loginForm" action = "#">
+			<fieldset>
+				<legend>회원 로그인</legend>
+				
+				<table>
+					<tr>
+						<td>
+							<label>아이디 </label>							
+						</td>
+						<td>
+							<input type = "text" name = "userId" id = "userId">
+						</td>
+					</tr>
+				
+					<tr>
+						<td>
+							<label>비밀번호 </label>
+						</td>
+						<td>
+							<input type = "password" name = "userPw" id = "userPw">
+						</td>
+					</tr>
+				</table>
+				<p>
+					<input type = "submit" value ="로그인">
+				</p>
+				<p>
+					<label for = "check1">값1</label>
+					<input type = "checkbox" name = "check1" 
+									id = "check1" value = "v1">
+									
+					<label for = "check2">값2</label>
+					<input type = "checkbox" name = "check2" 
+									id = "check2" value = "v2">
+									
+					<label for = "check3">값3</label>
+					<input type = "checkbox" name = "check3" 
+									id = "check3" value = "v3">
+									
+				</p>
+				
+			</fieldset>
+			
+		</form>	
+	</body>
+</html>
