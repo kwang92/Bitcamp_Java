@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>이벤트 처리</title>
+
 		<script type = "text/javascript">
 			/*
 				문서객체 이벤트 처리하기
@@ -23,11 +24,16 @@
 					alert("버튼2 눌림");
 				};
 				
+				var div1 = document.getElementById("div1");
+				div1.addEventListener("click",function(){
+					alert("div눌림");	
+				},true);	// 세번 째인자가 true이므로 안쪽의 요소 (btn4)이벤트가 발생해도 자기 자신의 이벤트부터 실행함
+				
 				var btn4 = document.getElementById("btn4");
 				btn4.addEventListener("click",function(){
 					alert("버튼4 눌림");	
 				},false);	// 세번 째 인자 boolean 값은 부모와 자식요소간 이벤트 실행 순서 값 false이면 자식 이벤트 먼저, true이면 부모 이벤트 먼저
-				
+							// 적지않아도 default 값은 false
 				var btn5 = document.getElementById("btn5");
 				btn5.addEventListener("dblclick",function(){
 					alert("버튼5 더블클릭");
@@ -48,7 +54,9 @@
 		<button onclick = "alert('버튼1 눌림')" id = "btn1">버튼1</button>
 		<button id = "btn2">버튼2</button>
 		<button onclick = "btn3Alert()" id = "btn3">버튼3</button>
-		<button id = "btn4">버튼4</button>
+		<div id = "div1">
+			<button id = "btn4">버튼4</button>
+		</div>
 		<button id = "btn5">버튼5</button>
 	</body>
 </html>
