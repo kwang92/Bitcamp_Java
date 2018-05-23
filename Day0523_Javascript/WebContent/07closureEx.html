@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>클로저 예제</title>
+		<!-- 
+			
+		 -->
+		<style type = "text/css">
+			*{
+				margin : 0;
+				padding : 0;
+				box-sizing : border;
+			}
+			#wrap_con{
+				width : 100%;
+				margin-top : 50px;
+			}
+			#content{
+				width : 960px;
+				margin : 0 auto;
+			}
+		</style>
+		<script type = "text/javascript">
+			window.onload = function(){
+				var help_Text;
+				
+				function showHelp(help){
+					document.getElementById("help").innerHTML = help;
+				};
+				function makeHelpCallBack(help){	// showHelp를 파라미터로 받아와서 실행시켜준다.
+					return function(){
+						showHelp(help);
+					}
+				};
+				function setHelp(){
+					// help 요소에 텍스트 집어넣기
+					help_Text = [];
+					help_Text[0] = {
+						"id" : "name",
+						"help" : "이름을 입력하세요"
+					}
+					help_Text[1] = {
+							"id" : "email",
+							"help" : "이메일을 입력하세요"
+					}
+					help_Text[2] = {
+							"id" : "age",
+							"help" : "나이를 입력하세요"
+					}
+					for(var i = 0; i < help_Text.length; i++){
+						var item = help_Text[m];
+						document.getElementById(item.id).onfocus = makeHelpCallBack(item.help);
+			
+					}
+				};
+		
+				
+				setHelp();	
+			};
+			
+		</script>
+	</head>
+	<body>
+		
+		<div id = "wrap_con">
+			<div id = "content">
+				<table>
+					<tr>
+						<td>
+							<label>이름 </label>		
+						</td>
+						<td>
+							<input type = "text" id = "name">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>이메일 </label>		
+						</td>
+						<td>
+							<input type = "text" id = "email">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>나이 </label>		
+						</td>
+						<td>
+							<input type = "text" id = "age">
+						</td>
+					</tr>
+				</table>
+				
+				<br>
+				
+				<p id = "help">
+					여기에 도움말이 표시 됩니다.	
+				</p>	
+						
+			</div>
+		</div>
+	</body>
+</html>

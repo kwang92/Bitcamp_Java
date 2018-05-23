@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<style type = "text/css">		
+			h1{
+				position : absolute;
+			}
+			#sun{
+				left : 500px;
+				top : 400px;
+			}
+			.check{
+			}
+	
+		</style>
+		<script type = "text/javascript">
+			window.onload = function(){
+				var e = document.getElementById("earth");
+				var m = document.getElementById("moon");
+				var earthMove = 0;
+				var moonMove = 0;
+				
+				setInterval(function(){
+					var eLeft = 500 + 300 * Math.cos(earthMove);
+					var eTop = 500 + 300 * Math.sin(earthMove);
+					var mLeft = eLeft + 50 * Math.cos(moonMove);
+					var mTop = eTop + 40 * Math.sin(moonMove);
+					
+					e.style.left = eLeft+"px";
+					e.style.top = eTop+"px";
+					m.style.left = mLeft+"px";
+					m.style.top = mTop+"px";
+					moonMove += 0.08;
+					
+					earthMove += 0.01;
+				},10);
+				
+			
+			
+			};
+				
+		</script>
+	</head>
+	<body>
+		
+		<h1 id = "sun">@</h1>
+		<h1 id = "earth">O</h1>
+		<h1 id = "moon">*</h1>
+	</body>
+</html>

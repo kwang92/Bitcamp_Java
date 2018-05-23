@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>이벤트 객체</title>
+		<style type = "text/css">
+			fieldset{
+				width : 500px;
+			}
+		</style>
+		<script type = "text/javascript">
+		/* 이벤트 객체
+		이벤트가 발생하면 이벤트에 대한 정보를 가지고 있는 객체가 발생
+		이 이벤트 객체가 가지고 있는 속성을 가져와서 사용해보기
+		
+			1. 마우스 이벤트객체
+				: clientX, clientY - 마우스 이벤트가 발생한 x,y 좌표 (스크롤바 이동너비, 높이 무시)
+				: pageX, pageY - 마우스 이벤트가 발생한 x,y 좌표 (스크롤바 이동너비, 높이 포함)
+				: screenX, screenY - 모니터 기준 x, y
+				: layerX, layerY - position이 적용된 요소 기준 x, y 좌표
+			2. 키보드 이벤트 객체
+				: keycode - 이벤트가 발생한 키에 대한 유니코드
+				: altkey - alt키가 눌려져있으면 true, 아니면 false
+				: ctrlkey - ctrl키가 눌러져있으면 true, 아니면 false
+				: shiftkey - shift키가 눌러져있으면 true, 아니면 false
+		*/
+			window.onload = function(){
+				var form1 = document.f1;
+				var form2 = document.f2;
+				
+				// 문서 위에서 마우스가 움직이는 이벤트가 발생하면 실행
+				document.onmousemove = function(e){
+					var cx = e.clientX;
+					var cy = e.clientY;
+					form1.clientX.value = cx;
+					form1.clientY.value = cy;
+					
+					var px = e.pageX;
+					var py = e.pageY;
+					form1.pageX.value = px;
+					form1.pageY.value = py;
+				};
+				
+				document.onkeydown = function(e){
+					
+					if(e.keyCode == 65 && e.ctrlKey){	
+						alert("단축키 실행");			
+					}
+					
+					form2.code.value = e.keyCode;
+					
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div>
+			<h1>마우스 이벤트 객체 속성</h1>
+			<form name = "f1">
+				<fieldset>
+					<legend>마우스 커서출력</legend>
+					<table>
+						<tr>
+							<td>
+								<label for = "clientX">clientX : </label>
+							</td>
+							<td>
+								<input type = "text" name = "clientX" id = "clientX">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for = "clientY">clientY : </label>
+							</td>
+							<td>
+								<input type = "text" name = "clientY" id = "clientY">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for = "pageX">pageX : </label>
+							</td>
+							<td>
+								<input type = "text" name = "pageX" id = "pageX">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for = "pageY">pageY : </label>
+							</td>
+							<td>
+								<input type = "text" name = "pageY" id = "pageY">
+							</td>
+						</tr>
+		
+					</table>
+				</fieldset>
+			</form>
+			
+			<h1>키보드 이벤트 객체 속성</h1>
+			<form name = "f2">
+				<fieldset>
+					<legend>키보드 코드출력</legend>
+					<table>
+						<tr>
+							<td>
+								<label for = "key">입력키보드 : </label>
+							</td>
+							<td>
+								<input type = "text" name = "key" id = "key">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for = "code">유니코드 : </label>
+							</td>
+							<td>
+								<input type = "text" name = "code" id = "code">
+							</td>
+						</tr>
+					</table>
+			
+				
+				</fieldset>
+			</form>
+		</div>
+	</body>
+</html>

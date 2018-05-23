@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>function</title>
+		<style type = "text/css">
+		
+		</style>
+		<script type = "text/javascript">
+			/* 함수만들기
+			  함수 : 명령문의 집합
+			  - 반복적으로 사용되는 여러 명령어를 모아놓고 필요할 때 마다 호출해서 사용하기 위함
+			  
+			  javascript에선 function 또한 객체여서 변수에 참조 될 수가 있다.
+			*/
+		/*
+			myFunc();	// 선언함수는 함수정의보다 먼저 호출되도 정상실행 된다.
+			myFunc2();	// 익명함수는 함수정의보다 먼저 호출되면 실행이 되지 않는다.
+			
+			*/
+			function myFunc(){
+				alert("선언함수 입니다.");
+			}
+		
+			var myFunc2 = function(){
+				alert("슈바 이게 왜 호출됨?");
+			}
+			
+			
+			(function(){
+				alert("익명함수2 입니다!!");
+			}());
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

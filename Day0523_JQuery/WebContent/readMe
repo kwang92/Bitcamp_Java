@@ -1,0 +1,15 @@
+JQuery
+: JavaScript API ( 자주 사용되는 함수들을 모아놓은 라이브러리 언어 )
+
+HTML 요소를 선택해서, 그 속성 변경하기 위해서 JavaScript 사용,
+>>> 선택과 속성 변경을 용이하게 하는 함수들을 모아둠
+
+장점 : 가벼움 , 간결한 코드, AJax 구현이 편리해짐
+	, 브라우저간 호환성을 높여줌, 동적으로 HTML이나 CSS를 컨트롤하는 기능이 편리
+  
+사용법
+1. JQuery 라이브러리를 사용하겠다라고 선언하고 사용 
+	(1) JQuery의 JS파일을 다운받아서 사용
+	(2) CDN(Content Delivery Network)네트워크 환경에서 JS를 불러서 사용
+
+2. Project 내에 폴더를 만들어 JQuery(JS)파일을 담는다.

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<style type = "text/css">
+			button{
+				margin : 5px;
+			}
+		</style>
+		<script type = "text/javascript">
+		/* 클로저 (closure)
+			함수와 함수가 선언된 어휘적 환경의 조합
+			클로저는 함수인데, 선언되는 시점의 상태값을 같이 가지고 있는 함수
+			클로저는 함수가 선언되는 시점에서 동등한 위치에 선언된 변수들을 가지고 사용할 수 있음
+		*/
+		/*
+			// 클로저 문제점
+			window.onload = function(){
+				for(var i = 1; i <= 5; i++){
+					var btn = document.getElementById("btn"+i);
+					btn.addEventListener("click", function(){
+						alert("버튼" + i + " 클릭!!");		// 클로저 때문에 어떤 버튼을 클릭해도 버튼6클릭이라 alert됨
+					});
+				}
+			}
+		*/
+			// 클로저 해결 방법 : 함수 생성 당시에 접근할 수 있는 상태값을 고정 값으로 만들어준다.
+			// i 값이 계속 쓰이는 부분을 묶어서 즉시실행 함수로 바꿔준다.
+			window.onload = function(){
+				for(var i = 1; i <= 5; i++){
+					(function(m){
+						var btn = document.getElementById("btn"+m);
+						btn.addEventListener("click", function(){
+							alert("버튼" + m + " 클릭!!");		// 즉시실행 하기 때문에 값이 정상적으로 출력
+						});
+					})(i);
+				}
+			}
+			function outter(){
+				var name = "홍길동";
+				
+				function displayName(){
+					alert("이름: " + name);
+				}
+				return displayName;
+			}
+			var func = outter();
+	//		func();
+		</script>
+	</head>
+	<body>
+		<button id = "btn1">버튼1</button>
+		<button id = "btn2">버튼2</button>
+		<button id = "btn3">버튼3</button>
+		<button id = "btn4">버튼4</button>
+		<button id = "btn5">버튼5</button>
+	</body>
+</html>

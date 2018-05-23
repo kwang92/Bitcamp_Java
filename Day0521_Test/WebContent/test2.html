@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<style type = "text/css">
+		
+		</style>
+		<script type = "text/javascript">
+			var t1, t2;
+			var bool;
+			window.onload = function(){
+				t1 = document.frm.t1;
+				t2 = documnet.frm.t2;
+			};
+	
+			
+			function down(e){
+				if(e.keyCode == 13){
+					if(e.srcElement.name == "t1"){
+						document.getElementById("t2").focus();
+						return false;
+					}
+					else if(e.srcElement.name == "t2"){
+						if(t1.value == ""){
+							document.getElementById("t1").focus();
+							return false;
+						}
+						frm.submit();
+					}	
+				}
+				
+			};
+		</script>
+	</head>
+	<body>
+		<form name = "frm" onSubmit = "return false">
+			<input type = "text" id = "t1" name = "t1" onkeydown = "down(event)"><br>
+			<input type = "text" id = "t2" name = "t2" onkeydown = "down(event)"><br>
+			<input type = "submit" value = "제출" id = "sub" onsubmit = "check(this);">
+		</form>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JQuery 시작하기</title>
+		<style type = "text/css">
+		</style>
+		<!-- js 다운 방식 
+		<script type = "text/javascript" src = "js/jquery-3.3.1.min.js"></script>
+		-->
+		
+		<!-- CDN 방식 -->
+		<script
+		  src="https://code.jquery.com/jquery-3.3.1.min.js"
+		  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		  crossorigin="anonymous">
+		</script>
+		
+		<script type = "text/javascript">
+		/*
+			jQuery(document).ready(function(){	// 기존 js의 window.onload와 같은 기능
+				alert("hello JQuery");				
+			});
+		*/
+		
+		/*
+			$(document).ready(function(){	// 위의 코드와 동일 jQuery단어를 $로 생략가능
+				alert("hello $");
+			});
+		*/
+			$(function(){		// ready는 단지 $(function(){}); 만으로도 가능 
+				alert("$");	
+			});
+			
+		</script>
+		
+	</head>
+	<body>
+		
+	</body>
+</html>

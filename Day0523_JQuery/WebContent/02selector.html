@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>선택자</title>
+		<style type = "text/css">
+		</style>
+		
+		 
+		 <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous">
+		 </script>
+		<script type = "text/javascript">
+			/*	JQuery 선택자 == $("선택자")
+			  1. 전체선택자 : $("*")
+			  2. 아이디선택자 : $("#아이디")
+			  3. 클래스선택자 : $(".클래스")
+			  4. 태그선택자    : $("태그이름")
+			  5. 그룹선택자    : $("요소1,요소2,요소3......,요소n")
+			*/
+			$(function(){
+				$("*").css("border","1px solid blue");
+				$("#title").css("border","1px solid red").css("backgroundColor","yellow");
+				$(".direct").css("border","1px solid green").css("backgroundColor","orange");	
+				$("h1,h2,h3,h4").css("font-size","3em");
+			});
+		</script>
+	</head>
+	<body>
+		<h1>제이쿼리</h1>
+		<h2 id = "title">선택자의 종류</h2>
+		<h3 class = "direct">직접 선택자</h3>
+		<h4>관계 선택자</h4>
+		
+	</body>
+</html>

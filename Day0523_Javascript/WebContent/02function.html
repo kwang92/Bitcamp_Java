@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>function 2</title>
+		<style type = "text/css">
+		
+		</style>
+		<script type = "text/javascript">
+			/*
+				함수 파라미터 및 반환 값 작성
+			*/
+			
+			/*
+			var gop = function(a, b, c){
+				return a * b * c;
+			};
+			var value = gop(2,3,4);
+			alert(value);
+			*/
+			
+			var sum = function(){
+				var sumArg = 1;
+				for(var i = 0; i < arguments.length; i++){
+					sumArg = sumArg * arguments[i];	// 이런식으로 메개변수에 접근 할 수가 있다.
+				}
+//				alert(arguments.length);	// 함수호출 시 들어온 인자의 길이(개 수)
+				return sumArg;
+			};
+			
+			alert(sum(1,2,3,4,5))	;
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

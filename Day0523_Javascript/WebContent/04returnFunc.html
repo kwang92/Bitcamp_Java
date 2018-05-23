@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<style type = "text/css">
+		
+		</style>
+		<script type = "text/javascript">
+			/*
+				함수도 반환 될 수 있다.
+			*/
+			var myFunc = function(){
+				alert("함수를 반환할 거에요!");
+				
+				return (function(){
+					return (function(){
+						alert("반환 된 함수의 반환 함수 입니다!");
+					})();		
+					alert("반환 된 함수 입니다!");
+				})();
+			};
+			myFunc();
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>
