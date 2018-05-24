@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>갤러그</title>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script type="text/javascript" src = "js/ship.js"></script>  
+<script type="text/javascript" src = "js/bullet.js"></script>
+<script type="text/javascript" src = "js/enemy.js"></script>
+<script type="text/javascript">
+$(function(){
+	var content = $("#content");		  
+	content.css("backgroundColor","pink").width("1000px").height("700px");
+	content.css("backgroundImage","url('img/bg.png')");
+	
+	//배경이동 : 일정 시간마다 같은 간격으로 이동
+	var bgPosition = 0;
+	
+	setInterval(function(){
+		bgPosition += 5;
+		content.css("backgroundPositionY",bgPosition+"px");
+	},30);
+	
+	//비행기 그리기 
+	//비행기에 대한 위치정보를 저장하고, 초기 요소를 작성하는 함수 작성 Ship
+	//>>외부 스크립트로 작성
+	var enemies = [];
+	var posX = 1000/2 - 31/2;  //중간
+	//아래쪽에서 비행기 높이 만큼 띄우고, 50px 만큼 더 띄움
+	var posY = 700-33-50;  
+	var ship = new Ship(content,posX,posY,31,33);
+	ship.init();
+	ship.move();
+	
+	setInterval(function(){
+		if(enemies.length == 0){
+			makeEnemy();
+		}
+	},500);
+	
+	/*
+		총알 맞는 처리, 총알과 적선의 영역이 겹치면 총알을 없애고 적의 hp를 1 줄임
+		적의 hp가 0이 되면 해당 span remove
+	*/
+	
+	//키보드 이벤트 처리 
+	$(document).on({
+		"keydown":function(e){
+			//어떤 키가 눌렸는지 알기 위해서 이벤트 객체가 필요
+			switch(e.keyCode){
+			case 37:
+				//좌측이동(left)
+				ship.stepX = -5;
+				break;
+			case 39:
+				//우측이동
+				ship.stepX = 5;
+				break;
+			case 32:
+				//총알 만들기 //x좌표 비행기의 중간 높이는 비행기 높이
+				var bX = (ship.posX+(ship.width/2));
+				var bullet = new Bullet(content,bX,posY,7,17, enemies);
+				bullet.init();
+				bullet.move();
+				break;
+			}
+		},
+		"keyup":function(e){
+			var key = e.keyCode;
+			if(key == 37 || key == 39 ){
+				ship.stepX = 0;
+			}
+		}
+	});
+	function makeEnemy(){
+		var ePosX = 100;
+		var ePosY = 50;
+		
+		
+		for(var i = 0; i < 5; i++){	// blue_king paint
+			var blue = new Enemy(content,ePosX,ePosY,31*2,31*2,"./img/blue_king.png",3,0.7);
+			blue.init();
+			blue.move();
+			ePosX += 31 * 2 + 20; 
+			enemies.push(blue);
+		}
+		for(var i = 0; i < 5; i++){	// green_king paint
+			var green = new Enemy(content,ePosX,ePosY,31*2,31*2,"./img/green_king.png",2,0.7);
+			green.init();
+			green.move();
+			ePosX += 31 * 2 + 20; 
+			enemies.push(green);
+		}
+		ePosY += 31*2 + 50;
+		ePosX = 100;
+		for(var i = 0; i < 16; i++){
+			var ene1 = new Enemy(content,ePosX,ePosY,31,31,"./img/enemy1.png",1,1);
+			ene1.init();
+			ene1.move();
+			ePosX += 31 + 20;
+			enemies.push(ene1);
+		}
+		ePosY += 31*2 + 10;
+		ePosX = 100;
+		for(var i = 0; i < 16; i++){
+			var ene2 = new Enemy(content,ePosX,ePosY,31,31,"./img/enemy2.png",1,1);
+			ene2.init();
+			ene2.move();
+			ePosX += 31 + 20;
+			enemies.push(ene2);
+		}
+	};
+});
+
+</script>
+</head>
+<body>
+	<!-- 비행기 및 적들이 표시될 화면 -->
+	<div id = "content">
+		
+	</div>
+</body>
+</html>
+
+
+
+
+

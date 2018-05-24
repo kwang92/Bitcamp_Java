@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JQuery 이벤트처리</title>
+		<style type = "text/css">
+			button{
+				width : 80px;
+			}
+		</style>
+		<script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous">
+		 </script>
+		<script type = "text/javascript">
+			/* 이벤트 등록하기 
+				- 이벤트 핸들러 : 이벤트가 발생했을 때 실행할 코드
+				- 이벤트 등록 메소드 : 사용자가 지정한 요소에 특정이벤트가 발생 했을 때 
+								 지정된 실행문을 실행하기 위한 함수 ( 이벤트 리스너 개념 )
+				1. ready() : 지정한 HTML문서 객체가 로딩이 완료 된 후 이벤트 발생
+				2. click(), dblclick : 마우스 클릭 / 더블클릭 이벤트
+				3. mouseover() : 마우스가 요소에 올라 갔을 때
+				4. mouseout() : 마우스가 요소에서 벗어났을 때
+				5. mousedown() : 마우스버튼을 눌렀을 때
+				6. mouseup() : 마우스버튼을 땠을 때
+				7. mousemove() : 요소에서 마우스를 움직일 때
+				8. focus() : 요소에 포커스가 생성되었을 때, 특정요소에 포커스를 생성
+				9. focusin() : 요소에 포커스가 생성되었을 때
+				10. focusout() : 요소에서 포커스가 없어졌을 때
+				11. blur() : 요소에서 포커스가 없어졌을 때
+				12. keypress() : 요소에서 키보드가 눌려졌을 때
+				13. keydown() : 요소에서 키보드가 눌렀졌을 때
+				14. keyup() : 키를 땠을 때
+				15. change() : 선택요소에서 입력 요소값이 변경 되었을 때
+				16. scroll() : 스크롤이 이동했을 때
+				17. error() : 선택요소에서 에러가 발생했을 때
+				
+				(1) 이벤트 대상 요소 선택
+				(2) 이벤트 등록 메소드 호출
+				(3) 등록메소드의 인자 값으로 핸들러 전달 (콜백)
+			*/	
+			$(function(){
+				$("#btn1").click(function(){
+					$("p").css("background-color","yellow");
+				});
+				$("#btn2").dblclick(function(){
+					$("p").css("background-color","aqua");
+				});
+				$("#btn3").click(function(){XPathResult()
+					//btn2 요소에 dblclick 이벤트 발생시키기 : 
+					$("#btn2").dblclick();
+				});
+				$("#title").css("display","inline-block");
+				
+				/*
+				$("#title").mouseover(function(){
+					//this : 이벤트 핸들러 내부에서 this는
+					//이벤트가 발생한 요소를 가리킨다. 
+					$(this).css("color","red");
+				});
+				$("#title").mouseout(function(){
+					//this : 이벤트 핸들러 내부에서 this는
+					//이벤트가 발생한 요소를 가리킨다. 
+					$(this).css("color","black");
+				});
+				
+				// 위에 두 이벤트와 아래 한 이벤트는 같은 기능
+				*/
+				$("#title").hover(function(){
+					$(this).css("color","red");
+				},function(){
+					$(this).css("color","black");
+				});
+				
+				/*
+				$("#content").focusin(function(){
+					$(this).css("font-size","1.5em");
+				});
+				$("#content").focusout(function(){
+					$(this).css("font-size","1em");
+				});
+				*/
+				
+				// 위에 두 이벤트와 아래 두 이벤트는 같은 기능
+				
+				/*
+				$("#content").focus(function(){
+					$(this).css("font-size","1.5em");
+				});
+				$("#content").blur(function(){
+					$(this).css("font-size","1em");
+				});
+				*/
+				
+				/*
+				$("#content").on("focus",function(){
+					$(this).css("font-size","1.5em");
+				}).on("blur",function(){
+					$(this).css("font-size","1em");
+				});
+				*/
+				/*
+				$("#content").on({
+					"focus":function(){
+						$(this).css("font-size","1.5em");	
+					},
+					"blur":function(){
+						$(this).css("font-size","1em");
+					}
+				});
+				*/
+				$("#content").on({
+					"focus":function(){
+						$(this).css("font-size","1.5em");	
+					},
+					"keyup":function(e){		
+						if(e.keyCode == 13){
+							$(this).css("font-size","1em");
+						}
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div>
+			<button id = "btn1">click</button>
+		</div>
+		<div>
+			<button id = "btn2">dblclick</button>
+		</div>
+		<div>
+			<button id = "btn3">callEvent</button>
+		</div>
+		
+		<p>내용</p>
+		<h1 id = "title">제목입니다.</h1>
+		<br>
+		<input type = "text" id = "content" value = "홍길동">
+	</body>
+</html>
