@@ -51,11 +51,13 @@
 		3. 선언부 (declaration)	- 선언부에 변수를 선언하면 변환되는 서블릿의 멤버변수로 선언
 	--%>
 
-	<p>
-		<%= num1 %>과
-		<%= num2 %>의 곱은
-		<%= mulNums() %>입니다.
+	<p style = "font-size : 1.5em">
+		<%= num1 %>과 <%= num2 %>의 곱은 <%= mulNums() %>입니다.
 	</p>
+	<%
+		out.print(num1 + " * "+num2 + " = " + mulNums());
+	
+	%>
 	<label for="num1">숫자1 입력 : </label>
 	<input type="text" name="num1" id="num1">
 	<label for="num2">숫자2 입력 : </label>
