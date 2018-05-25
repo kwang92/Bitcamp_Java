@@ -1,0 +1,54 @@
+JSP / Servlet
+
+
+	웹 환경에서 동작하는 자바 프로그래밍 작성을 위해 필요한 기능
+ 
+  1. Client로부터 요청을 받음
+  2. Server에서 요청에 해당하는 동작을 응답함
+  
+  >>   Servlet : 자바로 웹 프로그래밍을 하기 위한 규약 또는 그 규약을 지켜서 작성한 프로그램
+  
+  HttpServlet : Servlet규약에 맞춰 작성된 클래스 ( 요청을 받고 응답 할 수 있는 클래스 )
+ 	 --> Tomcat Servlet 컨테이너 사용
+
+  웹 서버 : 클라이언트가 요청한 웹 문서를 찾아서 전달하는 기능
+                요청한 파일이 없거나 요청에 문제가 발생하면 코드로 응답을 대신함
+                
+ Web Application : 사용자의 요청을 처리하기 위한 로직을 실행하는 프로그램
+ 
+ WAS(Web Application Server) : 웹 서버의 기능을 구조적으로 분리해서 처리하기 위해 만들어졌다.
+ 상용 WAS : 웹 서버의 기능과 웹 컨테이너 기능을 제공, 이 외에 트랜잭션, 보안, DB연결관리, 사용자관리 등등
+ 
+ Apache-Tomcat 이클립스 연동
+ 1. window - preferences - server - runtime enviroment - add - 버전에 맞는 tomcat 설정 후 경로설정 - apply and close
+ 2. tomcat이 동작 할 수 있도록 서버 생성  : project explorer - new Server -  tomcat 버전에 맞는 Server 생성
+ 3. 사용할 프로젝트의 property - java build path - add library - server runtime - tomcat - apply and close
+ 
+ JSP : Java Server Page, 화면을 쉽게 만들어 내기 위해서 Servlet을 기반으로 만들어짐
+		JSP를 작성하고 실행하면, JSP가 Servlet으로 변환되서 변환 Servlet이 실행됨
+		
+
+JSP 구성요소 및 사용방법
+1. 디렉티브 : JSP 페이지 내에서 페이지 설정
+2. 스크립트 : JSP 페지이 내에서 Java코드를 사용하도록 하는 부분
+3. JSP 내장객체 : JSP가 제공하는 기본 객체(PageContext, Session, Request, ApplicationContext 등등)
+4. 표현언어 : 변수 값을 화면에 쉽게 표현 할 수 있도록 만들어 주는 언어
+5. 액션태그 : JSP에서 자주 사용되는 복잡한 기능들을 사용하기 쉽게 미리 만들어놓은 태그 
+6. JSTL  : 자주 사용되는 태그들의 기능을 모아놓은 라이브러리
+
+디렉티브 지시자 : <%@ 디렉티브이름 속성 = "값" 속성 = "값" %>
+	ex) <%@ page ..... %>  = page 디렉티브에 대한 설정
+	: page 속성(charSet = 페이지에서 작성할 문자인코딩 선언, 
+			   contentType = 생성할 문서에 대한 타입 선언,
+			   import = 외부클래스 사용하기 위한 선언, 
+			   pageEncoding = 웹 컨테이너가 jsp를 읽을 때의 인코딩 지정
+	
+	
+스크립트 : JSP내에서 Java를 사용 할 때 작성 (선언부, 표현부, 스크립트릿)
+ - 선언부 : Java코드에서 선언문을 작성 할 때 사용 (변수나 메소드 선언 시)
+ 		<%!	~~~~~  %> 형식
+ - 표현부 : Java코드에서 사용한 변수에 있는 값이나 메소드 실행결과 혹은 연산의 결과를 화면에 출력하기 위해 사용
+ 		<%= ~~~~~  %> 형식
+ - 스크립트릿 : 명령문의 실행부분, 연산,메소드 호출등
+ 		<%  ~~~~~  %> 형식
+	
