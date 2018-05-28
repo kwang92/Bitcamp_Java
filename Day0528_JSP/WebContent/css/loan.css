@@ -1,0 +1,20 @@
+table,tr,td{
+	border : 1px solid black;
+	border-collapse : collapse;
+	text-align: center;
+}
+table{
+	width : 400px;
+	margin : 0 auto;
+	margin-top : 200px;
+}
+td{
+	padding : 10px;
+	text-align: center;
+}
+th{
+	background-color: lightgray;
+}
+input{
+	border : 0;
+}

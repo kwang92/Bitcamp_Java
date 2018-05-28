@@ -23,6 +23,7 @@
 		
 		user_Dao = new UserDAO();
 		User usr = new User(id,pwd,name);
+		request.setAttribute("user_Info", usr);
 		boolean isIn = user_Dao.addUser(usr);
 		
 		RequestDispatcher dispatcher;

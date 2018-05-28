@@ -1,0 +1,17 @@
+table,td,th{
+	border : 1px solid black;
+	border-collapse : collapse;
+	width : 580px;
+	text-align: center;
+}
+table{
+	margin : 0 auto;
+	margin-top : 200px;
+	margin-bottom : 200px;
+}
+th{
+	background-color: lightgray;
+}
+td{
+	padding : 5px;
+}

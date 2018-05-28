@@ -10,9 +10,6 @@
 	<script type = "text/javascript">
 		alert("로그인 실패");
 	</script>
-	<%
-		String id = request.getParameter("id");
-	%>
-	<%=id %>님 누군지 모르겠습니다.
+	<%= request.getAttribute("reason") %>
 </body>
 </html>

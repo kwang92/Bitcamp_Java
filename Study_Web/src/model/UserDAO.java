@@ -30,11 +30,13 @@ public class UserDAO {
 		PreparedStatement pstmt = null;
 		
 		try{
-			sql = "insert into user_table values(?,?,?)";
+			sql = "insert into user_table values(?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, usr.getUserid());
 			pstmt.setString(2, usr.getUserpwd());
 			pstmt.setString(3, usr.getName());
+			pstmt.setString(4, usr.getGender());
+			pstmt.setString(5, usr.getBirth());
 			pstmt.executeUpdate();
 			
 			return true;
@@ -43,7 +45,7 @@ public class UserDAO {
 		} 
 		return false;
 	}
-	public boolean checkUser(User usr) {
+	public int checkUser(User usr) {
 		String sql = "";
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -55,8 +57,9 @@ public class UserDAO {
 				String pwd = rs.getString("userpwd");
 		
 				if(pwd.equals(usr.getUserpwd())) {
-					return true;
+					return 2;
 				}
+				return 1;
 				
 			}
 		} catch (SQLException e) {
@@ -65,6 +68,6 @@ public class UserDAO {
 		}
 		
 		
-		return false;
+		return 0;
 	}
 }
