@@ -28,7 +28,8 @@ public class loginServlet extends HttpServlet{
 		RequestDispatcher dispatcher;
 		String next_Page = "index.jsp";
 	 	if(check == 2){
-	 		next_Page = "loginSuccess.jsp";	
+	 		req.getSession().setAttribute("id", id);
+	 		next_Page = "mainPage.jsp";	
 	 	} else if (check == 1){
 	 		req.setAttribute("reason", "비밀번호가 틀렸습니다.");
 	 	} else{

@@ -7,9 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<script type = "text/javascript">
-		alert("로그인 실패");
-	</script>
-	<%= request.getAttribute("reason") %>
+	<%
+		String id = (String)request.getSession().getAttribute("user_id");
+	%>
+	현재 접속중인 아이디  세션 : <%= id %>
+	<button onclick = "location.href='logout'">로그아웃</button>
 </body>
 </html>

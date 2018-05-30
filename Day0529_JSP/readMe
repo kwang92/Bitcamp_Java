@@ -1,0 +1,25 @@
+JSP 액션태그 (Action Tag)
+: JSP 페이지 내에서 자바코드를 기술 할 때 가독성을 높이기 위한 방법
+
+ex)
+	<%
+		Student s = new Student();
+	%>
+	와
+	<jsp:useBean id = "s" class = "Student">
+	는 같은 역할을 수행한다.
+	
+ * 액션태그의 종류
+ 1. <jsp:forward> : 포워딩 방식으로 다른 페이지로 이동할 때 사용
+ 2. <jsp:include> > : 페이지의 모듈화를 위해 사용
+ 3. <jsp:param> : <jsp:forward>,<jsp:include>등과 함께 사용되는 것으로, 새로운 페이지로 넘어가거나 추가 할 때 파라미터를 추가하기 위해 사용
+ 4. <jsp:useBean> : bean을 생성하고 사용하기 위한 태그
+ 5. <jsp:setProperty> : bean의 속성값을 할당하기 위한 태그
+ 6. <jsp:getProperty> : bean의 속성값을 가져오기 위한 태그
+ 
+ 
+ 
+ * 페이지 모듈화
+ 1. <jsp:include>  액션태그 : 포함되는 페이지가 서블릿으로 변환 후 소스에 포함
+ 2. <%@ include @> 디렉티브 : 모듈 코드를 부모코드에 삽입하여 변환 실행
+ == 특정 페이지내에서 다른 페이지를 삽입해서 사용

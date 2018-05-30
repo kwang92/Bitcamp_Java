@@ -1,0 +1,10 @@
+$(function(){
+	$("#board").mousedown(function(){
+		$("#target").attr("src","board.jsp");
+	});
+	$("#myPage").mousedown(function(){
+		$("#target").css("height","500px");
+		$(section).css("height","500px");
+		$("#target").attr("src","myInfo.jsp");
+	});
+});

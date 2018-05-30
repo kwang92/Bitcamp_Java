@@ -66,8 +66,27 @@ public class UserDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		return 0;
+	}
+	public User selectUser(String id) {
+		User usr = null;
+		String sql = "select * from user_table where userid = '"+id+"'";
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				usr = new User(rs.getString("userid"),rs.getString("userpwd"),
+								rs.getString("uname"),rs.getString("ugender")
+								,rs.getString("birth"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return usr;
 	}
 }

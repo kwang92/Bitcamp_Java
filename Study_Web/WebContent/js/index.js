@@ -21,3 +21,7 @@ function down(e){
 	}
 	
 };
+function sub_click(){
+	alert("클릭");
+	frm1.submit();
+};

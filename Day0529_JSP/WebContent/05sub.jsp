@@ -7,9 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-		String id = request.getParameter("user_id");
-	%>
-	<p><%= id %>님 환영합니다.</p>
+	<jsp:include page = "05header.jsp"/>
+	<hr>
+	<h2>여기는 서브 페이지 입니다.</h2>
+	<a href = "05main.jsp">메인으로 이동</a>
+	<hr>
+	<jsp:include page = "05footer.jsp"/>
 </body>
 </html>

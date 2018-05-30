@@ -17,6 +17,13 @@ public class User {
 		this.userpwd = userpwd;
 		this.name = name;
 	}
+	public User(String id, String pwd, String name, String gender, String birth) {
+		this.userid = id;
+		this.userpwd = pwd;
+		this.name = name;
+		this.gender = gender;
+		this.birth = birth;
+	}
 	public String getUserid() {
 		return userid;
 	}
