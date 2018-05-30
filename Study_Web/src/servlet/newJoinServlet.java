@@ -43,7 +43,7 @@ public class newJoinServlet extends HttpServlet{
 			case "name":
 				usr.setName(req.getParameter(name));
 				break;
-			case "check_gender":
+			case "mail":
 				usr.setGender(req.getParameter(name));
 				break;
 			case "year": case "month": case "day":
