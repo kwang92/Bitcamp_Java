@@ -25,6 +25,8 @@ public class MemberServlet extends HttpServlet{
 	}
 	
 	protected void doProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 		String uri = req.getRequestURI();
 		String contextPath = req.getContextPath();
 
@@ -66,13 +68,14 @@ public class MemberServlet extends HttpServlet{
 					break;
 				}
 			}
-			mem.setRegDate(new Date());
 			
 			String target;
 			if(ms.join(mem)) {
+				System.out.println("서블릿 : 가입성공");
 				target = "loginForm";
 //				req.getSession().setAttribute("id", mem.getId());
 			} else {
+				System.out.println("서블릿 : 가입실패");
 				target = "joinForm";
 			}
 			resp.sendRedirect(target);
@@ -97,9 +100,23 @@ public class MemberServlet extends HttpServlet{
 			
 			MemberService ms = new MemberService();
 			Member member = ms.getMember((String)req.getSession().getAttribute("id"));
-			
+			member.setPw(pwd);
+			member.setName(name);
+			member.setEmail(mail);
+			if(ms.modifyMem(member)) {
+				resp.sendRedirect("main");
+				return;
+			}
+			resp.sendRedirect("modify");
 		}
 		else if(uri.equals(contextPath+"/logout")){	// memberList페이지 요청이 들어왔을 때
+			req.getSession().removeAttribute("id");
+			resp.sendRedirect("loginForm");
+		}
+		else if(uri.equals(contextPath+"/outjoin")){	// memberList페이지 요청이 들어왔을 때
+			MemberService ms = new MemberService();
+			ms.del((String)req.getSession().getAttribute("id"));
+			req.getSession().removeAttribute("pwd");
 			req.getSession().removeAttribute("id");
 			resp.sendRedirect("loginForm");
 		}

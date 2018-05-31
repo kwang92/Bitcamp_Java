@@ -23,29 +23,11 @@
 <script src="<%=path %>/js/join.js"></script>
 </head>
 <body>
-	<%
-		
-		if( request.getAttribute("join_res") != null ){
-			if(request.getAttribute("join_res").equals("SUC")){
-			%>
-			<script type = "text/javascript">
-				alert("가입성공");
-			</script>
-			
-			<%
-			}else{
-				%>
-				<script type = "text/javascript">
-				alert("가입실패");
-				</script>
-				<%
-			}
-		}
-	%>
+
 	<div id="wrap">
 		<div id="join">
 			<img src = "<%=path %>/img/logo.PNG" id = "logo">
-			<form action="addUser">
+			<form action="addUser" method = "POST">
 				<table>
 					<tr class = "input_info">
 						<td colspan="2"><input type="text" name="id"

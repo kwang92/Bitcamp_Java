@@ -9,15 +9,12 @@ public class Member {
 	private String email;
 	private Date regDate;	// ¿À´Ã ³¯Â¥
 	
-	public Member() {
-		this.regDate = new Date();
-	}
+	public Member() {}
 	public Member(String id, String pw, String name, String email) {
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
 		this.email = email;
-		this.regDate = new Date();
 	}
 	public Member(String id, String pw, String name, String email, Date regDate) {
 		this.id = id;

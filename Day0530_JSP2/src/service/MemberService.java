@@ -8,7 +8,7 @@ import model.Member;
 public class MemberService {
 	// login, logout, join(Member), modify(Member) 구현할 클래스
 	private MemberDAO dao;
-	
+
 	public MemberService() {
 		dao = new MemberDAO();
 	}
@@ -26,31 +26,30 @@ public class MemberService {
 		}
 		return reason;
 	}
-	public boolean del(String nowId,String inPw) {
-		if(dao.deleteUser(nowId, inPw)) {
+	public boolean del(String nowId) {
+		if(dao.deleteUser(nowId)) {
 			return true;
 		}
 		return false;
 	}
 	public boolean join(Member mem) {
-		boolean work = true;
-		
-		if(dao.selectOne(mem.getId()) != null) {
-			work = false;
+		boolean work = false;
+
+		if(dao.addMember(mem)) {
+			System.out.println("서비스에서 이프문");
+			work = true;
 		}
-		else{
-			if(dao.addMember(mem)) {
-				work = true;
-			}
-		}		
+
 		return work;
 	}
 	public Member getMember(String id) {
 		return dao.selectOne(id);
 	}
 	public boolean modifyMem(Member member) {
-		
-		
+		if(dao.updateMember(member)) {
+			return true;
+		}
+
 		return false;
 	}
 	public ArrayList<Member> showAllMembers() {

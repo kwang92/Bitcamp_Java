@@ -1,12 +1,19 @@
 <%@page import="model.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%! String pw; %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous">
+</script>
+
 <style type = "text/css">
 	form{
 		width : 100%;
@@ -28,9 +35,12 @@
 	input{
 		border : 0;
 	}
+	.end{
+		text-align: right;
+	}
 </style>
 <body>
-		<form action = "modifyCom">
+		<form action = "modifyCom" name = "modi"   onSubmit = "return false"  method = "POST">
 			<table>
 			<%
 				Member mem = (Member)request.getSession().getAttribute("member");
@@ -52,8 +62,11 @@
 					<th>이메일</th>
 					<td><input type = "text" name = "mail"  value = "<%=mem.getEmail()%>"></td>
 				</tr>				
-				<tr>
-					<th colspan = "2"><input type = "submit" value = "수정완료"></th>
+				<tr class = "end">
+					<th colspan = "2">
+						<button id = "submit" onclick = "modi.submit()">수정완료</button>
+						<button id = "out" onclick = "location.href = 'outjoin'">회원탈퇴</button>
+					</th>
 				</tr>
 			</table>
 		</form>	

@@ -26,7 +26,7 @@ public class MemberDAO {
 	}
 	// insert, update, delete, select, selectAll 구현
 	public boolean addMember(Member m) {
-		String sql = "insert into member_table values(?,?,?,?,?)";
+		String sql = "insert into member_table (memid, mempw, memname, mememail) values(?,?,?,?)";
 		PreparedStatement pstmt = null;
 		
 		try {
@@ -35,8 +35,8 @@ public class MemberDAO {
 			pstmt.setString(2, m.getPw());
 			pstmt.setString(3, m.getName());
 			pstmt.setString(4, m.getEmail());
-			pstmt.setDate(5, new java.sql.Date(m.getRegData().getTime()));
 			pstmt.executeQuery();
+			conn.commit();
 			return true;
 			// util 의 Date형식을 sql 의 Date형식으로 변환
 		} catch (SQLException e) {
@@ -45,8 +45,8 @@ public class MemberDAO {
 		}		
 		return false;
 	}
-	public boolean deleteUser(String id, String pw) {
-		String sql = "delete from member_table where memid = '"+id+"'"+" and mempw = '"+pw+"'";
+	public boolean deleteUser(String id) {
+		String sql = "delete from member_table where memid = '"+id+"'";
 		Statement stmt = null;
 		
 		try {
@@ -59,16 +59,31 @@ public class MemberDAO {
 		}
 		return false;
 	}
+	
 	public boolean updateMember(Member m) {
 		String sql = "update member_table set mempw = ?"
 										+", memname = ?"
 										+", mememail = ?"
-										+
+										+" where memid = '"+m.getId()+"'"; 
 		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getPw());
+			pstmt.setString(2, m.getName());
+			pstmt.setString(3, m.getEmail());
+			pstmt.executeUpdate();
+			
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		return false;
 	}
+	
 	public Member selectOne(String id) {
 		Member m = null;
 		String sql = "select * from member_table where memid = '"+id+"'";
