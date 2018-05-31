@@ -2,6 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 
 <html>
@@ -36,20 +37,17 @@
 			<tr>
 				<th>아이디</th><th>비밀번호</th><th>이름</th><th>이메일</th><th>가입일</th>
 			</tr>
-			<%
-				ArrayList<Member> memList = (ArrayList<Member>)request.getSession().getAttribute("members");
-				for(int i = 0; i < memList.size(); i++){
-					%>
-					<tr>
-						<td><%=memList.get(i).getId()%></td>
-						<td><%=memList.get(i).getPw()%></td>
-						<td><%=memList.get(i).getName()%></td>
-						<td><%=memList.get(i).getEmail()%></td>
-						<td><%=memList.get(i).getRegData()%></td>
-					</tr>
-					<%
-				}
-			%>
+
+			<c:forEach items = "${members}" var = "member">
+				<tr>
+					<td>${member.id}</td>
+					<td>${member.pw}</td>
+					<td>${member.name}</td>
+					<td>${member.email}</td>
+					<td>${member.regDate}</td>
+				</tr>
+			</c:forEach>
+
 			<tr class = "end">
 				<td  class = "end" colspan = "5">
 					<button onclick = "location.href = 'stepback'">뒤로가기</button>

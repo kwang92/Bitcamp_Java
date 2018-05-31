@@ -47,7 +47,7 @@ public class Member {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getRegDate() {
+	public Date getRegData() {
 		return this.regDate;
 	}
 	public void setRegDate(Date regDate) {
