@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionProvider {
-	private final static String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-	private final static String USER = "kwangmin";
-	private final static String PWD = "1";
-	
+	private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+	private static final String USER = "kwangmin";
+	private static final String PWD = "1";
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+		Connection conn;
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection conn = DriverManager.getConnection(URL, USER, PWD);
+		conn = DriverManager.getConnection(URL, USER, PWD);
 		return conn;
 	}
 }

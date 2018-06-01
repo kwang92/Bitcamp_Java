@@ -37,7 +37,7 @@
 			<tr>
 				<th>아이디</th><th>비밀번호</th><th>이름</th><th>이메일</th><th>가입일</th>
 			</tr>
-
+			
 			<c:forEach items = "${members}" var = "member">
 				<tr>
 					<td>${member.id}</td>

@@ -15,7 +15,6 @@ public class MemberDAO {
 	public MemberDAO() {
 		try {
 			this.conn = ConnectionProvider.getConnection();
-			System.out.println("연결완료");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

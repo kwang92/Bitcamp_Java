@@ -15,13 +15,19 @@
 		begin : 시작 index
 		end : 끝 index
 		step : 증감 값
+		
+		[varStatus] 속성 : index, count에 접근 가능
+		- index : 실행중인 index 
+		  count : 루프실행 횟수
+		  first : 루프실행이 첫 번째 실행이면 true, 아니면 false
+		  last  : 루프실행이 마지막번째면 true, 아니면 false
 	--%>
 	<%
 		String[] movieList = {"독전","데드풀2","데자뷰","스탠바이 웬디","어벤져스"};
 		request.setAttribute("mList", movieList);
 	%>
-	<c:forEach items = "${mList}" var = "movie">
-		${movie}<br>
+	<c:forEach items = "${mList}" var = "movie" varStatus = "status" step = "2">
+		${movie} : index = ${status.index}, count = ${status.count}, first = ${status.first}, last = ${status.last} <br>
 	</c:forEach>
 	<%-- 요런식으로 반복해서 값을 가져온다 for(String movie : movieList)와 동일 --%>
 	
