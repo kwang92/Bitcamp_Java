@@ -1,0 +1,38 @@
+* Ajax(Asynchronous Javascript and XML) : 특정 URL로 요청을 보내서 데이터를 받아오기 위해서 사용
+ - 비동기 방식 : 화면을 그려놓고 데이터를 나중에 채워 놓는다 (화면과 데이터가 동기적이지 않음)
+ - JQuery에 있는 메소드로 작성 시 JQuery 이용
+ 
+ : Ajax를 이용하면 화면은 그대로인 상태에서 데이터만 받아오고 목록만 다시 그릴 수 있다.
+ 
+ load() : 외부에 있는 컨텐츠를 가져올 때 사용
+ 		: $(요소).load(url, data, 콜백);  <-- 요소에 데이터를 집어넣는 방식
+ 		
+ ajax() : http 프로토콜을 이용해서 요청을 전송할 수 있고, 데이터를 text, json, xml 형태로 받아 올 수 있음
+        : $.ajax({옵션}); 
+        : $.ajax({
+        	  url : "전송url",
+        	  type : "전송방식(get|post)",
+        	  data : "전솔항 데이터",
+        	  dataType : 요청 데이터 타입
+        	  success : function(result){
+        	   	  요청이 제대로 전송되었을 때 실행하는 함수
+        	  }
+        	  error : function(){
+        	  	  요청이 실패 했을 때 실행하는 함수
+        	  }
+          });
+          
+          
+JSON (Javascript Object Nation) 
+: 자바 스크립트 객체 표기법 ,client와 서버간 정보를 교환하기 위해서 사용
+{	
+	"key1" : value1,
+	"key2" : value2
+	"key3" : [{k:v},{k:v},{k:v}]
+}
+
+
+command pattern : 요청은 그대로인데 파라미터에 상세 요청을 의미하는 파라미터를 하나 만들어서 파라미터로 요청을 구분
+ex)  /member?command=join&userid=hong&pw=123
+ex)  /member?command=memberList
+ajax에 많은 데이터 담아서 전송 및 처리하기

@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +14,8 @@ import service.MessageService;
 
 public class MessageServlet extends HttpServlet{
 	private MessageService service;
-	private ArrayList<Message> msgList;
-	private int count;
 	public MessageServlet() {
-		service = new MessageService();
-		msgList = service.getAllMsg();
-		if(msgList.size() > 0) {
-			count = msgList.get(msgList.size()-1).getId();
-		}else {
-			count = 0;
-		}
+		service = MessageService.getInstance();
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,21 +32,38 @@ public class MessageServlet extends HttpServlet{
 		String path = req.getContextPath();
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
+		/*
 		if(uri.equals(path+"/messageList")) {
-			req.getSession().setAttribute("msgs", msgList);
+			ArrayList<Message> msgList = service.getAllMsg();
+			req.setAttribute("msgs", msgList);
+			req.getRequestDispatcher("messageList.jsp").forward(req, resp);
+		}*/
+		if(uri.equals(path+"/messageList")) {
+			int pageNumber = 1;
+			String strPageNumber = req.getParameter("page");
+			
+			if(strPageNumber != null) {
+				pageNumber = Integer.parseInt(strPageNumber);
+			}
+			//페이지 네비게이션 출력을 위한 정보를 전달
+			Map<String, Object> viewData 
+			= service.getMessageList(pageNumber);
+			
+			req.setAttribute("viewData",viewData);
+			
 			req.getRequestDispatcher("messageList.jsp").forward(req, resp);
 		}
 		else if(uri.equals(path+"/write")) {
 			Message msg = new Message(req.getParameter("password"), req.getParameter("name"), req.getParameter("context"));
 			if(service.writeMsg(msg)) {
-				msgList.add(msg);
-				
-				if(msgList.size() != 1) {
-					msgList.get(msgList.size()-1).setId(++count);
-				}
-				req.getSession().setAttribute("msgs", msgList);
 				resp.sendRedirect("messageList");
 			}
+		}
+		else if(uri.equals(path+"/del")) {
+			int id = Integer.parseInt(req.getParameter("id"));
+			String pwd = req.getParameter("pwd");
+			service.delText(id, pwd);
+			resp.sendRedirect("messageList");
 		}
 	}
 }

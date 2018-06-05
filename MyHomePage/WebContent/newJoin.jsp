@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	    <% String path = request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,8 @@
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous">
 </script>
-
+<link rel="stylesheet" type="text/css" href= "<%=path %>/css/newJoin.css">
+<script src="<%=path %>/js/newJoin.js"></script>
 <style type = "text/css">
 	#error{
 		display : none;
@@ -19,7 +21,7 @@
 		color : red;
 	}	
 </style>
-<script src="./js/newJoin.js"></script>
+
 </head>
 <body>
 	<%
@@ -44,7 +46,7 @@
 	<div id="wrap">
 		<div id="join">
 			<img src = "./img/logo.PNG" id = "logo">
-			<form action="newJoin">
+			<form action="newJoin" method = "POST">
 				<table>
 					<tr class = "input_info">
 						<td colspan="2"><input type="text" name="id"
@@ -69,6 +71,28 @@
 								type="radio" name="check_gender" value="M">남자</label> <label
 							class="gender_op" onmousedown="clicked(this)"><input
 								type="radio" name="check_gender" value="F">여자</label></td>
+					</tr>
+					<tr class = "birth">
+						<td>생일</td>
+						<td class = "birth">
+							<input type = "text" name = "year" placeholder = "년(4자)">
+							<select name = "month">
+								<option value = "">월</option>
+								<option value = "01">1월</option>
+								<option value = "02">2월</option>
+								<option value = "03">3월</option>
+								<option value = "04">4월</option>
+								<option value = "05">5월</option>
+								<option value = "06">6월</option>
+								<option value = "07">7월</option>
+								<option value = "08">8월</option>
+								<option value = "09">9월</option>
+								<option value = "10">10월</option>
+								<option value = "11">11월</option>
+								<option value = "12">12월</option>
+							</select>
+							<input type = "text" name = "day" placeholder = "일">
+						</td>
 					</tr>
 				</table>
 

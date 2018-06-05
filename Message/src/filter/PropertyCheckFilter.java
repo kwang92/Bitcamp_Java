@@ -27,7 +27,7 @@ public class PropertyCheckFilter implements Filter{
 		if(((HttpServletRequest)req).getSession().getAttribute("msgs") == null) {
 			((HttpServletRequest)req).getSession().setAttribute("msgs", new Message());
 		}*/
-		
+
 		chain.doFilter(req, resp);
 	}
 
