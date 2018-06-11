@@ -62,9 +62,13 @@ public class NullParameterRequestWrapper extends HttpServletRequestWrapper {
 	//////////// 우리가 만들어야하는 기능 메소드 /////////////////////
 	public void checkNull(String[] names) {
 		// 우리가 지정한 파라미터가 없으면, 파라미터를 추가해준다.
+		System.out.println("in");
 		for(String pName : names) {
+			
 			if( !( this.parameterMap.containsKey(pName) ) ) {
 				String[] values = new String[] {"없음"};
+				System.out.println(pName);
+				System.out.println(values);
 				this.parameterMap.put(pName, values);
 			}
 		}

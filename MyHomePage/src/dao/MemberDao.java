@@ -29,6 +29,30 @@ public class MemberDao {
 		}
 		return dao;
 	}
+	
+	public boolean updateMember(Member member) {
+		String sql = "update page_member set"
+				+ " password = ?,"
+				+ " name = ?,"
+				+ " email = ?,"
+				+ " picture = ?"
+				+ " where mem_id = '"+member.getMem_id()+"'";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getPassword());
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, member.getEmail());
+			pstmt.setBytes(4, member.getProfile());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 	public Member selectOne(String id) {
 		Member member = null;
 		String sql = "select * from page_member where mem_id = '"+id+"'";
@@ -41,16 +65,18 @@ public class MemberDao {
 			
 			if(rs.next()) {
 				member = new Member(rs.getString("mem_id"),rs.getString("password"),rs.getString("name"),rs.getString("email"));
+
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println("세션 멤버아이디 : "+member.getMem_id());
 		return member;
 	}
 	public boolean addMember(Member member) {
-		String sql = "insert into page_member values(?,?,?,?)";
+		String sql = "insert into page_member(mem_id,password,name,email) values(?,?,?,?)";
 		PreparedStatement pstmt = null;
 		
 		try {

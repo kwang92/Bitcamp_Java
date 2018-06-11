@@ -5,7 +5,15 @@ public class Member {
 	private String password;
 	private String name;
 	private String email;
+	private int totalWrite;
+	private byte[] profile;
 	
+	public int getTotalWrite() {
+		return totalWrite;
+	}
+	public void setTotalWrite(int totalWrite) {
+		this.totalWrite = totalWrite;
+	}
 	public Member() {}
 	public Member(String mem_id, String password) {
 		this.mem_id = mem_id;
@@ -40,6 +48,12 @@ public class Member {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public byte[] getProfile() {
+		return profile;
+	}
+	public void setProfile(byte[] profile) {
+		this.profile = profile;
 	}
 	
 	

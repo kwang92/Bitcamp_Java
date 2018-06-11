@@ -11,8 +11,9 @@
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous">
 </script>
-<link rel="stylesheet" type="text/css" href= "<%=path %>/css/main.css">
-<script src="<%=path %>/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href= "<%=path %>/css/main.css?ver=6">
+<script src="<%=path %>/js/main.js?ver=4"></script>
+
 </head>
 <body>
 	<div id = "header_wrap">
@@ -21,13 +22,25 @@
 			<ul>
 				<li id = "board">게시판</li>
 				<li id = "myPage">마이페이지</li>
+				<li id = "logInOut"><a href = "logout" style = "color : white; text-decoration : none; font-weight : bold">로그인</a></li>
 			</ul>
 		</header>
 	</div>
+	
+	<div id = "aside_wrap">
+		<aside>
+			<ul>
+				<li>영업부</li>
+				<li>기획부</li>
+				<li>개발부</li>
+			</ul>
+		</aside>
+	</div>
 	<div id = "content_wrap">
+		
 		<section>
 			<article>
-				<iframe id = "target" width = "100%" height = "980px"></iframe>
+				<iframe id = "target" width = "100%" height = "680px" name = "myFrame"></iframe>
 			</article>
 		</section>
 	</div>

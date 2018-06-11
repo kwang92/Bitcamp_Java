@@ -22,4 +22,15 @@
 		<url-pattern>*.js</url-pattern>
 		<url-pattern>*.PNG</url-pattern>
 	</servlet-mapping>
+
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/WriteBoard.jsp</url-pattern>
+		<url-pattern>/myPage.jsp</url-pattern>
+	</filter-mapping>
+
 </web-app>

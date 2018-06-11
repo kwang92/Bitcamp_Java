@@ -6,6 +6,7 @@ public class Board {
 	private String context;
 	private String mem_id;
 	private String writer;
+	private int viewCount;
 	
 	public Board() {}
 	public Board(String title, String context) {
@@ -41,6 +42,17 @@ public class Board {
 	}
 	public void setWriter(String writer) {
 		this.writer = writer;
+	}
+	public int getViewCount() {
+		return viewCount;
+	}
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+	@Override
+	public String toString() {
+		return "Board [b_id=" + b_id + ", title=" + title + ", context=" + context + ", mem_id=" + mem_id + ", writer="
+				+ writer + ", viewCount=" + viewCount + "]";
 	}
 	
 	

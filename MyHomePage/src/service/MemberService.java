@@ -36,4 +36,10 @@ public class MemberService {
 		
 		return false;
 	}
+	public boolean infoModify(Member member) {
+		if(dao.updateMember(member)) {
+			return true;
+		}
+		return false;
+	}
 }

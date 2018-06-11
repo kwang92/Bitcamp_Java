@@ -44,9 +44,30 @@ a:visited{
 }
 section{
 	width : 980px;
-	
 	margin : 0 auto;
 	margin-top : 80px;
 	height : 980px;
-	border : 1px solid yellow;
 }
+#aside_wrap{
+	display : none;
+	float : left;
+	position : fixed;
+	top : 0px;
+	left : 0px;
+	margin-left : 120px;
+	margin-top : 200px;
+	width : 300px;
+}
+aside ul{
+	border : 1px solid black;
+	text-align : center;
+	list-style-type: none;
+	background-color: black;
+	border-radius : 20px;
+	opacity: 0.3;
+	border : 1px solid gray;
+}
+aside li{
+	margin : 20px 0 20px 0;
+	color : white;
+}	

@@ -1,10 +1,18 @@
 $(function(){
 	$("#board").mousedown(function(){
-		$("#target").attr("src","board.jsp");
+		$("#target").attr("src","boardList.jsp");
+		$("#aside_wrap").css("display","block");
 	});
 	$("#myPage").mousedown(function(){
-		$("#target").css("height","500px");
-		$(section).css("height","500px");
-		$("#target").attr("src","myInfo.jsp");
+		$("#target").attr("src","myPage.jsp");
+		$("#aside_wrap").css("display","none");
+	});
+	$("#logInOut").mousedown(function(){
+		alert($("#logInOut").text());
+		if($("#logInOut").text() == "로그인"){
+			$("#target").attr("src","loginForm.jsp");
+		}else{
+			location.href = "logout";
+		}
 	});
 });

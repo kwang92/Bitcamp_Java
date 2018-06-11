@@ -2,5 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-	response.sendRedirect("login");
+//	response.sendRedirect("login");
+	response.sendRedirect("mainForm.jsp");
 %>

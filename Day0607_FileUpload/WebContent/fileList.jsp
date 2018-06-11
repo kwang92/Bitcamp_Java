@@ -8,17 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table>
-		<tr>
-			<th>번호</th><th class = "title">제목</th><th>작성자</th>
-		</tr>
-		<c:forEach items = "${viewPage.board}" var = "board">
-			<tr>
-				<td>${board.b_id}</td>
-				<td>${board.title}</td>
-				<td>%{board.writer}</td>
-			</tr>
-		</c:forEach>
-	</table>
+	<button onclick = "location.href = 'file?command=fileList'">리스트 요청</button><hr>
+	<c:forEach items = "${fileList}" var = "file">
+		<a href = "file?command=download&filename=${file}">${file}</a><br>
+	</c:forEach>
 </body>
 </html>

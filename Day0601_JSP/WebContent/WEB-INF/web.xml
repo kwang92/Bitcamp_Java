@@ -15,7 +15,7 @@
 		<!-- 필터 초기화에 필요한 파라미터가 있으면 작성 저희 예제에서는 추가해야 할 파라미터의 이름 -->
 		<init-param>
 			<param-name>parameterNames</param-name>
-			<param-value>id,name</param-value>
+			<param-value>command</param-value>
 		</init-param>
 	</filter>
 	

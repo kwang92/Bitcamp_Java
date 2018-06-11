@@ -1,0 +1,56 @@
+게시판 만들기 (CRUD)
+게시글 쓰기
+게시글 수정
+게시글 삭제
+게시글 조회
+-------기능---------
+게시글 목록보기 : 페이징 처리
+상세글 보기
+새 글쓰기
+글 수정하기
+글 삭제하기
+
+
+
+-------화면----------
+boardList.jsp
+boardView.jsp
+boardWrite.jsp
+boardModify.jsp
+boardCheckPassword.jsp
+result.jsp
+
+------ 데이터 --------
+글 번호 : 정수, 자동증가(sequence) , number primary key (board_sequence)
+글 제목 : 문자열 , title varchar2(50) not null
+글 쓴이 : 문자열 , name varchar2(30) not null 
+비밀번호: 문자열 , pass varchar2(50) not null
+이메일 : 문자열 , email varchar2(50) not null unique
+내용   : 문자열 , content varchar2(1000)
+조회수 : 정수 , readCount number(10) default as 0
+게시일 : 날짜, writeDate Date default as sysdate
+
+
+-------- 요청 목록 ----------
+- 게시글
+board_list
+
+- 상세 글 보기
+board_view
+
+- 글쓰기
+board_write_form
+board_write
+
+- 글 수정/삭제
+board_check_pass_form
+board_check_pass
+board_update_form
+board_update
+board_delete
+
+--------------------------------
+1. 프로젝트 환경설정
+2. 테이블 만들기
+3.  ( BoardDao, BoardService, )= singleton 패턴 , BoardServlet = command패턴
+4. 화면구현
