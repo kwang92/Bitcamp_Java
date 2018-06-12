@@ -13,7 +13,7 @@ $(function(){
 	//		location.href = "imageReq";
 			$("#target").attr("src","loginForm.jsp");
 		}else{
-			location.href = "logout";
+			location.href = "board?cmd=logout";
 		}
 	});
 	

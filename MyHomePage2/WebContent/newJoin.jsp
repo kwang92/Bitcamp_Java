@@ -45,7 +45,8 @@
 	<div id="wrap">
 		<div id="join">
 			<img src = "./img/logo.PNG" id = "logo">
-			<form action="newJoin" method = "POST" onSubmit = "return submitCheck()">
+			<form action="board" method = "POST" onSubmit = "return submitCheck()">
+				<input type = "hidden" name = "cmd" value = "newJoin">
 				<table>
 					<tr class = "input_info">
 						<td colspan="2"><input type="text" name="id" id = "id"

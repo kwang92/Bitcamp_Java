@@ -43,19 +43,18 @@ public class PageServlet extends HttpServlet{
 	protected void doProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		String url = req.getRequestURI();
-		String path = req.getContextPath();
-		System.out.println("페이지 서블릿");
-		if(url.equals(path+"/")) {
+		
+		String cmd = req.getParameter("cmd");
+		if(cmd.equals("/")) {
 			resp.sendRedirect("mainForm.jsp");
 		}
-		else if(url.equals(path+"/login")) {
+		else if(cmd.equals("login")) {
 			resp.sendRedirect("loginForm");
 		}
-		else if(url.equals(path+"/loginForm")) {
+		else if(cmd.equals("loginForm")) {
 			req.getRequestDispatcher("loginForm.jsp").forward(req, resp);
 		}
-		else if(url.equals(path+"/loginCheck")) {	// Member 로그인 체크 method
+		else if(cmd.equals("loginCheck")) {	// Member 로그인 체크 method
 			String input_id = req.getParameter("id");
 			String input_pwd = req.getParameter("pwd");
 
@@ -73,13 +72,13 @@ public class PageServlet extends HttpServlet{
 				req.getSession().setAttribute("reason", "비밀번호가 틀렸습니다.");
 			}
 		}
-		else if(url.equals(path+"/mainForm")) {
+		else if(cmd.equals("mainForm")) {
 			req.getRequestDispatcher("mainForm.jsp").forward(req, resp);
 		}
-		else if(url.equals(path+"/main")) {
+		else if(cmd.equals("main")) {
 			resp.sendRedirect("mainForm");
 		}
-		else if(url.equals(path+"/newJoin")) {
+		else if(cmd.equals("newJoin")) {
 			Enumeration<String> names = req.getParameterNames();
 			Member member = new Member();
 			String email = "";
@@ -112,13 +111,13 @@ public class PageServlet extends HttpServlet{
 			System.out.println("가입실패");
 			req.getRequestDispatcher("login").forward(req, resp);
 		}
-		else if(url.equals(path+"/newjoinForm")) {
+		else if(cmd.equals("newjoinForm")) {
 			req.getRequestDispatcher("newJoin.jsp").forward(req, resp);
 		}
-		else if(url.equals(path+"/writePage")) {
+		else if(cmd.equals("writePage")) {
 			resp.sendRedirect("WriteBoard.jsp");
 		}
-		else if(url.equals(path+"/write")) {
+		else if(cmd.equals("write")) {
 			String title = req.getParameter("title");
 			String context = req.getParameter("context");
 			Board brd = new Board(title,context);
@@ -126,11 +125,11 @@ public class PageServlet extends HttpServlet{
 			bService.writeBoard(brd, mem);
 			resp.sendRedirect("boardList");
 		}
-		else if(url.equals(path+"/boardList")) {
+		else if(cmd.equals("boardList")) {
 			req.getRequestDispatcher("boardList.jsp").forward(req, resp);
 		}
 
-		else if(url.equals(path+"/reqList")) {
+		else if(cmd.equals("reqList")) {
 
 			List<Board> bList = bService.getAllBoards();
 			String result = "";
@@ -141,7 +140,7 @@ public class PageServlet extends HttpServlet{
 			}
 			resp.getWriter().println(result);
 		}
-		else if(url.equals(path+"/optionList")) {
+		else if(cmd.equals("optionList")) {
 			List<Board> bList;
 			String option = req.getParameter("option");
 			String info = req.getParameter("info");
@@ -156,11 +155,11 @@ public class PageServlet extends HttpServlet{
 			String result = new Gson().toJson(bList);
 			resp.getWriter().println(result);
 		}
-		else if(url.equals(path+"/logout")) {
+		else if(cmd.equals("logout")) {
 			req.getSession().removeAttribute("user");
 			req.getRequestDispatcher("main").forward(req, resp);
 		}
-		else if(url.equals(path+"/boardView")) {
+		else if(cmd.equals("boardView")) {
 			if(req.getParameter("option") == null) {
 				return;
 			}
@@ -173,7 +172,7 @@ public class PageServlet extends HttpServlet{
 			req.setAttribute("board", board);
 			req.getRequestDispatcher("board.jsp").forward(req, resp);
 		}
-		else if(url.equals(path+"/delBoard")) {
+		else if(cmd.equals("delBoard")) {
 			String del_Id = req.getParameter("delId");
 			if(del_Id == null) {
 				return;
@@ -187,7 +186,7 @@ public class PageServlet extends HttpServlet{
 			}
 			resp.getWriter().print(data);
 		}
-		else if(url.equals(path+"/modify_fin")) {
+		else if(cmd.equals("modify_fin")) {
 			// 폼 수정 적용 구현
 	//		List items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req); 
 			System.out.println("파일저장 시작");
@@ -199,7 +198,7 @@ public class PageServlet extends HttpServlet{
 				mService.uploadPicture(parts,m.getMem_id());
 			}
 		}
-		else if(url.equals(path+"/checkInput")) {
+		else if(cmd.equals("checkInput")) {
 			String id = req.getParameter("data");
 			id = id.substring(2, id.length());
 			String result = "";
@@ -211,7 +210,7 @@ public class PageServlet extends HttpServlet{
 			resp.getWriter().flush();
 			resp.getWriter().println(result);
 		}
-
+		
 	}
 
 }

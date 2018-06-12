@@ -1,0 +1,33 @@
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+	line-height: 24px; 
+}
+#wrap {
+	width: 800px;
+	margin: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+table td,th {
+	border: #808080 solid 1px; 
+	padding: 5px;
+}
+
+th {
+	background: yellowgreen;
+}
+.top{
+	height : 30px;
+}
+#content{
+	width : 93%;
+	hegiht : 600px;
+}
+.access{
+	display : none;
+}
+p{
+	height : 100%;
+}

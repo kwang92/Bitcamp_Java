@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>MyHomePage</display-name>
+	<display-name>MyHomePage2</display-name>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
@@ -28,7 +28,8 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>PageServlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/page</url-pattern>
+		<url-pattern>/board</url-pattern>
 	</servlet-mapping>
 	
 	<servlet-mapping>

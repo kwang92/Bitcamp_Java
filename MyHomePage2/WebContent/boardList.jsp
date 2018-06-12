@@ -26,7 +26,7 @@
 		var info = $("#info").val();
 		var table = $("#boardList");
 		$.ajax({
-			url : "optionList",
+			url : "board?cmd=optionList",
 			type : "POST",
 			dataType : "json",
 			data : {"option" : option, "info" : info},
@@ -50,7 +50,7 @@
 	function createTable(){
 		var table = $("#boardList");
 		$.ajax({
-			url : "reqList",
+			url : "board?cmd=reqList",
 			type : "POST",
 			dataType : "json",
 			success : function(data){
