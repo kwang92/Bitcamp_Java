@@ -46,8 +46,8 @@
 <link rel = "stylesheet" type = "text/css" href = "<%=path %>/css/boardTable.css">
 </head>
 <body>
-	<div id = "wrap" align = "center">
-		<table border = "1" style = "width : 500px; height : 500px; text-align : center">
+	<div id = "wrap" align = "center" style = "width : 100%; height : 100%">
+		<table border = "1" style = "width : 100%; height : 500px; text-align : center">
 			<tr>
 				<th class = "top">제목</th><td>${board.title}</td>
 				<th class = "top">작성자</th><td>${board.writer}</td>

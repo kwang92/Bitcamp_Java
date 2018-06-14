@@ -15,7 +15,7 @@ $(function(){
 			if((idExp.test($("#id").val()))){
 				$(".needId").text("");
 				var checkVal = "id"+($("#id").val());
-				if(!checkValue(checkVal)  ){
+				if(checkValue(checkVal) == false ){
 					$(".needId").text("중복된 아이디입니다.").css("color","red");
 					idFlag = false;
 				}else{
@@ -60,18 +60,19 @@ $(function(){
 
 function checkValue(value){
 	$.ajax({
-		url : "checkInput",
+		url : "page?cmd=checkInput",
 		type : "post",
 		data : {"data" : value},
 		dataType : "json",
 		success : function(result){
 			if(result.res){	// 가입가능
-				alert("true실행");
 				return true;	
 			}else{	// 아이디 중복
-				alert("false실행");
 				return false;
 			}
+		},
+		error : function(){
+			alert("체크벨류 에러");
 		}
 	
 	});

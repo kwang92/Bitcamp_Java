@@ -37,6 +37,10 @@
 		<url-pattern>*.css</url-pattern>
 		<url-pattern>*.js</url-pattern>
 		<url-pattern>*.PNG</url-pattern>
+		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+		<url-pattern>*.GIF</url-pattern>
 	</servlet-mapping>
 
 	

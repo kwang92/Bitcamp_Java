@@ -32,18 +32,18 @@ public class MemberService {
 		}
 		return 0;
 	}
-	public boolean uploadPicture(Collection<Part> parts, String id) {
-		System.out.println("mService uploadPicture Ω√¿€");
+	public String uploadPicture(Collection<Part> parts, String id) {
+		String path = null;
 		for(Part part : parts) {
 			if(part.getHeader("Content-Disposition").contains("filename=")) {
 				String fileName = part.getSubmittedFileName();
-				UUID uuid = UUID.randomUUID();
-				String fName = uuid.toString()+"_"+fileName;
+				String fName = fileName;
+				
 				if(part.getSize() > 0) {
 					try {
 						part.write(PATH+fName);				
 						dao.updateProfile(id, fName);
-						return true;
+						return fName;
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -52,16 +52,15 @@ public class MemberService {
 			}
 		}
 		
-		return false;
+		return path;
 	}
 	public Member getUserInfo(String id) {
 		Member member = dao.selectOne(id);
-		String pro_Path =  PATH+member.getProfile();
-		member.setProfile(pro_Path);
 		return member;
 	}
 	public boolean join(Member member) {
 		if(dao.addMember(member)) {
+			
 			return true;
 		}
 		

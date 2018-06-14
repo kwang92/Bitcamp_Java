@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.Board;
 import model.Member;
+
 
 public class BoardDao {
 	private static BoardDao dao;
@@ -31,6 +34,25 @@ public class BoardDao {
 			dao = new BoardDao();
 		}
 		return dao;
+	}
+
+	public int selectCount() {
+		int cnt = 0;
+		String sql = "select count(*) from page_board";
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				cnt = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		return cnt;
 	}
 	public boolean updateViewCount(int id) {
 		String sql = "update page_board set viewCount = viewCount+1 where b_id = "+id;
@@ -194,4 +216,38 @@ public class BoardDao {
 
 		return bList;
 	}
+	public ArrayList<Board> selectList(int firstRow, int endRow){
+		ArrayList<Board> mList = new ArrayList<Board>();
+		String sql = "select *"+
+				" from (select rownum rnum, b_id, title, context, viewCount,writer,mem_id"+
+				        " from (select rownum r, b_id, title, context, viewCount,writer,mem_id"+
+				            " from page_board"+
+				                " order by b_id desc))"+
+				"where rnum between ? and ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, firstRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Board board = new Board();
+				board.setB_id(rs.getInt("b_id"));
+				board.setTitle(rs.getString("title"));
+				board.setContext(rs.getString("context"));
+				board.setViewCount(rs.getInt("viewCount"));
+				board.setWriter(rs.getString("writer"));
+				board.setMem_id(rs.getString("mem_id"));
+				mList.add(board);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mList;
+	}
+	
 }

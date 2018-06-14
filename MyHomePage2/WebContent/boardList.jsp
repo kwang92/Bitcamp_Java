@@ -14,7 +14,7 @@
 </script>
 <script type = "text/javascript">
 	$(function(){
-		createTable();
+		createTable(1);
 		if("${user}"){
 			$("#logInOut",parent.document).text("로그아웃");
 		}else{
@@ -24,6 +24,9 @@
 	function searchFunc(){
 		var option = $("#option").val();
 		var info = $("#info").val();
+		if(!info){
+			window.location.reload();
+		}
 		var table = $("#boardList");
 		$.ajax({
 			url : "board?cmd=optionList",
@@ -44,39 +47,61 @@
 					$("<td>").text(data[brd].viewCount).appendTo(tr);
 					tr.appendTo(table);
 				}
+		//		window.location.reload();
 			}
 		});
 	};
-	function createTable(){
+	function createTable(page=1){
 		var table = $("#boardList");
+		clearList();
+		clearNavi();
 		$.ajax({
-			url : "board?cmd=reqList",
+			url : "board?cmd=reqList&page="+page,
 			type : "POST",
 			dataType : "json",
-			success : function(data){
-				for(var brd in data){
+			success : function(data){				
+				var brdList = data.brdList;
+	
+				for(var i in brdList){
 					var tr = $("<tr>");
 					$("<td>").text("1").appendTo(tr);
 				
-					var aTag = $("<a>").attr("href","boardView?option="+data[brd].b_id+"&cnt="+data[brd].viewCount);
-					$("<td class = 'title'>").text(data[brd].title).css("color","black").css("text-decoration","none").appendTo(aTag);
+					var aTag = $("<a>").attr("href","board?cmd=boardView&option="+brdList[i].b_id+"&cnt="+brdList[i].viewCount);
+					$("<td class = 'title'>").text(brdList[i].title).css("color","black").css("text-decoration","none").appendTo(aTag);
 					aTag.appendTo(tr);
-					$("<td>").text(data[brd].writer).appendTo(tr);
-					$("<td>").text(data[brd].viewCount).appendTo(tr);
+					$("<td>").text(brdList[i].writer).appendTo(tr);
+					$("<td>").text(brdList[i].viewCount).appendTo(tr);
 					tr.appendTo(table);
 				}
+				
+				var div_wrap = $("#navi_wrap");
+				var div = $("<div id = 'navi'>");
+				$("<a>").attr("href","javascript:createTable()").text("처음").appendTo(div);
+				for(var i = data.startPage; i <= ( data.endPage < data.pageTotalCount ? data.endPage : data.pageTotalCount ); i++){
+					if(i == data.currentPage){
+						$("<b>").text(i).appendTo(div);
+					}else{
+						var aLink = $("<a>").attr("href","javascript:createTable("+i+");").text(i).appendTo(div);
+					}
+				}
+				if(data.endPage < data.pageTotalCount){
+					var aLink = $("<a>").attr("href","javascript:createTable("+(data.endPage+1)+");").text("다음");
+					aLink.appendTo(div);
+				}
+				$("<a>").attr("href","javascript:createTable("+data.pageTotalCount+")").text("마지막").appendTo(div);
+				div.appendTo(div_wrap);
 			},
 			error : function(){
 				alert("fail");
 			}
 		});
 	};
+	function clearNavi(){
+		$("#navi").remove();
+	};
 	function clearList(){
 		$("#boardList tr:gt(0)").remove();
 	};
-	function test(){
-		$("#logInOut",parent.document).text("text");
-	}
 </script>
 <link rel="stylesheet" type="text/css" href= "<%=path %>/css/boardList.css?ver=6">
 </head>
@@ -98,30 +123,13 @@
 			<button onclick = "searchFunc();">검색</button>
 		</div>
 		<br>
-		<div id="navi" align = "center">
-			<c:if test="${viewData.startPage !=1 }">
-				<a href="messageList?page=1">[처음]</a>
-				<a href="messageList?page=${viewData.startPage-1}">[이전]</a>
-			</c:if>
-			<c:forEach var="pageNum" begin="${viewData.startPage}"
-				end="${viewData.endPage < viewData.pageTotalCount ? viewData.endPage : viewData.pageTotalCount}">
-				<c:choose>
-					<c:when test="${pageNum == viewData.currentPage}">
-						<b>[${pageNum}]</b>
-					</c:when>
-					<c:otherwise>
-						<a href="messageList?page=${pageNum}">[${pageNum}]</a>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<c:if test="${viewData.endPage < viewData.pageTotalCount}">
-				<a href="messageList?page=${viewData.endPage+1}">[다음]</a>
-				<a href="messageList?page=${viewData.pageTotalCount}">[마지막]</a>
-			</c:if>
+		<div id = "navi_wrap">
+		<%--<div id="navi" align = "center">
+				
+			</div> --%>
 		</div>
 		<div id = "foot">
-			<button id = "test" onclick = "test()">테스트</button>
-			<button onclick = "location.href = 'writePage'">글 쓰기</button>
+			<button onclick = "location.href = 'board?cmd=writePage'">글 쓰기</button>
 		</div>
 	</div>
 </body>

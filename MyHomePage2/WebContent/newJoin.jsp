@@ -12,7 +12,7 @@
 	crossorigin="anonymous">
 </script>
 <link rel="stylesheet" type="text/css" href= "<%=path %>/css/newJoin.css?ver=4">
-<script src="<%=path%>/js/newJoin.js?ver=4"></script>
+<script src="<%=path%>/js/newJoin.js?ver=7"></script>
 <style type = "text/css">
 	#error{
 		display : none;

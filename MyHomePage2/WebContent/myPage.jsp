@@ -12,8 +12,6 @@
 	crossorigin="anonymous">
 </script>
 <script type="text/javascript">
-	
-	alert("123123");
 	$(function(){
 		if("${user}"){
 			$("#logInOut",parent.document).text("로그아웃");
@@ -30,17 +28,6 @@
 		
 	});
 
-	var act = function doneFile(){
-		var file = $("#fileLoad")[0].files[0];
-		alert("이름"+file);
-		var filePath = window.URL.createObjectURL(file);
-		if(file){
-			var url = "imageReq?image="+filePath;
-			alert(url)
-			location.href = url;	
-		}
-		
-	};
 </script>
 <link rel="stylesheet" type="text/css" href="<%=path %>/css/myPage.css">
 </head>
@@ -50,6 +37,7 @@
 			<!-- onSubmit = "return submitCheck()" -->
 			<input type="hidden" name="cmd" value="modify_fin">
 			<input type = "hidden" id = "yabi" value = "${user.profile}">
+			<input type = "hidden" id = "flag" value = "no" onchange = "reloadPage()">
 			<table>
 				<tr>	
 					<td colspan="2" class="img_td" id="pp">
@@ -59,7 +47,6 @@
 				<tr>
 					<td colspan="2" class="img_td" style="text-align: right">
 					<input type="file" id="fileLoad" name="picture" value="사진가져오기"> 
-					<button type="button" onclick = "act()">설정완료</button></td>
 				</tr>
 				<tr>
 					<th>아이디</th>
@@ -86,7 +73,8 @@
 				</tr>
 				<tr>
 					<td colspan="2" id="bottom">
-						<button>뒤로가기</button> <input type="submit" value="수정">
+						<input type = "button" onclick = "history.back(-1);" value = "뒤로가기" style = "border : 1px solid gray; border-radius : 10px;">
+						<input type="submit" value="수정" style = "border : 1px solid gray; border-radius : 10px;">
 					</td>
 				</tr>
 			</table>
@@ -94,7 +82,4 @@
 	</div>
 
 </body>
-	<script type = "text/javascript">
-		alert(" 다 그려짐");
-	</script>
 </html>

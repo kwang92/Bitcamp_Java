@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +50,7 @@ public class PageServlet extends HttpServlet{
 			resp.sendRedirect("mainForm.jsp");
 		}
 		else if(cmd.equals("login")) {
-			resp.sendRedirect("loginForm");
+			resp.sendRedirect("page?cmd=loginForm");
 		}
 		else if(cmd.equals("loginForm")) {
 			req.getRequestDispatcher("loginForm.jsp").forward(req, resp);
@@ -64,6 +65,7 @@ public class PageServlet extends HttpServlet{
 				Member current_Member = mService.getUserInfo(input_id);	
 				current_Member.setTotalWrite(bService.countTotal(input_id));
 				req.getSession().setAttribute("user", current_Member);
+				
 				System.out.println("유저로그인 성공");
 				resp.sendRedirect("boardList.jsp");
 			}else if(result == 1) {
@@ -107,9 +109,10 @@ public class PageServlet extends HttpServlet{
 			member.setEmail(email);
 			if(mService.join(member)) {
 				System.out.println("가입성공");
+			}else {
+				System.out.println("가입실패");
 			}
-			System.out.println("가입실패");
-			req.getRequestDispatcher("login").forward(req, resp);
+			req.getRequestDispatcher("page?cmd=login").forward(req, resp);
 		}
 		else if(cmd.equals("newjoinForm")) {
 			req.getRequestDispatcher("newJoin.jsp").forward(req, resp);
@@ -123,25 +126,43 @@ public class PageServlet extends HttpServlet{
 			Board brd = new Board(title,context);
 			Member mem = (Member)req.getSession().getAttribute("user");
 			bService.writeBoard(brd, mem);
-			resp.sendRedirect("boardList");
+			resp.sendRedirect("board?cmd=boardList");
 		}
 		else if(cmd.equals("boardList")) {
+			System.out.println("리스트 띄움");
 			req.getRequestDispatcher("boardList.jsp").forward(req, resp);
 		}
 
 		else if(cmd.equals("reqList")) {
-
-			List<Board> bList = bService.getAllBoards();
-			String result = "";
+			int pageNumber = 1;
+			String strPageNumber = req.getParameter("page");
+			
+			if(strPageNumber != null) {
+				pageNumber = Integer.parseInt(strPageNumber);
+			}
+			//페이지 네비게이션 출력을 위한 정보를 전달
+			Map<String, Object> viewData 
+			= bService.getMessageList(pageNumber);
+			
+			
+			req.setAttribute("viewData",viewData);
+	//		List<Board> bList = bService.getMessageList(pageNumber)
+	
+			String brdList = new Gson().toJson(viewData);
+	
+			resp.getWriter().println(brdList);
+			
+	/*		String result = "";
 			if(bList.size() > 0) {
 				result = new Gson().toJson(bList);
 				req.setAttribute("option", 0);
 				
 			}
-			resp.getWriter().println(result);
+			resp.getWriter().println(result);*/
 		}
 		else if(cmd.equals("optionList")) {
 			List<Board> bList;
+			System.out.println("검색");
 			String option = req.getParameter("option");
 			String info = req.getParameter("info");
 
@@ -157,7 +178,7 @@ public class PageServlet extends HttpServlet{
 		}
 		else if(cmd.equals("logout")) {
 			req.getSession().removeAttribute("user");
-			req.getRequestDispatcher("main").forward(req, resp);
+			resp.sendRedirect("mainForm.jsp");
 		}
 		else if(cmd.equals("boardView")) {
 			if(req.getParameter("option") == null) {
@@ -171,6 +192,21 @@ public class PageServlet extends HttpServlet{
 			
 			req.setAttribute("board", board);
 			req.getRequestDispatcher("board.jsp").forward(req, resp);
+		}
+		else if(cmd.equals("pageView")){
+			int pageNumber = 1;
+			String strPageNumber = req.getParameter("page");
+			
+			if(strPageNumber != null) {
+				pageNumber = Integer.parseInt(strPageNumber);
+			}
+			//페이지 네비게이션 출력을 위한 정보를 전달
+			Map<String, Object> viewData 
+			= bService.getMessageList(pageNumber);
+			
+			req.setAttribute("viewData",viewData);
+			req.getRequestDispatcher("boardList.jsp").forward(req, resp);
+		//	req.getRequestDispatcher("board?cmd=boardList").forward(req, resp);
 		}
 		else if(cmd.equals("delBoard")) {
 			String del_Id = req.getParameter("delId");
@@ -195,18 +231,25 @@ public class PageServlet extends HttpServlet{
 			if(contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
 				Member m =(Member)req.getSession().getAttribute("user");
 				Collection<Part> parts = req.getParts();
-				mService.uploadPicture(parts,m.getMem_id());
+				String path = mService.uploadPicture(parts,m.getMem_id());
+				if(path != null) {
+					m.setProfile(path);
+					req.getSession().setAttribute("user", m);
+				}
 			}
+			resp.sendRedirect("myPage.jsp");
 		}
 		else if(cmd.equals("checkInput")) {
 			String id = req.getParameter("data");
 			id = id.substring(2, id.length());
+			System.out.println("id : "+id);
 			String result = "";
 			if(mService.getUserInfo(id) == null) {	// 가입가능한 아이디면 true 반환
 				result = "{\"res\":true}";
 			}else {	// 중복된 아이디면 false 반환
 				result = "{\"res\":false}";
 			}
+
 			resp.getWriter().flush();
 			resp.getWriter().println(result);
 		}

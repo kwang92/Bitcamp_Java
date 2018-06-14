@@ -11,9 +11,8 @@
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous">
 </script>
-<link rel="stylesheet" type="text/css" href= "<%=path %>/css/main.css?ver=6">
-<script src="<%=path %>/js/main.js?ver=6"></script>
-
+<link rel="stylesheet" type="text/css" href= "<%=path %>/css/main.css?ver=8">
+<script src="<%=path %>/js/main.js?ver=8"></script>
 </head>
 <body>
 	<div id = "header_wrap">
@@ -37,10 +36,9 @@
 		</aside>
 	</div>
 	<div id = "content_wrap">
-		
 		<section>
 			<article>
-				<iframe id = "target" width = "100%" height = "680px" name = "myFrame"></iframe>
+				<iframe id = "target" onload = "det()" width = "75%" height = "580px" name = "myFrame" ></iframe>
 			</article>
 		</section>
 	</div>

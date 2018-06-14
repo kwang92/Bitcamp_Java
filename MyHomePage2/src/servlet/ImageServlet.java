@@ -41,7 +41,8 @@ public class ImageServlet extends HttpServlet{
 		}
 //		String id = mem.getMem_id();
 		String fileName = mem.getProfile();     
-		FileInputStream fis = new FileInputStream(new File(fileName));
+		System.out.println("프로필 사진 : "+fileName);
+		FileInputStream fis = new FileInputStream(new File(PATH+fileName));
 		BufferedInputStream bis = new BufferedInputStream(fis);             
 		resp.setContentType("image/jpg");
 		BufferedOutputStream output = new BufferedOutputStream(resp.getOutputStream());

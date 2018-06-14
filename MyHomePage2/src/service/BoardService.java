@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Part;
@@ -14,9 +16,13 @@ import dao.BoardDao;
 import model.Board;
 import model.Member;
 
+
 public class BoardService {
 	private static BoardService service;
 	private BoardDao dao;
+	private static final int NUM_OF_MESSAGE_PER_PAGE = 3;
+	private static final int NUM_OF_NAVI_PAGE = 5;
+	
 	private BoardService() {
 		dao = BoardDao.getInstance();
 	}
@@ -68,5 +74,50 @@ public class BoardService {
 		bList = dao.getAllBoards();
 
 		return bList;
+	}
+	public Map<String,Object> getMessageList(int pageNumber) {
+		// 현재 페이지에 표시될 메시지 목록 가져오기
+		// 화면에 표시될 네비게이션의 정보를 계산 및 생성
+		Map<String, Object> viewData = new HashMap<String,Object>();
+		int firstRow = 0;
+		int endRow = 0; 
+		int totalCount = 0;	// 한 네비게이션의 시작페이지 부터 끝 페이지
+		
+		totalCount = dao.selectCount();
+		firstRow = (pageNumber-1)*NUM_OF_MESSAGE_PER_PAGE +1;
+		endRow = pageNumber*NUM_OF_MESSAGE_PER_PAGE;
+		
+		
+		ArrayList<Board> boards = dao.selectList(firstRow, endRow);
+		
+		viewData.put("currentPage",pageNumber);
+		viewData.put("brdList", boards);
+		viewData.put("pageTotalCount",calPageTotalCount(totalCount));
+		viewData.put("startPage", getStartPage(pageNumber));
+		viewData.put("endPage", getEndPage(pageNumber));
+		return viewData;
+	}
+	private int calPageTotalCount(int totalCount) {
+
+		int pageTotalCount = 0;
+		if(totalCount != 0) {
+			pageTotalCount = (int)Math.ceil(
+					((double)totalCount / NUM_OF_MESSAGE_PER_PAGE));
+		}
+		return pageTotalCount;
+	}
+	public int getStartPage(int pageNum) {
+
+		int startPage = 
+				((pageNum-1)/NUM_OF_NAVI_PAGE)*NUM_OF_NAVI_PAGE + 1;
+		
+		return startPage;
+	}
+	public int getEndPage(int pageNum) {
+
+		int endPage 
+		= (((pageNum-1)/NUM_OF_NAVI_PAGE)+1)
+		* NUM_OF_NAVI_PAGE;
+		return endPage;
 	}
 }
