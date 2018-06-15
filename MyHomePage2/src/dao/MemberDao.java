@@ -12,22 +12,42 @@ public class MemberDao {
 	private static MemberDao dao;
 	private Connection conn;
 	
-	private MemberDao() {
-		try {
-			conn = ConnectionProvider.getConnection();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	private MemberDao() {}
 	public static MemberDao getInstance() {
 		if(dao == null) {
 			dao = new MemberDao();
 		}
 		return dao;
+	}
+	public boolean deleteUser(String id) {
+		String sql = "delete from page_member where mem_id = '"+id+"'";
+		Statement stmt = null;
+		
+		try {
+			conn = ConnectionProvider.getConnection();
+			stmt = conn.createStatement();
+			stmt.executeUpdate(sql);
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();					
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 	public boolean updateProfile(String id, String path) {
 		String sql = "update page_member set img_path = ?"
@@ -35,6 +55,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		System.out.println("dao update picture Ω√¿€");
 		try {
+			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, path);
 			pstmt.executeUpdate();
@@ -42,6 +63,21 @@ public class MemberDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();					
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
@@ -55,6 +91,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		
 		try {
+			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getPassword());
 			pstmt.setString(2, member.getName());
@@ -65,6 +102,21 @@ public class MemberDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();					
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return false;
@@ -76,6 +128,7 @@ public class MemberDao {
 		ResultSet rs = null;
 		
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			
@@ -89,6 +142,21 @@ public class MemberDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();					
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return member;
 	}
@@ -97,6 +165,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		
 		try {
+			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMem_id());
 			pstmt.setString(2, member.getPassword());
@@ -107,6 +176,21 @@ public class MemberDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();					
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		

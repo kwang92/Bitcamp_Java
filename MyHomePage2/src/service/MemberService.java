@@ -54,6 +54,13 @@ public class MemberService {
 		
 		return path;
 	}
+	public boolean outUser(String id) {
+		if(dao.deleteUser(id)) {
+			return true;
+		}
+		
+		return false;
+	}
 	public Member getUserInfo(String id) {
 		Member member = dao.selectOne(id);
 		return member;

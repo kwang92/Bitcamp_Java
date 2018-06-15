@@ -29,21 +29,3 @@ th{
 	width : 80px;
 	background: yellowgreen;
 }
-#cancel_btn{
-	width : 70px;
-	height : 30px;
-	background-color: white;
-	color : #273346;
-	border : 1px solid #273346;
-	padding : 10px;
-	padding-bottom : 20px;
-}
-#submitBtn{
-	width : 70px;
-	height : 30px;
-	background-color: white;
-	color : #273346;
-	border : 1px solid #273346;
-	padding : 10px;
-	padding-bottom : 20px;
-}

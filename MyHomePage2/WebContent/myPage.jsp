@@ -11,6 +11,12 @@
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous">
 </script>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+<style type = "text/css">
+*{
+	font-family: 'Noto Sans', sans-serif;
+}
+</style>
 <script type="text/javascript">
 	$(function(){
 		if("${user}"){
@@ -27,13 +33,27 @@
 		});
 		
 	});
-
+	function checkTrue(){
+		var check = confirm("정말 탈퇴하시겠습니까?");
+		return check;
+	}
+	function outMember(check){
+		if(check){
+			location.href = "board?cmd=outUser";			
+		}
+		
+	}
+	function checkModify(){
+		if($("#pass") && $("#name") && $("#email")){
+			location.href = "board?cmd=";
+		}
+	}
 </script>
-<link rel="stylesheet" type="text/css" href="<%=path %>/css/myPage.css">
+<link rel="stylesheet" type="text/css" href="<%=path %>/css/myPage.css?ver=3">
 </head>
 <body>
 	<div id="wrap" align="center">
-		<form id="myFrm" action="board" method="POST" enctype="multipart/form-data">
+		<form id="myFrm" action="board" method="POST" enctype="multipart/form-data" onSubmit = "return checkModify()">
 			<!-- onSubmit = "return submitCheck()" -->
 			<input type="hidden" name="cmd" value="modify_fin">
 			<input type = "hidden" id = "yabi" value = "${user.profile}">
@@ -74,7 +94,8 @@
 				<tr>
 					<td colspan="2" id="bottom">
 						<input type = "button" onclick = "history.back(-1);" value = "뒤로가기" style = "border : 1px solid gray; border-radius : 10px;">
-						<input type="submit" value="수정" style = "border : 1px solid gray; border-radius : 10px;">
+						<input type="button" onclick = "checkModify();" value="수정" style = "border : 1px solid gray; border-radius : 10px;">
+						<input type = "button" onclick = "outMember(checkTrue());" value = "회원탈퇴" style = "border : 1px solid gray; border-radius : 10px;"> 
 					</td>
 				</tr>
 			</table>

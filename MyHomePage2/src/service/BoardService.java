@@ -1,17 +1,9 @@
 package service;
 
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.Part;
-
 import dao.BoardDao;
 import model.Board;
 import model.Member;
@@ -20,7 +12,7 @@ import model.Member;
 public class BoardService {
 	private static BoardService service;
 	private BoardDao dao;
-	private static final int NUM_OF_MESSAGE_PER_PAGE = 3;
+	private static final int NUM_OF_MESSAGE_PER_PAGE = 5;
 	private static final int NUM_OF_NAVI_PAGE = 5;
 	
 	private BoardService() {
@@ -31,7 +23,12 @@ public class BoardService {
 
 		return service;
 	}
-	
+	public boolean updateBoard(Board brd) {
+		if(dao.updateBoard(brd)) {
+			return true;
+		}
+		return false;
+	}
 	public boolean updateView(int id) {
 		if(dao.updateViewCount(id)) {
 			return false;

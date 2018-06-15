@@ -55,6 +55,11 @@ public class Member {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
+	@Override
+	public String toString() {
+		return "Member [mem_id=" + mem_id + ", password=" + password + ", name=" + name + ", email=" + email
+				+ ", totalWrite=" + totalWrite + ", profile=" + profile + "]";
+	}
 	
 	
 }

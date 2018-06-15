@@ -1,13 +1,10 @@
 $(function(){
-	//alert($("#target").contents().find("#profile_Img")[0].tagName);
-
-	/*
-	divimg.addEventListener("DOMAttrModified", function(event) {
-	    if (event.attrName == "src") {
-	       alert("이미지 바뀜")
-	    }
-	});
-	*/
+	var name = $("#loginNa").val();
+	$("#loginName").text(name);
+	if($("#loginSession").val()){
+	
+		$("#logInOut").text("로그아웃");
+	}
 	$("#board").mousedown(function(){
 		$("#target").attr("src","boardList.jsp");
 		$("#aside_wrap").css("display","block");
@@ -19,7 +16,6 @@ $(function(){
 	$("#logInOut").mousedown(function(){
 		alert($("#logInOut").text());
 		if($("#logInOut").text() == "로그인"){
-	//		location.href = "imageReq";
 			$("#target").attr("src","loginForm.jsp");
 		}else{
 			location.href = "board?cmd=logout";
@@ -32,11 +28,12 @@ function det(){
 	//alert($("target").attr("src"));
 	//$("#iframeID").contents().find("[tokenid=" + token + "]")
 	if(current_Url.match('myPage.jsp')){
+		$("#mainTitle").text("마이페이지");
 		var tt = $("#target").contents().find("[id='flag']");
 		tt.change(function(){
 			alert("submit");
 		});
-		
-
+	}else if(current_Url.match('boardList.jsp')){
+		$("#mainTitle").text("게시판");
 	}
 }

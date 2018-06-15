@@ -11,6 +11,12 @@
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous">
 </script>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+<style type = "text/css">
+*{
+	font-family: 'Noto Sans', sans-serif;
+}
+</style>
 <link rel="stylesheet" type="text/css" href= "<%=path %>/css/newJoin.css?ver=4">
 <script src="<%=path%>/js/newJoin.js?ver=7"></script>
 <style type = "text/css">

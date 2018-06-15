@@ -18,17 +18,7 @@ public class BoardDao {
 	private static BoardDao dao;
 	private Connection conn;
 
-	private BoardDao() {
-		try {
-			conn = ConnectionProvider.getConnection();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	private BoardDao() {}
 	public static BoardDao getInstance() {
 		if(dao == null) {
 			dao = new BoardDao();
@@ -42,6 +32,7 @@ public class BoardDao {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			if(rs.next()) {
@@ -50,20 +41,81 @@ public class BoardDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
-			
 		return cnt;
+	}
+	public boolean updateBoard(Board brd) {
+		String sql = "update page_board set title = ?,"
+				+ "							context = ?"
+				+ "	  where b_id = "+brd.getB_id();
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, brd.getTitle());
+			pstmt.setString(2, brd.getContext());
+			int num = pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return false;
 	}
 	public boolean updateViewCount(int id) {
 		String sql = "update page_board set viewCount = viewCount+1 where b_id = "+id;
 		Statement stmt = null;
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			stmt.executeUpdate(sql);
 			return true;
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 		return false;
 	}
@@ -72,6 +124,7 @@ public class BoardDao {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			if(rs.next()) {
@@ -80,6 +133,21 @@ public class BoardDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 		return 0;
 	}
@@ -87,8 +155,10 @@ public class BoardDao {
 		String sql = "insert into page_board (b_id, title, context, writer, mem_id)"
 				+" values(board_seq.nextval, ?, ?, ?, ?)";
 		PreparedStatement pstmt = null;
-
+		String text = brd.getContext().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", "");
+		brd.setContext(text);
 		try{
+			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, brd.getTitle());
 			pstmt.setString(2, brd.getContext());
@@ -98,6 +168,21 @@ public class BoardDao {
 			return true;
 		}catch(SQLException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 		return false;
 	}
@@ -106,12 +191,28 @@ public class BoardDao {
 		Statement stmt = null;
 
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			stmt.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 
 		return false;
@@ -123,6 +224,7 @@ public class BoardDao {
 		ResultSet rs = null;
 
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			if(rs.next()) {
@@ -137,6 +239,21 @@ public class BoardDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 
 		return brd;
@@ -147,6 +264,7 @@ public class BoardDao {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -161,6 +279,21 @@ public class BoardDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 
 
@@ -173,6 +306,7 @@ public class BoardDao {
 		ResultSet rs = null;
 
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -187,6 +321,21 @@ public class BoardDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 
 		return bList;
@@ -198,6 +347,7 @@ public class BoardDao {
 		ResultSet rs = null;
 
 		try {
+			conn = ConnectionProvider.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -212,6 +362,21 @@ public class BoardDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 
 		return bList;
@@ -220,14 +385,15 @@ public class BoardDao {
 		ArrayList<Board> mList = new ArrayList<Board>();
 		String sql = "select *"+
 				" from (select rownum rnum, b_id, title, context, viewCount,writer,mem_id"+
-				        " from (select rownum r, b_id, title, context, viewCount,writer,mem_id"+
-				            " from page_board"+
-				                " order by b_id desc))"+
+				" from (select rownum r, b_id, title, context, viewCount,writer,mem_id"+
+				" from page_board"+
+				" order by b_id desc))"+
 				"where rnum between ? and ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
+			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, firstRow);
 			pstmt.setInt(2, endRow);
@@ -245,9 +411,24 @@ public class BoardDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
-		
+
 		return mList;
 	}
-	
+
 }

@@ -8,6 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+<style type = "text/css">
+*{
+	font-family: 'Noto Sans', sans-serif;
+}
+</style>
 <script
 	src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -62,7 +68,7 @@
 			</tr>
 			<tr>
 				<td colspan = "6" style = "height : 30px; text-align : right">
-					<button class = "access">수정</button>
+					<button class = "access" onclick = "location.href = 'board?cmd=mod&num=${board.b_id}'">수정</button>
 					<button class = "access" onclick = "delBoard(checkTrue())">삭제</button>
 					<button onclick = "history.back(-1);">뒤로가기</button>
 				</td>

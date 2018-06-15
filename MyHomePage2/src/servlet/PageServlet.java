@@ -46,6 +46,7 @@ public class PageServlet extends HttpServlet{
 		resp.setCharacterEncoding("UTF-8");
 		
 		String cmd = req.getParameter("cmd");
+		System.out.println(cmd+"요청");
 		if(cmd.equals("/")) {
 			resp.sendRedirect("mainForm.jsp");
 		}
@@ -57,21 +58,24 @@ public class PageServlet extends HttpServlet{
 		}
 		else if(cmd.equals("loginCheck")) {	// Member 로그인 체크 method
 			String input_id = req.getParameter("id");
-			String input_pwd = req.getParameter("pwd");
-
+			String input_pwd = req.getParameter("pw");
+			System.out.println(input_id+","+input_pwd);
 			int result = mService.loginCheck(input_id, input_pwd);
 
+			String res = "";
 			if(result == 2) {	// 로그인 성공 시 session에 id 저장 후 mainForm으로 이동
 				Member current_Member = mService.getUserInfo(input_id);	
 				current_Member.setTotalWrite(bService.countTotal(input_id));
 				req.getSession().setAttribute("user", current_Member);
-				
-				System.out.println("유저로그인 성공");
-				resp.sendRedirect("boardList.jsp");
+				System.out.println("로그인성공");
+				res = "{\"res\": \"suc\"}";
+				resp.getWriter().println(res);
 			}else if(result == 1) {
-				req.getSession().setAttribute("reason", "아이디가 존재하지 않습니다.");
+				res = "{\"res\": \"아이디가 존재하지 않습니다.\"}";
+				resp.getWriter().println(res);
 			}else {
-				req.getSession().setAttribute("reason", "비밀번호가 틀렸습니다.");
+				res = "{\"res\": \"비밀번호가 틀렸습니다.\"}";
+				resp.getWriter().println(res);
 			}
 		}
 		else if(cmd.equals("mainForm")) {
@@ -178,7 +182,7 @@ public class PageServlet extends HttpServlet{
 		}
 		else if(cmd.equals("logout")) {
 			req.getSession().removeAttribute("user");
-			resp.sendRedirect("mainForm.jsp");
+			req.getRequestDispatcher("board?cmd=/").forward(req, resp);
 		}
 		else if(cmd.equals("boardView")) {
 			if(req.getParameter("option") == null) {
@@ -253,7 +257,29 @@ public class PageServlet extends HttpServlet{
 			resp.getWriter().flush();
 			resp.getWriter().println(result);
 		}
-		
+		else if(cmd.equals("mod")) {
+			String b_id = req.getParameter("num");
+			int id = Integer.parseInt(b_id);
+			Board brd = bService.getOneBoard(id);
+			req.setAttribute("board", brd);
+			req.getRequestDispatcher("ModifyForm.jsp").forward(req, resp);
+		}
+		else if(cmd.equals("writeModify")) {
+			String title = req.getParameter("title");
+			String context = req.getParameter("contextModi");
+			String num = req.getParameter("num");
+			Board brd = new Board(title,context);
+			brd.setB_id(Integer.parseInt(num));
+			bService.updateBoard(brd);
+			resp.sendRedirect("board?cmd=boardList");
+		}
+		else if(cmd.equals("outUser")) {
+			Member member = (Member)req.getSession().getAttribute("user");
+			String id = member.getMem_id();
+			mService.outUser(id);
+			resp.sendRedirect("board?cmd=logout");
+			
+		}
 	}
 
 }

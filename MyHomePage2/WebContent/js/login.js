@@ -16,11 +16,8 @@ function down(e){
 				$("#id").focus();
 				return false;
 			}
-			frm1.submit();
+			checkLogin();
 		}	
 	}
 	
-};
-function sub_click(){
-	frm1.submit();
 };
