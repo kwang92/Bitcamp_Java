@@ -1,6 +1,5 @@
 $(function(){
-	var name = $("#loginNa").val();
-	$("#loginName").text(name);
+
 	if($("#loginSession").val()){
 	
 		$("#logInOut").text("로그아웃");
@@ -35,5 +34,7 @@ function det(){
 		});
 	}else if(current_Url.match('boardList.jsp')){
 		$("#mainTitle").text("게시판");
+	}else{
+		$("#mainTitle").text("메인페이지");
 	}
 }

@@ -32,16 +32,31 @@ public class ImageServlet extends HttpServlet{
 		System.out.println("ImageServlet");
 		req.setCharacterEncoding("utf-8");
 		resp.setCharacterEncoding("utf-8");
-		Member mem = (Member)req.getSession().getAttribute("user");
-		if(mem == null) {
-			System.out.println("세션정보 없어");
+		
+		String fileName = "";
+		String cmd = "";
+		if(req.getParameter("cmd") != null) {
+			cmd = req.getParameter("cmd");
 		}
-		if(req.getParameter("image") != null) {
-			System.out.println(req.getParameter("image"));
+		System.out.println("이미지 서블릿 cmd : "+cmd);
+		Member mem = null;
+		if(cmd.equals("other")) {
+			mem = dao.selectOne(req.getParameter("who"));
+			
+		} else if(cmd.equals("home")) {
+			fileName = "home2.jpg";
+		} else if(cmd.equals("mainLogo")) {
+			fileName = "mainLogo.png";
+			
+		} else {
+			mem = (Member)req.getSession().getAttribute("user");
 		}
-//		String id = mem.getMem_id();
-		String fileName = mem.getProfile();     
-		System.out.println("프로필 사진 : "+fileName);
+		
+		if(mem != null) {	// 로고 관련 이미지 처리
+			fileName = mem.getProfile();
+		}
+		
+
 		FileInputStream fis = new FileInputStream(new File(PATH+fileName));
 		BufferedInputStream bis = new BufferedInputStream(fis);             
 		resp.setContentType("image/jpg");

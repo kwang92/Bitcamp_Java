@@ -56,7 +56,7 @@
 				<table>
 					<tr class = "input_info">
 						<td colspan="2"><input type="text" name="id" id = "id"
-							placeholder="아이디를 입력하세요"><span class = "needId"></span></td>
+							placeholder="아이디를 입력하세요"  autofocus><span class = "needId"></span></td>
 					</tr>
 					<tr class = "input_info">
 						<td colspan="2"><input type="password" name="pwd" id ="pw1" 

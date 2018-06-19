@@ -45,7 +45,7 @@
 	}
 	function checkModify(){
 		if($("#pass") && $("#name") && $("#email")){
-			location.href = "board?cmd=";
+			return true;
 		}
 	}
 </script>
@@ -70,7 +70,7 @@
 				</tr>
 				<tr>
 					<th>아이디</th>
-					<td>${user.mem_id}</td>
+					<td><input type = "text" id = "id" name = "id" value = "${user.mem_id}" readonly></td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
@@ -94,7 +94,7 @@
 				<tr>
 					<td colspan="2" id="bottom">
 						<input type = "button" onclick = "history.back(-1);" value = "뒤로가기" style = "border : 1px solid gray; border-radius : 10px;">
-						<input type="button" onclick = "checkModify();" value="수정" style = "border : 1px solid gray; border-radius : 10px;">
+						<input type="submit" onclick = "checkModify();" value="수정" style = "border : 1px solid gray; border-radius : 10px;">
 						<input type = "button" onclick = "outMember(checkTrue());" value = "회원탈퇴" style = "border : 1px solid gray; border-radius : 10px;"> 
 					</td>
 				</tr>

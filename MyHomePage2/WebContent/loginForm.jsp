@@ -46,7 +46,7 @@ function checkLogin(){
 	});
 };
 </script>
-<link rel="stylesheet" type="text/css" href= "<%=path %>/css/login.css">
+<link rel="stylesheet" type="text/css" href= "<%=path %>/css/login.css?ver=3">
 <script src="<%=path %>/js/login.js?ver=6"></script>
 </head>
 <body>
@@ -62,7 +62,7 @@ function checkLogin(){
 					<legend><strong>Login</strong></legend>
 					<p>
 						<label>아이디&nbsp;&nbsp;&nbsp;<input type="text" id="id"
-							name="id" onkeydown="down(event)"></label>
+							name="id" onkeydown="down(event)" autofocus></label>
 					</p>
 					<p>
 						<label>비밀번호<input type="password" id="pwd" name="pwd"

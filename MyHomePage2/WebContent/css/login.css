@@ -80,4 +80,11 @@ form{
 }
 h1{
 	color : #333;
+	margin-bottom : 20px;
+}
+p{
+	margin-top : 20px;
+}
+fieldset{
+	margin : 10px;
 }

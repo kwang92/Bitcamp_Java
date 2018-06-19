@@ -150,19 +150,10 @@ public class PageServlet extends HttpServlet{
 			
 			
 			req.setAttribute("viewData",viewData);
-	//		List<Board> bList = bService.getMessageList(pageNumber)
-	
 			String brdList = new Gson().toJson(viewData);
 	
 			resp.getWriter().println(brdList);
-			
-	/*		String result = "";
-			if(bList.size() > 0) {
-				result = new Gson().toJson(bList);
-				req.setAttribute("option", 0);
-				
-			}
-			resp.getWriter().println(result);*/
+
 		}
 		else if(cmd.equals("optionList")) {
 			List<Board> bList;
@@ -227,20 +218,24 @@ public class PageServlet extends HttpServlet{
 			resp.getWriter().print(data);
 		}
 		else if(cmd.equals("modify_fin")) {
-			// 폼 수정 적용 구현
-	//		List items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req); 
-			System.out.println("파일저장 시작");
+			Member tmpMember = (Member)req.getSession().getAttribute("user");
+			
 			String contentType = req.getContentType();
-			System.out.println(contentType);
+			
 			if(contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
-				Member m =(Member)req.getSession().getAttribute("user");
 				Collection<Part> parts = req.getParts();
-				String path = mService.uploadPicture(parts,m.getMem_id());
+				String path = mService.uploadPicture(parts,tmpMember.getMem_id());
 				if(path != null) {
-					m.setProfile(path);
-					req.getSession().setAttribute("user", m);
+					tmpMember.setProfile(path);
+					
 				}
 			}
+			tmpMember.setPassword(req.getParameter("pass"));
+			tmpMember.setName(req.getParameter("name"));
+			tmpMember.setEmail(req.getParameter("email"));
+			mService.infoModify(tmpMember);
+			
+			req.getSession().setAttribute("user", tmpMember);
 			resp.sendRedirect("myPage.jsp");
 		}
 		else if(cmd.equals("checkInput")) {
@@ -264,6 +259,12 @@ public class PageServlet extends HttpServlet{
 			req.setAttribute("board", brd);
 			req.getRequestDispatcher("ModifyForm.jsp").forward(req, resp);
 		}
+		else if(cmd.equals("profileView")) {
+			String view_Id = req.getParameter("who");
+			Member showMember = mService.getUserInfo(view_Id);
+			req.setAttribute("showMember", showMember);
+			req.getRequestDispatcher("userProfile.jsp").forward(req, resp);
+		}
 		else if(cmd.equals("writeModify")) {
 			String title = req.getParameter("title");
 			String context = req.getParameter("contextModi");
@@ -279,6 +280,8 @@ public class PageServlet extends HttpServlet{
 			mService.outUser(id);
 			resp.sendRedirect("board?cmd=logout");
 			
+		}else if(cmd.equals("Home")) {
+			resp.sendRedirect("board?cmd=mainForm");
 		}
 	}
 

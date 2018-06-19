@@ -85,8 +85,7 @@ public class MemberDao {
 		String sql = "update page_member set"
 				+ " password = ?,"
 				+ " name = ?,"
-				+ " email = ?,"
-				+ " picture = ?"
+				+ " email = ?"
 				+ " where mem_id = '"+member.getMem_id()+"'";
 		PreparedStatement pstmt = null;
 		
@@ -96,8 +95,8 @@ public class MemberDao {
 			pstmt.setString(1, member.getPassword());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, member.getEmail());
-			pstmt.setString(4, member.getProfile());
 			pstmt.executeUpdate();
+			System.out.println("정보 업데이트 완료");
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -161,7 +160,8 @@ public class MemberDao {
 		return member;
 	}
 	public boolean addMember(Member member) {
-		String sql = "insert into page_member(mem_id,password,name,email) values(?,?,?,?)";
+		String sql = "insert into page_member(mem_id,password,name,email,img_path) values(?,?,?,?,?)";
+		String default_Img = "default.png";
 		PreparedStatement pstmt = null;
 		
 		try {
@@ -171,6 +171,7 @@ public class MemberDao {
 			pstmt.setString(2, member.getPassword());
 			pstmt.setString(3, member.getName());
 			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, default_Img);
 			pstmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {

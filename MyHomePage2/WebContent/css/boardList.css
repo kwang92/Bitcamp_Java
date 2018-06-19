@@ -115,7 +115,12 @@ h2{
 	padding-top : 30px;
 	padding-bottom : 30px;
 }
-
+.name{
+	width : 50px;
+}
+.name_link{
+	width : 80px;
+}
 .writer{
 	color : gray;
 }
@@ -144,16 +149,10 @@ td .title:hover{
 }
 a{
 	text-decoration: none;
-	width : 100%;
+
 }
 a:hover{
 	font-weight: bold;
-}
-.num{
-
-}
-.write,.cnt{
-
 }
 td{
 	font-size : 16px;

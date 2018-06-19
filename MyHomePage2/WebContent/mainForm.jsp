@@ -24,14 +24,6 @@
 	width:100%;
 }
 
-#total_wrap img{
-	width:100%;
-	opacity : 0.3;
-	position: absolute;
-	top:0;
-	left:0;
-	z-index : 0;
-}
 </style>
 <script src="<%=path %>/js/main.js?ver=8"></script>
 </head>
@@ -41,7 +33,7 @@
 	<div id = "total_wrap" align = "center">
 		<div id = "header_wrap">
 			<header>
-				<h3 id = "loginName"></h3>
+				<a href = "board?cmd=Home" style = "float:left; margin-left : 100px"><img src = "imageReq?cmd=home" width = "80" height = "60"></a>
 				<ul>
 					<li id = "board">게시판</li>
 					<li id = "myPage">마이페이지</li>
@@ -54,7 +46,7 @@
 			<section>
 			<h1 id = "mainTitle"></h1>
 				<article>
-					<iframe id = "target" onload = "det()" width = "90%" height = "980px" name = "myFrame" ></iframe>
+					<iframe id = "target" src = "defaultHome.jsp" onload = "det()" width = "90%" height = "980px" name = "myFrame" ></iframe>
 				</article>
 			</section>
 		</div>

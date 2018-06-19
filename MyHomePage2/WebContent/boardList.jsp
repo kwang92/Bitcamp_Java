@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href= "<%=path %>/css/boardList.css?ver=10">
+<link rel="stylesheet" type="text/css" href= "<%=path %>/css/boardList.css?ver=12">
 <style type = "text/css">
 *{
 	font-family: 'Noto Sans', sans-serif;
@@ -20,6 +20,7 @@
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 	crossorigin="anonymous">
 </script>
+<script src="<%=path %>/js/boardList.js"></script>
 <script type = "text/javascript">
 	$(function(){
 		createTable(1);
@@ -79,7 +80,21 @@
 					var aTag = $("<a class = 'title_link'>").attr("href","board?cmd=boardView&option="+brdList[i].b_id+"&cnt="+brdList[i].viewCount);
 					$("<td class = 'title'>").text(brdList[i].title).css("color","black").css("text-decoration","none").appendTo(aTag);
 					aTag.appendTo(tr);
-					$("<td>").text(brdList[i].writer).appendTo(tr);
+					
+					
+// 					$("<td class = 'name'>").text(brdList[i].writer).appendTo(tr);
+					var nameTd = $("<td class = 'name'>");
+			
+// 					var name = brdList[i].writer;
+// 					$("<a>"+name+"</a>").attr("href","board?cmd=profileView&who="+brdList[i].b_id).appendTo(nameTd);
+// 					nameTd.appendTo(tr);
+
+					var name = brdList[i].writer;
+					//"board?cmd=profileView&who="+brdList[i].b_id+"
+					var url = "board?cmd=profileView&who="+brdList[i].mem_id;
+					$("<a>"+name+"</a>").attr("href","javascript:openProfile('"+url+"')").appendTo(nameTd);
+					nameTd.appendTo(tr);
+					
 					$("<td>").text(brdList[i].viewCount).appendTo(tr);
 					tr.appendTo(table);
 				}
@@ -121,7 +136,7 @@
 			<colgroup>
 				<col width = "80"/>
 				<col width = "200"/>
-				<col width = "100"/>
+				<col width = "80"/>
 				<col width = "100"/>
 			</colgroup>
 			<tr>
